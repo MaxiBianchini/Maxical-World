@@ -8,7 +8,7 @@ public class Tower : MonoBehaviour
     [SerializeField] private float shootTimerMax;
     [SerializeField] private float targetMaxRadius = 20f;
     private float shootTimer;
-    private Enemy targetEnemy;
+    private EnemyTestLeo targetEnemy;
     private float lookForTargetTimer;
     private float lookForTargetTimerMax = 0.2f;
 
@@ -55,7 +55,7 @@ public class Tower : MonoBehaviour
 
         foreach (Collider collider in colliderArray)
         {
-            Enemy enemy = collider.GetComponent<Enemy>();
+            EnemyTestLeo enemy = collider.GetComponent<EnemyTestLeo>();
             if (enemy != null)
             {
                 //it's an enemy

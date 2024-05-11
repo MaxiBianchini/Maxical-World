@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class ArrowProjectile : MonoBehaviour
 {
-    public static ArrowProjectile Create(Vector3 position, Enemy enemy)
+    public static ArrowProjectile Create(Vector3 position, EnemyTestLeo enemy)
     {
         Transform pfArrowProjectile  = GameAssets.Instance.pfArrowProjectile;
         Transform ArrowProjectileTransform = Instantiate(pfArrowProjectile,position,Quaternion.identity);
@@ -18,7 +18,7 @@ public class ArrowProjectile : MonoBehaviour
     }
     
     [SerializeField] float arrowMoveSpeed = 20f;
-    private Enemy targetEnemy;
+    private EnemyTestLeo targetEnemy;
 
     private Vector3 lastMoveDir;
     private float timeToDie = 2f;
@@ -46,14 +46,14 @@ public class ArrowProjectile : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void SetTarget(Enemy enemy)
+    private void SetTarget(EnemyTestLeo enemy)
     {
         this.targetEnemy = enemy;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Enemy enemy = other.GetComponent<Enemy>();
+        EnemyTestLeo enemy = other.GetComponent<EnemyTestLeo>();
         if(enemy != null)
         {
             //Hit an enemy
