@@ -14,7 +14,6 @@ public class ArrowProjectile : MonoBehaviour
         ArrowProjectile arrowProjectile = ArrowProjectileTransform.GetComponent<ArrowProjectile>();
         arrowProjectile.SetTarget(enemy);
         return arrowProjectile;
-
     }
     
     [SerializeField] float arrowMoveSpeed = 20f;

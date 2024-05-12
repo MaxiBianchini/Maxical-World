@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    public static Tower Create(Vector3 position)
+    {
+        Transform pfArrowTower = GameAssets.Instance.pfArrowTower;
+        Transform TowerTransform = Instantiate(pfArrowTower, position, Quaternion.identity);
+
+        Tower tower = TowerTransform.GetComponent<Tower>();
+        return tower;
+    }
+
+
     [SerializeField] private float shootTimerMax;
     [SerializeField] private float targetMaxRadius = 20f;
     private float shootTimer;

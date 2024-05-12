@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pfArrowProjectile: {fileID: 3148217092885813663, guid: f11758c5f901bb84a8012d86b0c03c8b, type: 3}
+  pfArrowTower: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
