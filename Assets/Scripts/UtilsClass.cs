@@ -14,15 +14,16 @@ public static class UtilsClass //it's static so we can access it anywhere
         //Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         //mouseWorldPosition.z = 0f;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
         
         if(Physics.Raycast(ray, out RaycastHit raycastHit))
         {
+            //Debug.Log(raycastHit.point.ToString());
             return raycastHit.point;
+
         }
         else
         {
-            Debug.Log("No encontre collision con el mouse");
+            //Debug.Log("No encontre collision con el mouse");
             return Vector3.zero;
         }
         
