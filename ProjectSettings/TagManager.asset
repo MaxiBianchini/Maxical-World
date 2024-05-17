@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Door
+  - Wall
+  - Nucelo
+  - Tower
+  - Nexo
   layers:
   - Default
   - TransparentFX
@@ -13,8 +18,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
+  - Door
+  - Wall
   - 
   - 
   - 

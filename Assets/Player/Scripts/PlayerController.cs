@@ -9,6 +9,8 @@ namespace Player.Scripts
 
         private CharacterController _controller;
         private Camera _mainCamera;
+        
+        
 
         void Start()
         {
