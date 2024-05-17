@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3148217092885813663}
   - component: {fileID: -8578189971948243946}
+  - component: {fileID: 8625005630787152849}
   m_Layer: 0
   m_Name: pfArrowProjectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +46,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe42116ca54128e47b883937d4cfe793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowMoveSpeed: 20
+  arrowMoveSpeed: 10
+  duration: 1
+  heightY: 3
+  animCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.292545
+      value: 0.7482052
+      inSlope: 2.2387247
+      outSlope: 2.2387247
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.24716009
+    - serializedVersion: 3
+      time: 0.527632
+      value: 1.060981
+      inSlope: 0.08537895
+      outSlope: 0.08537895
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.20268984
+    - serializedVersion: 3
+      time: 1
+      value: -0.0041503906
+      inSlope: -4.419739
+      outSlope: -4.419739
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10296181
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  accuracy: 0.75
+--- !u!135 &8625005630787152849
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5789191515601876406}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.13
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7153996054525939461
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +124,6 @@ GameObject:
   - component: {fileID: 6898100614566203494}
   - component: {fileID: 4015204734054340155}
   - component: {fileID: 3007206892067444621}
-  - component: {fileID: 3925929090751241231}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -130,24 +196,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3925929090751241231
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7153996054525939461}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

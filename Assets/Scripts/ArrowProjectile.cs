@@ -17,33 +17,64 @@ public class ArrowProjectile : MonoBehaviour
     }
     
     [SerializeField] float arrowMoveSpeed = 20f;
+    [SerializeField] float duration = 1f;
+    [SerializeField] private float heightY = 3f; //the height for the projectile
+    [SerializeField] private AnimationCurve animCurve;
+    [SerializeField] private float accuracy = .75f;
     private EnemyTestLeo targetEnemy;
 
+    private Vector3 initialPosition;
     private Vector3 lastMoveDir;
     private float timeToDie = 2f;
 
+    private void Start()
+    {
+        initialPosition = transform.position;
+        StartCoroutine(ProjectilCurveRoutine(initialPosition,targetEnemy.transform.position));
+    }
 
     private void Update()
     {
-        Vector3 moveDir;
-        if(targetEnemy != null)
+        //Vector3 moveDir;
+        //if(targetEnemy != null)
+        //{
+        //    moveDir = (targetEnemy.transform.position - transform.position).normalized;
+        //    lastMoveDir = moveDir;
+        //}
+        //else
+        //{
+        //    moveDir = lastMoveDir;
+        //}
+
+        ////transform.eulerAngles = new Vector3 (0,)
+        //transform.position += moveDir * arrowMoveSpeed * Time.deltaTime;
+
+        //timeToDie -= Time.deltaTime;
+        //if(timeToDie <= 0)
+        //{
+        //    Destroy(gameObject);
+        //}
+    }
+
+    private IEnumerator ProjectilCurveRoutine(Vector3 startPosition, Vector3 endPosition)
+    {
+        float timePassed = 0f;
+
+        while (timePassed < duration)
         {
-            moveDir = (targetEnemy.transform.position - transform.position).normalized;
-            lastMoveDir = moveDir;
-        }
-        else
-        {
-            moveDir = lastMoveDir;
+            endPosition = targetEnemy.transform.position;
+            timePassed += Time.deltaTime;
+            float linearT = timePassed / duration;
+            float heightT = animCurve.Evaluate(linearT); //this evaluates in each linearT moment the curve
+            float height = Mathf.Lerp(0f, heightY, heightT);
+
+            //The last + new Vector adds the curve for the projectile
+            transform.position = Vector3.Lerp(startPosition, endPosition, linearT) + new Vector3(0f, height);
+            
+            yield return null;
         }
 
-        //transform.eulerAngles = new Vector3 (0,)
-        transform.position += moveDir * arrowMoveSpeed * Time.deltaTime;
-
-        timeToDie -= Time.deltaTime;
-        if(timeToDie <= 0)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
     private void SetTarget(EnemyTestLeo enemy)
     {
@@ -55,9 +86,22 @@ public class ArrowProjectile : MonoBehaviour
         EnemyTestLeo enemy = other.GetComponent<EnemyTestLeo>();
         if(enemy != null)
         {
+            
+            float hitChance = UnityEngine.Random.Range(0f, 1f);
+            
+            if(hitChance <= accuracy)
+            {
+                Debug.Log("Hit");
+                int damageAmount = 10;
+                //DAMAGE ENEMY
+                //enemy.GetComponent<TowerHealthSystem>().Damage(damageAmount);
+            }
+            else
+            {
+                //Instanciar particulas de polvo en el piso
+                Debug.Log("Missed");
+            }
             //Hit an enemy
-            int damageAmount = 10;
-            enemy.GetComponent<TowerHealthSystem>().Damage(damageAmount);
             Destroy(gameObject);
         }
     }

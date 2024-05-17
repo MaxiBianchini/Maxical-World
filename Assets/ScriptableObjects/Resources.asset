@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59e348c2099f7cd43949f3517fbc8199, type: 3}
-  m_Name: ArrowTower
+  m_Script: {fileID: 11500000, guid: d63dfafd2b21807458fd4a4707bbfcd1, type: 3}
+  m_Name: Resources
   m_EditorClassIdentifier: 
-  nameString: ArrowTower
-  prefab: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
-  goldAmountCost: 100
-  healthAmountMax: 250
-  constructionTimerMax: 10
+  list:
+  - {fileID: 11400000, guid: 124cc2e0a2e87784385396ea9db2afca, type: 2}
