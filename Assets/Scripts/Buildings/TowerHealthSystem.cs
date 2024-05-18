@@ -10,9 +10,10 @@ public class TowerHealthSystem : MonoBehaviour
     public event EventHandler onTowerHealthAmountMaxChanged;
     public event EventHandler onTowerHealed;
 
-    public delegate void TowerDeathEventHandler(TowerHealthSystem tower);
-    public static event TowerDeathEventHandler OnTowerDeath;
+    // public delegate void TowerDeathEventHandler(TowerHealthSystem tower);
+    // public static event TowerDeathEventHandler OnTowerDeath;
 
+    public event EventHandler onTowerDeath;
     public event EventHandler onTowerDamaged;
 
 
@@ -38,16 +39,13 @@ public class TowerHealthSystem : MonoBehaviour
 
     private void Update()
     {
-        //TO DO HACER CHECK DE SALUD
         CheckHealth();
     }
 
     private void CheckHealth()
     {
-        //TO DO
         if (isDead)
         {
-            // Llama al método para manejar la muerte de la torre
             Die();
         }
     }
@@ -55,9 +53,10 @@ public class TowerHealthSystem : MonoBehaviour
     private void Die()
     {
         // Notify suscriptors tower is dead
-        if (OnTowerDeath != null)
+        if (onTowerDeath != null)
         {
-            OnTowerDeath(this);
+            //OnTowerDeath(this); //Global event (not just for an instance)
+            onTowerDeath?.Invoke(this, EventArgs.Empty);
             Debug.Log("La torre murio");
         }
 
@@ -80,30 +79,6 @@ public class TowerHealthSystem : MonoBehaviour
         }
 
     }
-
-
-
-    //private int healthAmount;
-
-    //[SerializeField] private int healthAmountMax;
-
-    //private void Awake()
-    //{
-    //    healthAmount = healthAmountMax;
-    //}
-
-    //public void Damage(int damageAmount)
-    //{
-    //    healthAmount -= damageAmount;
-    //    healthAmount = Mathf.Clamp(healthAmount, 0, healthAmountMax);
-
-    //    onTowerDamaged?.Invoke(this, EventArgs.Empty);
-
-    //    if (isDead())
-    //    {
-    //        onTowerDied?.Invoke(this,EventArgs.Empty);
-    //    }
-    //}
 
     //private void Heal(int healAmount)
     //{
