@@ -18,6 +18,9 @@ public class Tower : MonoBehaviour
     [SerializeField] private float shootTimerMax;
     [SerializeField] private float targetMaxRadius = 20f;
     [SerializeField] private float towerAccuracy = .75f;
+
+    public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
+    private bool canAttack = false;
     private float shootTimer;
     private EnemyTestLeo targetEnemy;
     private float lookForTargetTimer;
@@ -42,7 +45,7 @@ public class Tower : MonoBehaviour
         if(shootTimer < 0)
         {
             shootTimer += shootTimerMax;
-            if(targetEnemy != null)
+            if(targetEnemy != null && canAttack)
             {
                 ArrowProjectile.Create(projectileSpawnPosition, targetEnemy, towerAccuracy);
             }

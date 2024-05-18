@@ -21,8 +21,8 @@ public class GameAssets : MonoBehaviour
     public Transform pfArrowTower;
     public Transform pfGhostArrowTowerMesh;
     public Transform pfHitGroundVFX;
+    public Transform pfBuildingPlacedParticles;
     //public Transform pfArrowDestroyedParticles;
     //public Transform pfBuildingDestroyedParticles;
-    //public Transform pfBuildingPlacedParticles;
     //public Transform pfBuildingConstruction;
 }

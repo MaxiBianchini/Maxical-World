@@ -48,3 +48,4 @@ MonoBehaviour:
   pfArrowTower: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
   pfGhostArrowTowerMesh: {fileID: 176561352003582481, guid: 53214f7e8df3f464cbec7032059edbbc, type: 3}
   pfHitGroundVFX: {fileID: 4390186289661675091, guid: 6a9041e363a2e7d428c45d1655cb566a, type: 3}
+  pfBuildingPlacedParticles: {fileID: 4390186289661675091, guid: 454404a40e168434c99d4f0a75df494f, type: 3}

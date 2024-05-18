@@ -5,76 +5,149 @@ using UnityEngine;
 
 public class TowerHealthSystem : MonoBehaviour
 {
+    private BuildingTypeHolder buildingTypeHolder;
+
     public event EventHandler onTowerHealthAmountMaxChanged;
-    public event EventHandler onTowerDamaged;
     public event EventHandler onTowerHealed;
-    public event EventHandler onTowerDied;
 
-    private int healthAmount;
+    public delegate void TowerDeathEventHandler(TowerHealthSystem tower);
+    public static event TowerDeathEventHandler OnTowerDeath;
 
-    [SerializeField] private int healthAmountMax;
+    public event EventHandler onTowerDamaged;
+
+
+    private int currentHealth;
+    private int maxHealth;
+
+    //Test Variables
+    public bool isDead;
 
     private void Awake()
     {
-        healthAmount = healthAmountMax;
+        buildingTypeHolder = GetComponent<BuildingTypeHolder>();
     }
 
-    public void Damage(int damageAmount)
+    private void Start()
     {
-        healthAmount -= damageAmount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, healthAmountMax);
-
-        onTowerDamaged?.Invoke(this, EventArgs.Empty);
-
-        if (isDead())
+        if (buildingTypeHolder != null)
         {
-            onTowerDied?.Invoke(this,EventArgs.Empty);
+            maxHealth = buildingTypeHolder.buildingType.healthAmountMax;
+            currentHealth = maxHealth;
         }
     }
 
-    private void Heal(int healAmount)
+    private void Update()
     {
-        healthAmount += healAmount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, healthAmountMax);
-        onTowerHealed?.Invoke(this, EventArgs.Empty);
+        //TO DO HACER CHECK DE SALUD
+        CheckHealth();
     }
 
-    public bool isDead()
+    private void CheckHealth()
     {
-        return healthAmount <= 0;
-    }
-
-    public bool isFullHealth()
-    {
-        return healthAmount == healthAmountMax;
-    }
-
-    public int GetHealthAmount()
-    {
-        return healthAmount;
-    }
-
-    public int GetHealthAmountMax()
-    {
-        return healthAmountMax;
-    }
-
-    public float GetHealthAmountNormalized()
-    {
-        return (float) healthAmount / healthAmountMax;
-    }
-
-    public void SetHealthAmountMax(int healthAmountMax, bool updateHealthAmount)
-    {
-        this.healthAmountMax = healthAmountMax;
-
-        if (updateHealthAmount)
+        //TO DO
+        if (isDead)
         {
-            healthAmount = healthAmountMax;
+            // Llama al método para manejar la muerte de la torre
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        // Notify suscriptors tower is dead
+        if (OnTowerDeath != null)
+        {
+            OnTowerDeath(this);
+            Debug.Log("La torre murio");
         }
 
-        onTowerHealthAmountMaxChanged?.Invoke(this, EventArgs.Empty);
+        Destroy(gameObject);
     }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if(onTowerDamaged != null)
+        {
+            //Notify suscriptors tower has been damaged
+            onTowerDamaged?.Invoke(this, EventArgs.Empty);
+            Debug.Log("La torre recibio "+ damage + " de daño");
+        }
+        if(currentHealth <= 0)
+        {
+            currentHealth = 0;
+            isDead = true;
+        }
+
+    }
+
+
+
+    //private int healthAmount;
+
+    //[SerializeField] private int healthAmountMax;
+
+    //private void Awake()
+    //{
+    //    healthAmount = healthAmountMax;
+    //}
+
+    //public void Damage(int damageAmount)
+    //{
+    //    healthAmount -= damageAmount;
+    //    healthAmount = Mathf.Clamp(healthAmount, 0, healthAmountMax);
+
+    //    onTowerDamaged?.Invoke(this, EventArgs.Empty);
+
+    //    if (isDead())
+    //    {
+    //        onTowerDied?.Invoke(this,EventArgs.Empty);
+    //    }
+    //}
+
+    //private void Heal(int healAmount)
+    //{
+    //    healthAmount += healAmount;
+    //    healthAmount = Mathf.Clamp(healthAmount, 0, healthAmountMax);
+    //    onTowerHealed?.Invoke(this, EventArgs.Empty);
+    //}
+
+    //public bool isDead()
+    //{
+    //    return healthAmount <= 0;
+    //}
+
+    //public bool isFullHealth()
+    //{
+    //    return healthAmount == healthAmountMax;
+    //}
+
+    //public int GetHealthAmount()
+    //{
+    //    return healthAmount;
+    //}
+
+    //public int GetHealthAmountMax()
+    //{
+    //    return healthAmountMax;
+    //}
+
+    //public float GetHealthAmountNormalized()
+    //{
+    //    return (float) healthAmount / healthAmountMax;
+    //}
+
+    //public void SetHealthAmountMax(int healthAmountMax, bool updateHealthAmount)
+    //{
+    //    this.healthAmountMax = healthAmountMax;
+
+    //    if (updateHealthAmount)
+    //    {
+    //        healthAmount = healthAmountMax;
+    //    }
+
+    //    onTowerHealthAmountMaxChanged?.Invoke(this, EventArgs.Empty);
+    //}
     
 
 }

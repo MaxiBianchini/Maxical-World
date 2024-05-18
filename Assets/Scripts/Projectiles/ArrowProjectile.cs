@@ -105,7 +105,7 @@ public class ArrowProjectile : MonoBehaviour
             {
                 //Damage the enemy
                 int damage = UnityEngine.Random.Range(arrowMinDamage, arrowMaxDamage);
-                Debug.Log("Enemy get " + damage + " of damage");
+                //Debug.Log("Enemy get " + damage + " of damage");
                 enemy.GetDamage(damage);
                 
                 Transform hitVFX = Instantiate(enemyHitVFX, this.transform.position, Quaternion.identity);

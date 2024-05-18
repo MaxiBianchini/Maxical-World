@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 656870100949903683}
   - component: {fileID: 3354530412586308382}
   - component: {fileID: 8851114349591604275}
+  - component: {fileID: 8760565410157347960}
   m_Layer: 7
   m_Name: Tower
   m_TagString: Untagged
@@ -96,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb989b645bfd42040b853cbe115e4920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthAmountMax: 250
+  isDead: 0
 --- !u!114 &8851114349591604275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +113,27 @@ MonoBehaviour:
   shootTimerMax: 0.5
   targetMaxRadius: 20
   towerAccuracy: 0.7
+--- !u!95 &8760565410157347960
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642386142145943725}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cca73da4fc2eb3f41a3ffb7f7243ae00, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4086384306097316429
 GameObject:
   m_ObjectHideFlags: 0
