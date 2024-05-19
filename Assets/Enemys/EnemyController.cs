@@ -43,7 +43,7 @@ namespace Enemys
             FindAndAddNexo();
            
             
-            DebugLists(); //borrar cuando chequee que funciona
+           // DebugLists(); //borrar cuando chequee que funciona
         }
         
         private void FindAndAddAllTowers()

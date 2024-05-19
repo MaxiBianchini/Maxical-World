@@ -23,7 +23,7 @@ namespace Enemys.Destroyer
 
         private GameObject _target;
         
-        private void Start()
+        private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
         }
@@ -67,8 +67,6 @@ namespace Enemys.Destroyer
         public void SetDestination(GameObject newDestination)
         {
             _target = newDestination;
-            Debug.Log("Target: " + _target.tag);
-            
             _destination = newDestination.transform.position;
             _agent.SetDestination(_destination);
         }

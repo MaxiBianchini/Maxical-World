@@ -1940,7 +1940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerPrefab: {fileID: 6656528533039227221, guid: c76ba74851dbef6419bd19c6a2b1f8d5, type: 3}
-  destroyerAmount: 0
+  destroyerAmount: 1
   destroyerHealth: 0
   destroyerDamage: 0
   destroyerSpeed: 0
@@ -1957,7 +1957,7 @@ MonoBehaviour:
   spawnPointList:
   - {fileID: 7111871926226381016}
   - {fileID: 1526747688}
-  destroyerTargets: {fileID: 0}
+  destroyerTargets: {fileID: 11400000, guid: c64b397a2320baf46a7c8804f07b4a98, type: 2}
   rangerTargets: {fileID: 0}
   chaserTargets: {fileID: 0}
 --- !u!4 &1755258590

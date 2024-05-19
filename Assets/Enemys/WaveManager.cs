@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Enemys.Data;
 using UnityEngine;
@@ -44,7 +45,12 @@ namespace Enemys
             Ranger,
             Chaser
         }
-        
+
+        private void Start()
+        {
+            SpawnEnemy(EnemyType.Destroyer);
+        }
+
         //metodos
         private void SpawnEnemy(EnemyType type)
         {
@@ -79,8 +85,8 @@ namespace Enemys
                     speed = chaserSpeed;
                     break;
                 default:
-                    Debug.LogError("SpawnEnenmy - Error tipo de enemigo");
-                    prefab = destroyerPrefab;
+                    Debug.LogError("SpawnEnemy - Error tipo de enemigo");
+                    prefab = null;
                     target = null;
                     amount = 0;
                     health = 0;
@@ -92,9 +98,9 @@ namespace Enemys
             for (int i = 0; i < spawnPointList.Count; i++) {
                 for (int j = 0; j < amount; j++)
                 {
-                    GameObject newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity); //todo ver newENemy que hace xd
+                    GameObject newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
                     spawn = spawnPointList[i].position;
-                    prefab.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
+                    newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
                 }
             }
         }
@@ -109,7 +115,7 @@ namespace Enemys
             GameObject closestGameObject = null;
             float closestDistance = Mathf.Infinity;
             float currentDistance;
-
+            
             switch (target.tag)
             {
                 case "Door":
@@ -118,8 +124,13 @@ namespace Enemys
                         currentDistance = Vector3.Distance(spawnPoint, door.transform.position);
                         if (currentDistance < closestDistance)
                         {
+                            
                             closestDistance = currentDistance;
                             closestGameObject = door;
+                            Debug.Log(" currentDistance:" + currentDistance +
+                                      " closestDistance: " + closestDistance +
+                                      " closestGameObject " + closestGameObject
+                            );
                         }
                     }
                     break;
@@ -136,7 +147,8 @@ namespace Enemys
                     }
                     break;
             }
-
+            Debug.Log(closestGameObject);
+            
             return closestGameObject;
         }
         
