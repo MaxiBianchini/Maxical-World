@@ -7,7 +7,7 @@ namespace Doors
 {
     public class Door : MonoBehaviour, IDamageable
     {
-        public float health;
+        [SerializeField] private float health;
         private NavMeshObstacle _navMesh;
         
         void Start()
@@ -32,7 +32,8 @@ namespace Doors
         private void Death()
         {
             _navMesh.carving = false;
-            Destroy(gameObject);
+            EnemyController.Instance.RemoveDoor(gameObject);
+            Destroy(gameObject); // si la puerta se puediera resconstruir este se cambia a un SetActive(false)
         }
     }
 }

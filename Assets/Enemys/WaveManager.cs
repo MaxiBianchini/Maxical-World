@@ -35,10 +35,17 @@ namespace Enemys
         [SerializeField] private EnemyTarget destroyerTargets;
         [SerializeField] private EnemyTarget rangerTargets;
         [SerializeField] private EnemyTarget chaserTargets;
+
+        [Header("Break between spawns")] 
+        [SerializeField] private float breakBetweenSpawns;
+        
         
         
         private float _spawnTime;
-        
+        private GameObject _player;
+        private Coroutine _breakCoroutine;
+        private IEnemy _enemy;
+        private GameObject _newEnemy;
 
         private enum EnemyType {
             Destroyer,
@@ -98,9 +105,12 @@ namespace Enemys
             for (int i = 0; i < spawnPointList.Count; i++) {
                 for (int j = 0; j < amount; j++)
                 {
-                    GameObject newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
+                    //tiempo para que spawnee el siguiente?
+                    _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
                     spawn = spawnPointList[i].position;
-                    newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
+                    _enemy = _newEnemy.GetComponent<IEnemy>();
+                    _enemy.Initialize(health, damage, speed);
+                    _newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
                 }
             }
         }
@@ -124,13 +134,8 @@ namespace Enemys
                         currentDistance = Vector3.Distance(spawnPoint, door.transform.position);
                         if (currentDistance < closestDistance)
                         {
-                            
                             closestDistance = currentDistance;
                             closestGameObject = door;
-                            Debug.Log(" currentDistance:" + currentDistance +
-                                      " closestDistance: " + closestDistance +
-                                      " closestGameObject " + closestGameObject
-                            );
                         }
                     }
                     break;
@@ -146,8 +151,12 @@ namespace Enemys
                         }
                     }
                     break;
+                
+                case "Player":
+                    _player = EnemyController.Instance.Player;
+                    closestGameObject = _player;
+                    break;
             }
-            Debug.Log(closestGameObject);
             
             return closestGameObject;
         }

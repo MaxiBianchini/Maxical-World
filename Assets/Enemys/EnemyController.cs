@@ -10,6 +10,8 @@ namespace Enemys
     {
         public static EnemyController Instance { get; private set; }
         public static event Action DoorDestroyedEvent;
+      //  public static event Action DoorDestroyedEvent;
+       // public static event Action DoorDestroyedEvent;
         
         public GameObject Player => _player; 
         public GameObject Nexo => _nexo; 
@@ -18,6 +20,9 @@ namespace Enemys
         
         private readonly List<GameObject> _towerList = new List<GameObject>();
         private readonly List<GameObject> _doorList = new List<GameObject>();
+
+        private List<DestroyerMovement> _destroyerList = new List<DestroyerMovement>();
+        
         private GameObject _player; //si fuera multijugador esto seria una lista?
         private GameObject _nexo; // si hubiera mas de uno cambiarlo a lista
 
@@ -33,10 +38,15 @@ namespace Enemys
                 Destroy(gameObject);
             }
             DoorDestroyedEvent = null;
+           // DoorDestroyedEvent = null;
+            //DoorDestroyedEvent = null;
         }
 
         private void Start()
         {
+            DoorDestroyedEvent += HandleDoorDestroyed;
+          //  DoorDestroyedEvent += HandleDoorDestroyed;
+          //  DoorDestroyedEvent += HandleDoorDestroyed;
             FindAndAddAllTowers();
             FindAndAddAllDoors();
             FindAndAddPlayer();
@@ -97,7 +107,42 @@ namespace Enemys
         {
             DoorDestroyedEvent?.Invoke();
         }
+    /*    public static void OnDoorDestroyed()
+        {
+            DoorDestroyedEvent?.Invoke();
+        }
+        public static void OnDoorDestroyed()
+        {
+            DoorDestroyedEvent?.Invoke();
+        } */
+        private void OnDestroy()
+        {
+            DoorDestroyedEvent -= HandleDoorDestroyed;
+           // TowerDestroyedEvent -= HandleTowerDestroyed;
+           // PlayerDestroyedEvent -= HandlePlayerDestroyed;
+        }
         
+        private void HandleDoorDestroyed()
+        {
+            foreach (DestroyerMovement destroyer in FindObjectsOfType<DestroyerMovement>())
+            {
+                destroyer.SetDestination(Nexo); // Cambiar el objetivo al jugador (Player)
+            }
+        }
+      /*  private void HandleDoorDestroyed()
+        {
+            foreach (DestroyerMovement destroyer in FindObjectsOfType<DestroyerMovement>())
+            {
+                destroyer.SetDestination(Nexo); // Cambiar el objetivo al jugador (Player)
+            }
+        }
+        private void HandleDoorDestroyed()
+        {
+            foreach (DestroyerMovement destroyer in FindObjectsOfType<DestroyerMovement>())
+            {
+                destroyer.SetDestination(Nexo); // Cambiar el objetivo al jugador (Player)
+            }
+        } */
         
         
         private void DebugLists() //borrar

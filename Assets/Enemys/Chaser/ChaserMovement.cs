@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Common;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +16,8 @@ namespace Enemys.Chaser
         public float AttackSpeed { get; }
 
         private NavMeshAgent _agent;
+        
+        
 
         private void Start()
         {
