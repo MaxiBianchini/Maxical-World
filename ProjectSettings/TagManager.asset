@@ -3,18 +3,26 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Wall
+  - Ground
+  - Nucelo
+  - Door
+  - Tower
+  - Nexo
+  - Projectile
+  - InstancesGroupingObje
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Enemies
+  - Buildings
+  - Enviroment
+  - FriendlyProjectiles
   - 
   - 
   - 
