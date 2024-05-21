@@ -37,7 +37,14 @@ namespace Enemys.Destroyer
         {
             CheckRange();
         }
-        
+
+        public void Initialize(float health, float damage, float speed)
+        {
+            _health = health;
+            _damage = damage;
+            _agent.speed = speed;
+        }
+
         public void TakeDamage(float amount)
         {
             _health -= amount;
@@ -46,6 +53,7 @@ namespace Enemys.Destroyer
                 Death();
             }
         }
+
         public void Attack(GameObject currentTarget)
         {
             if (_damageable != null)
@@ -76,13 +84,6 @@ namespace Enemys.Destroyer
             }
         }
 
-        public void Initialize(float health, float damage, float speed)
-        {
-            _health = health;
-            _damage = damage;
-            _agent.speed = speed;
-        }
-        
         private void StartAttacking()
         {
             if (_attackCoroutine == null)
@@ -125,7 +126,7 @@ namespace Enemys.Destroyer
             {
                 yield return new WaitForSeconds(10/attackSpeed);
                 Attack(_target);
-                Debug.Log($"Attack {_target}");
+              //  Debug.Log($"Attack {_target}");
             }
         }
     }

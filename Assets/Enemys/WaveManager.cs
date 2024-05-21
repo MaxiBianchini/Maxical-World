@@ -35,10 +35,6 @@ namespace Enemys
         [SerializeField] private EnemyTarget destroyerTargets;
         [SerializeField] private EnemyTarget rangerTargets;
         [SerializeField] private EnemyTarget chaserTargets;
-
-        [Header("Break between spawns")] 
-        [SerializeField] private float breakBetweenSpawns;
-        
         
         
         private float _spawnTime;
@@ -56,6 +52,8 @@ namespace Enemys
         private void Start()
         {
             SpawnEnemy(EnemyType.Destroyer);
+            SpawnEnemy(EnemyType.Chaser);
+           // SpawnEnemy(EnemyType.Ranger);
         }
 
         //metodos
