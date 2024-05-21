@@ -4,8 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Wall
+  - Ground
+  - Nucelo
+  - Door
+  - Tower
+  - Nexo
   - Projectile
-  - InstancesGroupingObject
+  - InstancesGroupingObje
   layers:
   - Default
   - TransparentFX
@@ -15,7 +21,7 @@ TagManager:
   - UI
   - Enemies
   - Buildings
-  - Environment
+  - Enviroment
   - FriendlyProjectiles
   - 
   - 
