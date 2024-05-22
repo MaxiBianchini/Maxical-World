@@ -7,8 +7,8 @@ public class TowerHealthSystem : MonoBehaviour
 {
     private BuildingTypeHolder buildingTypeHolder;
 
-    public event EventHandler onTowerHealthAmountMaxChanged;
-    public event EventHandler onTowerHealed;
+    //public event EventHandler onTowerHealthAmountMaxChanged;
+   // public event EventHandler onTowerHealed;
 
     // public delegate void TowerDeathEventHandler(TowerHealthSystem tower);
     // public static event TowerDeathEventHandler OnTowerDeath;
@@ -70,7 +70,7 @@ public class TowerHealthSystem : MonoBehaviour
         {
             //Notify suscriptors tower has been damaged
             onTowerDamaged?.Invoke(this, EventArgs.Empty);
-            Debug.Log("La torre recibio "+ damage + " de daño");
+            Debug.Log("La torre recibio "+ damage + " de daï¿½o");
         }
         if(currentHealth <= 0)
         {

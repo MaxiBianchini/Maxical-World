@@ -11,7 +11,7 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Material redMaterial;
     [SerializeField] private LayerMask layerMask;
 
-    private bool readyToBuild = false;
+   // private bool readyToBuild;
     private bool isBuilding = false;
     private bool isOverTowerSpawnPoint;
     private Transform pfGhostTower;
@@ -41,7 +41,7 @@ public class BuildManager : MonoBehaviour
 
     private void StartBuildingProcess()
     {
-        readyToBuild = true;
+      //  readyToBuild = true;
         isBuilding = true;
 
         if (pfGhostTower == null)
@@ -76,7 +76,7 @@ public class BuildManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            readyToBuild = false;
+          //  readyToBuild = false;
             isBuilding = false;
 
             Destroy(ghostTowerInstance.gameObject);

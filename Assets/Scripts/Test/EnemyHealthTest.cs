@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyHealthTest : MonoBehaviour
 {
-    [SerializeField] int currentHealth = 100;
+    //[SerializeField] int currentHealth = 100;
     [SerializeField] private GameObject pfFloatingText;
     public void GetDamage(int value)
     {

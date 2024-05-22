@@ -23,6 +23,7 @@ namespace Doors
             {
                 Death();
             }
+            Debug.Log($"DOOR {gameObject.name} recibio  {amount} damage");
         }
         private void OnDestroy()
         {

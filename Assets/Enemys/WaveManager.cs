@@ -53,7 +53,7 @@ namespace Enemys
         {
             SpawnEnemy(EnemyType.Destroyer);
             SpawnEnemy(EnemyType.Chaser);
-           // SpawnEnemy(EnemyType.Ranger);
+            SpawnEnemy(EnemyType.Ranger);
         }
 
         //metodos
@@ -103,7 +103,7 @@ namespace Enemys
             for (int i = 0; i < spawnPointList.Count; i++) {
                 for (int j = 0; j < amount; j++)
                 {
-                    //tiempo para que spawnee el siguiente?
+                    //tiempo para que spawnee el siguiente? ver milanote
                     _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
                     spawn = spawnPointList[i].position;
                     _enemy = _newEnemy.GetComponent<IEnemy>();

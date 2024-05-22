@@ -68,7 +68,7 @@ namespace Enemys.Destroyer
 
         public void Death()
         {
-            //EnemyController.Instance.RemoveChaserFromList(gameObject);
+            //EnemyController.Instance.RemoveDestroyerFromList(gameObject);
             StopAttacking();
             Destroy(gameObject);
         }
