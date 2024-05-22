@@ -13,9 +13,7 @@ namespace Enemys.Ranger
         private float _speed;
         private Vector3 _targetPosition;
         private IDamageable _target;
-
-        private Coroutine _destroyCoroutine;
-
+        
         public void Initialize(float damage, float speed, IDamageable target, Vector3 targetPosition)
         {
             _damage = damage;
@@ -36,12 +34,7 @@ namespace Enemys.Ranger
         {
             if ((damageables.value & (1 << other.gameObject.layer)) != 0)
             {
-                IDamageable damageable = other.GetComponent<IDamageable>();
-                
-                if (damageable != null)
-                {
-                    Impact();
-                }
+                Impact();
             }
         }
 

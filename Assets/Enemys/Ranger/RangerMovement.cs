@@ -26,6 +26,7 @@ namespace Enemys.Ranger
         private Coroutine _attackCoroutine;
         private Vector3 _destination;
         private GameObject _target;
+        private Bullet _shootBullet;
         private IDamageable _damageable;
 
 
@@ -65,8 +66,8 @@ namespace Enemys.Ranger
             {
                 //_damageable.TakeDamage(_damage);
                 GameObject projectile = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-                Bullet shootBullet = projectile.GetComponent<Bullet>();
-                shootBullet.Initialize(_damage, bulletSpeed, _damageable, currentTarget.transform.position);
+                _shootBullet = projectile.GetComponent<Bullet>();
+                _shootBullet.Initialize(_damage, bulletSpeed, _damageable, currentTarget.transform.position);
             }
             else
             {
