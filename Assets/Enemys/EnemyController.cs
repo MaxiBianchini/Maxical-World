@@ -11,12 +11,10 @@ namespace Enemys
         [SerializeField] private GameObject coinPrefab;
         public static EnemyController Instance { get; private set; }
         public static event Action DoorDestroyedEvent;
-      //  public static event Action DoorDestroyedEvent;
-       // public static event Action DoorDestroyedEvent;
         
         public GameObject Player => _player;
         public GameObject Nexo => _nexo;
-        public List<GameObject> enemiesList = new List<GameObject>();
+        public List<GameObject> enemiesList = new List<GameObject>(); //todo cambiar la estructura para que solo se modifique por metodos
         public IReadOnlyList<GameObject> Towers => _towerList.AsReadOnly();
         public IReadOnlyList<GameObject> Doors => _doorList.AsReadOnly();
 
@@ -39,22 +37,19 @@ namespace Enemys
                 Destroy(gameObject);
             }
             DoorDestroyedEvent = null;
-           // DoorDestroyedEvent = null;
-            //DoorDestroyedEvent = null;
+   
         }
 
         private void Start()
         {
             DoorDestroyedEvent += HandleDoorDestroyed;
-          //  DoorDestroyedEvent += HandleDoorDestroyed;
-          //  DoorDestroyedEvent += HandleDoorDestroyed;
+
             FindAndAddAllTowers();
             FindAndAddAllDoors();
             FindAndAddPlayer();
             FindAndAddNexo();
            
             
-           // DebugLists(); //borrar cuando chequee que funciona
         }
         
         private void FindAndAddAllTowers()
@@ -108,61 +103,26 @@ namespace Enemys
         {
             DoorDestroyedEvent?.Invoke();
         }
-    /*    public static void OnDoorDestroyed()
-        {
-            DoorDestroyedEvent?.Invoke();
-        }
-        public static void OnDoorDestroyed()
-        {
-            DoorDestroyedEvent?.Invoke();
-        } */
+  
         private void OnDestroy()
         {
             DoorDestroyedEvent -= HandleDoorDestroyed;
-           // TowerDestroyedEvent -= HandleTowerDestroyed;
-           // PlayerDestroyedEvent -= HandlePlayerDestroyed;
+
         }
         
         private void HandleDoorDestroyed()
         {
             foreach (DestroyerMovement destroyer in FindObjectsOfType<DestroyerMovement>())
             {
-                destroyer.SetDestination(Nexo); // Cambiar el objetivo al jugador (Player)
+                destroyer.SetDestination(Nexo);
             }
         }
-      /*  private void HandleDoorDestroyed()
-        {
-            foreach (DestroyerMovement destroyer in FindObjectsOfType<DestroyerMovement>())
-            {
-                destroyer.SetDestination(Nexo); // Cambiar el objetivo al jugador (Player)
-            }
-        }
-        private void HandleDoorDestroyed()
-        {
-            foreach (DestroyerMovement destroyer in FindObjectsOfType<DestroyerMovement>())
-            {
-                destroyer.SetDestination(Nexo); // Cambiar el objetivo al jugador (Player)
-            }
-        } */
 
       public void DropCoin(Transform position, int value)
-      {
-          GameObject newCoin = Instantiate(coinPrefab, position.position, Quaternion.identity);
-      }
-        private void DebugLists() //borrar
-        {
-            Debug.Log("Torres: ");
-            foreach (GameObject tower in _towerList)
-            {
-                Debug.Log(tower.name);
-            }
-
-            Debug.Log("Puertas: ");
-            foreach (GameObject door in _doorList)
-            {
-                Debug.Log(door.name);
-            }
-        }
+         {
+             GameObject newCoin = Instantiate(coinPrefab, position.position, Quaternion.identity);
+             //todo newCoin.Initialize(value) con esto llamo a ese metodo de la coin para cuando el player pase por encima reciba value monedas
+         }
 
     }
 }

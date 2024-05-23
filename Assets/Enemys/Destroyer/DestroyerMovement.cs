@@ -70,8 +70,9 @@ namespace Enemys.Destroyer
 
         public void Death()
         {
-            //EnemyController.Instance.RemoveDestroyerFromList(gameObject);
             StopAttacking();
+            EnemyController.Instance.DropCoin(gameObject.transform, _value);
+            EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
         }
 

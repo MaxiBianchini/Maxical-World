@@ -31,13 +31,9 @@ namespace Enemys
         [SerializeField] private float chaserDamage;
         [SerializeField] private float chaserSpeed;
         [SerializeField] private int chaserValue;
-
         
         [Header("Spawns Points")]
         [SerializeField] private List<Transform> spawnPointList = new List<Transform>();
-
-        [Header("Time Until Next Wave")] 
-        [SerializeField] private float nextWaveTime;
         
         [Header("Targets Data")] 
         [SerializeField] private EnemyTarget destroyerTargets;
@@ -49,6 +45,7 @@ namespace Enemys
         private Coroutine _waveTimerCoroutine;
         private IEnemy _enemy;
         private GameObject _newEnemy;
+        private bool _isEnemiesAlive;
         
 
         private enum EnemyType {
@@ -64,25 +61,21 @@ namespace Enemys
 
         private void Update()
         {
-            Debug.Log(EnemyController.Instance.enemiesList.Count);
-
-            if (EnemyController.Instance.enemiesList.Count == 0)
+            if (Input.GetKeyDown(KeyCode.X)) //todo borrar cuando se haga lo de spawn de enemigos cada N tiempo
             {
-                Debug.Log("NO HAY ENEMIGOS");
-                StartTimeToSpawn();
-            }
-            else
-            {
-                StopWaveTimer();
+                if (EnemyController.Instance.enemiesList.Count == 0)
+                {
+                    SpawnAllEnemies();
+                }
+                else
+                {
+                    Debug.Log("Quedan enemigos!");
+                }
             }
             
         }
 
         //metodos
-        private void StartTimeToSpawn()
-        {
-            StartWaveTimer();
-        }
         
         private void SpawnEnemy(EnemyType type)
         {
@@ -146,6 +139,7 @@ namespace Enemys
                 }
             }
         }
+        
         private Vector3 SpawnsPoints(int index)
         {
             Vector3 spawn = spawnPointList[index].position;
@@ -199,30 +193,5 @@ namespace Enemys
             SpawnEnemy(EnemyType.Chaser);
             SpawnEnemy(EnemyType.Ranger);
         }
-        private void StartWaveTimer()
-        {
-            if (_waveTimerCoroutine != null)
-            {
-                StopCoroutine(_waveTimerCoroutine);
-            }
-            _waveTimerCoroutine = StartCoroutine(WaveTimerCoroutine());
-        }
-
-        private void StopWaveTimer()
-        {
-            if (_waveTimerCoroutine != null)
-            {
-                StopCoroutine(_waveTimerCoroutine);
-                _waveTimerCoroutine = null;
-            }
-        }
-        private IEnumerator WaveTimerCoroutine()
-        {
-            Debug.Log("CORUNTINA");
-            yield return new WaitForSeconds(nextWaveTime);
-            Debug.Log("TIEMPO TERMINADO");
-            SpawnAllEnemies();
-        }
-        
     }
 }

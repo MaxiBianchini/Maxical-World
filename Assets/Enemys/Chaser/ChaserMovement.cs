@@ -116,8 +116,9 @@ namespace Enemys.Chaser
 
         public void Death()
         {
-            //EnemyController.Instance.RemoveChaserFromList(gameObject);
             StopAttacking();
+            EnemyController.Instance.DropCoin(gameObject.transform, _value);
+            EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
         }
 
