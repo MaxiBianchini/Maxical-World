@@ -91,8 +91,6 @@ namespace Enemys.Ranger
             {
                 Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
             }
-
-            
         }
 
         public void Death()
@@ -152,8 +150,6 @@ namespace Enemys.Ranger
                 closestGameObject = EnemyController.Instance.Nexo;
                 SetDestination(closestGameObject);
             }
-
-            
         }
         
         private void StartAttacking()
@@ -190,7 +186,6 @@ namespace Enemys.Ranger
                 _agent.isStopped = false;
                 StopAttacking();
             }
-
             LookTarget();
         }
         private void LookTarget()
@@ -207,12 +202,10 @@ namespace Enemys.Ranger
         {
             while (_isAttacking)
             {
-
                 yield return new WaitForSeconds(10/attackSpeed);
                 Attack(_target);
                 Debug.Log($"Attack {_target}");
             }
         }
-        
     }
 }
