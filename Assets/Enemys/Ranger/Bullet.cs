@@ -9,17 +9,20 @@ namespace Enemys.Ranger
     public class Bullet : MonoBehaviour
     {
         [SerializeField] private LayerMask damageables;
+        [SerializeField] private float destroyTime;
+        
         private float _damage;
         private float _speed;
         private Vector3 _targetPosition;
         private IDamageable _target;
-        
+         
         public void Initialize(float damage, float speed, IDamageable target, Vector3 targetPosition)
         {
             _damage = damage;
             _speed = speed;
             _target = target;
             _targetPosition = targetPosition;
+            StartCoroutine(DestroyAfterTime(destroyTime));
         }
 
         private void Update()
@@ -46,6 +49,11 @@ namespace Enemys.Ranger
         private void DestroyBullet()
         {
             Destroy(gameObject);
+        }
+        private IEnumerator DestroyAfterTime(float time)
+        {
+            yield return new WaitForSeconds(time);
+            DestroyBullet();
         }
         
     }

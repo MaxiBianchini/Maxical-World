@@ -16,6 +16,7 @@ namespace Enemys.Destroyer
 
         private float _damage;
         private float _health;
+        private int _value;
         private NavMeshAgent _agent;
         private Coroutine _attackCoroutine;
         private bool _isAttacking = false;
@@ -38,11 +39,12 @@ namespace Enemys.Destroyer
             CheckRange();
         }
 
-        public void Initialize(float health, float damage, float speed)
+        public void Initialize(float health, float damage, float speed, int value)
         {
             _health = health;
             _damage = damage;
             _agent.speed = speed;
+            _value = value;
         }
 
         public void TakeDamage(float amount)

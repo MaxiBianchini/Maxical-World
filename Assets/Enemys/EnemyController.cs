@@ -8,21 +8,22 @@ namespace Enemys
 {
     public class EnemyController : MonoBehaviour
     {
+        [SerializeField] private GameObject coinPrefab;
         public static EnemyController Instance { get; private set; }
         public static event Action DoorDestroyedEvent;
       //  public static event Action DoorDestroyedEvent;
        // public static event Action DoorDestroyedEvent;
         
-        public GameObject Player => _player; 
-        public GameObject Nexo => _nexo; 
+        public GameObject Player => _player;
+        public GameObject Nexo => _nexo;
+        public List<GameObject> enemiesList = new List<GameObject>();
         public IReadOnlyList<GameObject> Towers => _towerList.AsReadOnly();
         public IReadOnlyList<GameObject> Doors => _doorList.AsReadOnly();
-        
+
         private readonly List<GameObject> _towerList = new List<GameObject>();
         private readonly List<GameObject> _doorList = new List<GameObject>();
 
-        private List<DestroyerMovement> _destroyerList = new List<DestroyerMovement>();
-        
+
         private GameObject _player; //si fuera multijugador esto seria una lista?
         private GameObject _nexo; // si hubiera mas de uno cambiarlo a lista
 
@@ -143,8 +144,11 @@ namespace Enemys
                 destroyer.SetDestination(Nexo); // Cambiar el objetivo al jugador (Player)
             }
         } */
-        
-        
+
+      public void DropCoin(Transform position, int value)
+      {
+          GameObject newCoin = Instantiate(coinPrefab, position.position, Quaternion.identity);
+      }
         private void DebugLists() //borrar
         {
             Debug.Log("Torres: ");

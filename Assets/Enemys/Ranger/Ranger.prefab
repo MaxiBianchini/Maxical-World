@@ -147,9 +147,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 24
   attackSpeed: 8
+  rotationSpeed: 10
   bulletPrefab: {fileID: 6605577101491823418, guid: b9e16523ee41c2044bde7ad008592790, type: 3}
   firePoint: {fileID: 2397869588255491975}
-  bulletSpeed: 15
+  bulletSpeed: 25
 --- !u!1 &5764945686056615535
 GameObject:
   m_ObjectHideFlags: 0
