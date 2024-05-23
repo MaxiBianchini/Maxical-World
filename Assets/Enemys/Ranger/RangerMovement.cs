@@ -172,7 +172,8 @@ namespace Enemys.Ranger
         private void CheckRangeAndAttack()
         {
             float distanceToDestination = Vector3.Distance(transform.position, _destination);
-            
+
+          //  LookTarget();
             if (distanceToDestination <= attackRange && !_isAttacking)
             {
                 _isAttacking = true;
@@ -186,9 +187,8 @@ namespace Enemys.Ranger
                 _agent.isStopped = false;
                 StopAttacking();
             }
-            LookTarget();
         }
-        private void LookTarget()
+     /*   private void LookTarget()
         {
             if (_isAttacking) //mira al obeetivo
             {
@@ -197,6 +197,7 @@ namespace Enemys.Ranger
                 transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
             }
         }
+        */
         
         private IEnumerator AttackPerform()
         {

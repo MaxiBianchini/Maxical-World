@@ -526,6 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 3598773729849541221, guid: 3fb36fc0ece3e65449d526bc2daef401, type: 3}
+  enemiesList: []
 --- !u!1001 &389443475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2096,7 +2097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerPrefab: {fileID: 6656528533039227221, guid: c76ba74851dbef6419bd19c6a2b1f8d5, type: 3}
-  destroyerAmount: 0
+  destroyerAmount: 3
   destroyerHealth: 100
   destroyerDamage: 10
   destroyerSpeed: 8
@@ -2108,7 +2109,7 @@ MonoBehaviour:
   rangerSpeed: 6
   rangerValue: 0
   chaserPrefab: {fileID: 804486940702456321, guid: f72aa015ccec371439757ec314b44e05, type: 3}
-  chaserAmount: 0
+  chaserAmount: 1
   chaserHealth: 100
   chaserDamage: 20
   chaserSpeed: 9
@@ -2116,7 +2117,6 @@ MonoBehaviour:
   spawnPointList:
   - {fileID: 7111871926226381016}
   - {fileID: 1526747688}
-  nextWaveTime: 3
   destroyerTargets: {fileID: 11400000, guid: c64b397a2320baf46a7c8804f07b4a98, type: 2}
   rangerTargets: {fileID: 11400000, guid: 9737a8b8d8791d04e8e1f04681de7067, type: 2}
   chaserTargets: {fileID: 11400000, guid: fc4056a2aab487e4b9e49bbc4808d192, type: 2}
