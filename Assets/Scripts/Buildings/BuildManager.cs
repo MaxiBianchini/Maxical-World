@@ -11,9 +11,9 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Material redMaterial;
     [SerializeField] private LayerMask layerMask;
 
-   // private bool readyToBuild;
-    private bool isBuilding = false;
-    private bool isOverTowerSpawnPoint;
+    [SerializeField] private bool readyToBuild = false;
+    [SerializeField] private bool isBuilding = false;
+    [SerializeField] private bool isOverTowerSpawnPoint;
     private Transform pfGhostTower;
     private Transform ghostTowerInstance;
 
@@ -41,7 +41,7 @@ public class BuildManager : MonoBehaviour
 
     private void StartBuildingProcess()
     {
-      //  readyToBuild = true;
+        readyToBuild = true;
         isBuilding = true;
 
         if (pfGhostTower == null)
@@ -58,6 +58,7 @@ public class BuildManager : MonoBehaviour
 
         if (CanSpawnBuilding(UtilsClass.GetMouseWorldPosition()) && isOverTowerSpawnPoint)
         {
+
             ChangeGhostTowerMeshMaterial(blueMaterial);
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -76,7 +77,7 @@ public class BuildManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-          //  readyToBuild = false;
+            readyToBuild = false;
             isBuilding = false;
 
             Destroy(ghostTowerInstance.gameObject);
@@ -119,6 +120,7 @@ public class BuildManager : MonoBehaviour
 
     private bool CanSpawnBuilding(Vector3 position)
     {
+
         Transform torre = GameAssets.Instance.pfArrowTower;
         Collider[] colliderArray = Physics.OverlapBox(position, spawnPointRadius * Vector3.one,Quaternion.identity, layerMask);
         
