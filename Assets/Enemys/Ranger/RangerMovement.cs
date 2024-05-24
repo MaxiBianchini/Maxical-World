@@ -51,10 +51,6 @@ namespace Enemys.Ranger
         private void Update()
         {
             CheckRangeAndAttack();
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Death();
-            }
         }
 
         public void Initialize(float health, float damage, float speed, int value)

@@ -12,6 +12,8 @@ TagManager:
   - Nexo
   - Projectile
   - InstancesGroupingObje
+  - InstancesGroupingObject
+  - Enemy
   layers:
   - Default
   - TransparentFX

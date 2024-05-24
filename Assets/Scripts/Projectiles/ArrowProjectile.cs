@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class ArrowProjectile : MonoBehaviour
 {
     //public static method to create a bullet
-    public static ArrowProjectile Create(Vector3 position, EnemyTestLeo enemy, float towerAccuracy)
+    public static ArrowProjectile Create(Vector3 position, Transform enemy, float towerAccuracy)
     {
         Transform pfArrowProjectile  = GameAssets.Instance.pfArrowProjectile;
         Transform ArrowProjectileTransform = Instantiate(pfArrowProjectile,position,Quaternion.identity);
@@ -43,12 +44,15 @@ public class ArrowProjectile : MonoBehaviour
     private Transform hitGroundVFX;
 
     //Position Variables
-    private EnemyTestLeo targetEnemy;
+   // private EnemyTestLeo targetEnemy;
     private Vector3 initialPosition;
 
     //bullet Accuracy
     private float accuracy;
     float hitChance;
+    
+    //noe modif
+    private Transform _targetEnemy;
 
     private void Start()
     {
@@ -57,7 +61,7 @@ public class ArrowProjectile : MonoBehaviour
         this.transform.parent = VFXParent;
         initialPosition = transform.position;
         hitChance = UnityEngine.Random.Range(0f, 1f);
-        StartCoroutine(ProjectilCurveRoutine(initialPosition,targetEnemy.transform.position));
+        StartCoroutine(ProjectilCurveRoutine(initialPosition,_targetEnemy.position));
     }
 
     //Manage the projectile to go from initial position to enemy position
@@ -71,11 +75,11 @@ public class ArrowProjectile : MonoBehaviour
         {
             if(hitChance <= accuracy)
             {
-                endPosition = targetEnemy.transform.position;
+                endPosition = _targetEnemy.position;
             }
             else
             {
-                endPosition = targetEnemy.transform.position + new Vector3(x,-5f,z);
+                endPosition = _targetEnemy.position + new Vector3(x,-5f,z);
             }
 
             timePassed += Time.deltaTime;
@@ -91,22 +95,22 @@ public class ArrowProjectile : MonoBehaviour
     }
 
     //Set enemy target
-    private void SetTarget(EnemyTestLeo enemy)
+    private void SetTarget(Transform enemy)
     {
-        this.targetEnemy = enemy;
+        this._targetEnemy = enemy;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        EnemyHealthTest enemy = other.GetComponent<EnemyHealthTest>();
-        if (enemy != null)
+        IDamageable enemy = other.GetComponent<IDamageable>();
+        if (other.CompareTag("Enemy"))
         {
             if (hitChance <= accuracy)
             {
                 //Damage the enemy
-                int damage = UnityEngine.Random.Range(arrowMinDamage, arrowMaxDamage);
+                float damage = UnityEngine.Random.Range(arrowMinDamage, arrowMaxDamage);
                 //Debug.Log("Enemy get " + damage + " of damage");
-                enemy.GetDamage(damage);
+                enemy.TakeDamage(damage);
                 
                 Transform hitVFX = Instantiate(enemyHitVFX, this.transform.position, Quaternion.identity);
                 hitVFX.eulerAngles = new Vector3(xVFXRotation, 0f, 0f);

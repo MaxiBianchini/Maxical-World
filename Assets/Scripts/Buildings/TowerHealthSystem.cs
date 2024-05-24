@@ -19,8 +19,8 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
     public event EventHandler onTowerDamaged;
 
 
-    private float currentHealth;
     private int maxHealth;
+    private float currentHealth;
 
     //Test Variables
     public bool isDead;

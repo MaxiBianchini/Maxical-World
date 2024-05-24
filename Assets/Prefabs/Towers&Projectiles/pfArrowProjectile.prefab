@@ -47,9 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe42116ca54128e47b883937d4cfe793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowMoveSpeed: 10
-  arrowMinDamage: 10
-  arrowMaxDamage: 15
+  arrowMinDamage: 30
+  arrowMaxDamage: 40
   duration: 1
   heightY: 3
   animCurve:
