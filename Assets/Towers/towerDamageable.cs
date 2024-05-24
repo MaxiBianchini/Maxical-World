@@ -9,7 +9,7 @@ namespace Towers
         private float _health = 100;
         public void TakeDamage(float amount)
         {
-            Debug.Log($"TOWER {gameObject.name} recibio  {amount} damage ");
+           // Debug.Log($"TOWER {gameObject.name} recibio  {amount} damage ");
             _health -= amount;
             if (_health <= 0)
             {

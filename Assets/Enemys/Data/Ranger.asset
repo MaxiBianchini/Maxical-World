@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9312d124b84b5b842a4fd39407631d5d, type: 3}
   m_Name: Ranger
   m_EditorClassIdentifier: 
-  primaryTarget: {fileID: 417303685449149625, guid: 823b5f49c937a4c4aa8ecf9551ec55ef, type: 3}
+  primaryTarget: {fileID: 642386142145943725, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
   secondaryTarget: {fileID: 4397924609401135458, guid: 33273bcef6b7fa64d872bfecb2dd1749, type: 3}
-  finalTarget: {fileID: 5475880943917374549, guid: 816dca7f0ba605542864513673de36d4, type: 3}
+  finalTarget: {fileID: 4980443045758925229, guid: 7563fe1c25dfabf4f9353adecb31e579, type: 3}

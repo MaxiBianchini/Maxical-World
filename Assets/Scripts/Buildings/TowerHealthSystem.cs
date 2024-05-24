@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
+using Enemys;
 using UnityEngine;
 
-public class TowerHealthSystem : MonoBehaviour
+public class TowerHealthSystem : MonoBehaviour, IDamageable
 {
     private BuildingTypeHolder buildingTypeHolder;
 
@@ -17,7 +19,7 @@ public class TowerHealthSystem : MonoBehaviour
     public event EventHandler onTowerDamaged;
 
 
-    private int currentHealth;
+    private float currentHealth;
     private int maxHealth;
 
     //Test Variables
@@ -59,17 +61,18 @@ public class TowerHealthSystem : MonoBehaviour
             onTowerDeath?.Invoke(this, EventArgs.Empty);
             Debug.Log("La torre murio");
         }
-
+        
+        EnemyController.Instance.RemoveTower(gameObject);
         Destroy(gameObject);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if(onTowerDamaged != null)
         {
             //Notify suscriptors tower has been damaged
-            onTowerDamaged?.Invoke(this, EventArgs.Empty);
+           // onTowerDamaged?.Invoke(this, EventArgs.Empty);
             Debug.Log("La torre recibio "+ damage + " de da�o");
         }
         if(currentHealth <= 0)

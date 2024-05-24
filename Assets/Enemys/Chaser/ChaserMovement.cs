@@ -56,7 +56,7 @@ namespace Enemys.Chaser
         
         private void Chase()
         {
-            Debug.Log($"Is attacking chase  {_isAttacking} to {_target}");
+          //  Debug.Log($"Is attacking chase  {_isAttacking} to {_target}");
             if (_target != null && !_isAttacking)
             {
                 _agent.SetDestination(_target.transform.position);
