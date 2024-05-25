@@ -7,7 +7,7 @@ namespace Nexo
     {
         public void TakeDamage(float amount)
         {
-            Debug.Log("NExo recibo damage " + amount);
+            Debug.Log($"NEXO {gameObject.name} recibio  {amount} damage");
         }
     }
 }

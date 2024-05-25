@@ -28,6 +28,10 @@ public class Tower : MonoBehaviour
 
     private Vector3 projectileSpawnPosition;
 
+    //noe modif
+    private Transform _targetEnemy;
+    private Transform _enemy;
+
     private void Start()
     {
         projectileSpawnPosition = transform.Find("ProjectileSpawnPosition").position;
@@ -45,9 +49,9 @@ public class Tower : MonoBehaviour
         if(shootTimer < 0)
         {
             shootTimer += shootTimerMax;
-            if(targetEnemy != null && canAttack)
+            if(_targetEnemy != null && canAttack)
             {
-                ArrowProjectile.Create(projectileSpawnPosition, targetEnemy, towerAccuracy);
+                ArrowProjectile.Create(projectileSpawnPosition, _targetEnemy, towerAccuracy);
             }
         }
     }
@@ -63,12 +67,37 @@ public class Tower : MonoBehaviour
         }
     }
 
+    //noe modif
     private void LookForTargets()
     {
         Collider[] colliderArray = Physics.OverlapSphere(transform.position, targetMaxRadius);
-
         foreach (Collider collider in colliderArray)
         {
+            
+            if (collider.CompareTag("Enemy"))
+            {
+                Debug.Log($"Enemy {collider.name}");
+                _enemy = collider.transform;
+                if (_targetEnemy == null)
+                {
+                    _targetEnemy = _enemy;
+                }
+                else
+                {
+                    if (Vector3.Distance(transform.position, _enemy.transform.position) <
+                        Vector3.Distance(transform.position, _targetEnemy.transform.position))
+                    {
+                        //Enemy is on range
+                        _targetEnemy = _enemy;
+                    }
+                }
+                
+            }
+            
+            
+            
+            
+           /* Leo original script
             EnemyTestLeo enemy = collider.GetComponent<EnemyTestLeo>();
             if (enemy != null)
             {
@@ -87,6 +116,7 @@ public class Tower : MonoBehaviour
                     }
                 }
             }
+            */
         }
 
 
