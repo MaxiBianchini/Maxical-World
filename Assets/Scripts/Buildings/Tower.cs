@@ -20,7 +20,7 @@ public class Tower : MonoBehaviour
     [SerializeField] private float towerAccuracy = .75f;
 
     public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
-    private bool canAttack = false;
+    [SerializeField] private bool canAttack = false;
     private float shootTimer;
     private EnemyTestLeo targetEnemy;
     private float lookForTargetTimer;

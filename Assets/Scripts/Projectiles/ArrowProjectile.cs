@@ -57,6 +57,7 @@ public class ArrowProjectile : MonoBehaviour
         this.transform.parent = VFXParent;
         initialPosition = transform.position;
         hitChance = UnityEngine.Random.Range(0f, 1f);
+        
         StartCoroutine(ProjectilCurveRoutine(initialPosition,targetEnemy.transform.position));
     }
 
@@ -69,14 +70,20 @@ public class ArrowProjectile : MonoBehaviour
 
         while (timePassed < duration)
         {
-            if(hitChance <= accuracy)
+            if (targetEnemy)
             {
-                endPosition = targetEnemy.transform.position;
+                if (hitChance <= accuracy)
+                {
+                    endPosition = targetEnemy.transform.position;
+                }
+                else
+                {
+                    endPosition = targetEnemy.transform.position + new Vector3(x, -5f, z);
+                }
+                
             }
-            else
-            {
-                endPosition = targetEnemy.transform.position + new Vector3(x,-5f,z);
-            }
+            
+
 
             timePassed += Time.deltaTime;
             float linearT = timePassed / duration;
@@ -84,7 +91,8 @@ public class ArrowProjectile : MonoBehaviour
             float height = Mathf.Lerp(0f, heightY, heightT);
 
             transform.position = Vector3.Lerp(startPosition, endPosition, linearT) + new Vector3(0f, height);
-            
+            RotateProjectileDirection(heightT);
+
             yield return null;
         }
 
@@ -131,6 +139,17 @@ public class ArrowProjectile : MonoBehaviour
 
 
         Destroy(gameObject);
+    }
+
+    //Apunto la flecha a la direccion del enemigo.
+    private void RotateProjectileDirection(float curve)
+    {
+        if (!targetEnemy) return;
+
+        Vector3 direction = targetEnemy.transform.position - transform.position;
+        Vector3 xDirection = new Vector3(-curve, transform.position.y, direction.z);
+        Quaternion lookRotation = Quaternion.LookRotation(xDirection);
+        transform.rotation = lookRotation;
     }
 
 
