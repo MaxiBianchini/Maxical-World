@@ -16,7 +16,7 @@ public class Building : MonoBehaviour
         //TO DO:
         //Eventos para designar vida maxima
         //Evento para morir
-        //Evento para ser dañada
+        //Evento para ser daÃ±ada
         //Evento para curarse
 
     }

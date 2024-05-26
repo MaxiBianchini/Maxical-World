@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemys;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
@@ -50,6 +51,7 @@ public class BuildManager : MonoBehaviour
         }
         
         ghostTowerInstance = Instantiate(pfGhostTower);
+        
     }
 
     private void BuildingProcess()
@@ -66,7 +68,8 @@ public class BuildManager : MonoBehaviour
                 // TO DO: Hacer que solo se pueda construir cerca de un rango del player.
                 //TO DO: call EnemyController add tower method --- Noe
                 //Tower.Create(UtilsClass.GetMouseWorldPosition());
-                Tower.Create(ghostTowerInstance.position);
+                var tower = Tower.Create(ghostTowerInstance.position);
+                EnemyController.Instance.AddTower(tower.gameObject);
 
             }
         }

@@ -27500,7 +27500,7 @@ MonoBehaviour:
   rangerPrefab: {fileID: 547409883634415930, guid: bc02e56bc75a52747a22051b5dfa1216, type: 3}
   rangerAmount: 1
   rangerHealth: 20
-  rangerDamage: 1
+  rangerDamage: 40
   rangerSpeed: 6
   rangerValue: 0
   chaserPrefab: {fileID: 804486940702456321, guid: f72aa015ccec371439757ec314b44e05, type: 3}
