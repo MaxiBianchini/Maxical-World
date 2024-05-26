@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Enemys.Data;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Enemys
         [SerializeField] private float destroyerHealth;
         [SerializeField] private float destroyerDamage;
         [SerializeField] private float destroyerSpeed;
+        [SerializeField] private int destroyerValue;
 
         [Header("Ranger")]
         [SerializeField] private GameObject rangerPrefab;
@@ -20,6 +22,7 @@ namespace Enemys
         [SerializeField] private float rangerHealth;
         [SerializeField] private float rangerDamage;
         [SerializeField] private float rangerSpeed;
+        [SerializeField] private int rangerValue;
         
         [Header("Chaser")]
         [SerializeField] private GameObject chaserPrefab;
@@ -27,21 +30,23 @@ namespace Enemys
         [SerializeField] private float chaserHealth;
         [SerializeField] private float chaserDamage;
         [SerializeField] private float chaserSpeed;
+        [SerializeField] private int chaserValue;
         
         [Header("Spawns Points")]
         [SerializeField] private List<Transform> spawnPointList = new List<Transform>();
-
+        
         [Header("Targets Data")] 
         [SerializeField] private EnemyTarget destroyerTargets;
         [SerializeField] private EnemyTarget rangerTargets;
         [SerializeField] private EnemyTarget chaserTargets;
-        
-        
+
         private float _spawnTime;
         private GameObject _player;
-        private Coroutine _breakCoroutine;
+        private Coroutine _waveTimerCoroutine;
         private IEnemy _enemy;
         private GameObject _newEnemy;
+        private bool _isEnemiesAlive;
+        
 
         private enum EnemyType {
             Destroyer,
@@ -51,17 +56,32 @@ namespace Enemys
 
         private void Start()
         {
-            SpawnEnemy(EnemyType.Destroyer);
-            SpawnEnemy(EnemyType.Chaser);
-           // SpawnEnemy(EnemyType.Ranger);
+            SpawnAllEnemies();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.X)) //todo borrar cuando se haga lo de spawn de enemigos cada N tiempo
+            {
+                if (EnemyController.Instance.enemiesList.Count == 0)
+                {
+                    SpawnAllEnemies();
+                }
+                else
+                {
+                    Debug.Log("Quedan enemigos!");
+                }
+            }
+            
         }
 
         //metodos
+        
         private void SpawnEnemy(EnemyType type)
         {
             Vector3 spawn;
             GameObject prefab, target;
-            int amount;
+            int amount, value;
             float health, damage, speed;
 
             switch (type) {
@@ -72,6 +92,7 @@ namespace Enemys
                     health = destroyerHealth;
                     damage = destroyerDamage;
                     speed = destroyerSpeed;
+                    value = destroyerValue;
                     break;
                 case EnemyType.Ranger:
                     prefab = rangerPrefab;
@@ -80,6 +101,8 @@ namespace Enemys
                     health = rangerHealth;
                     damage = rangerDamage;
                     speed = rangerSpeed;
+                    value = rangerValue;
+
                     break;
                 case EnemyType.Chaser:
                     prefab = chaserPrefab;
@@ -88,6 +111,8 @@ namespace Enemys
                     health = chaserHealth;
                     damage = chaserDamage;
                     speed = chaserSpeed;
+                    value = chaserValue;
+
                     break;
                 default:
                     Debug.LogError("SpawnEnemy - Error tipo de enemigo");
@@ -97,21 +122,24 @@ namespace Enemys
                     health = 0;
                     damage = 0;
                     speed = 0;
+                    value = 0;
                     break;
             }
             
             for (int i = 0; i < spawnPointList.Count; i++) {
                 for (int j = 0; j < amount; j++)
                 {
-                    //tiempo para que spawnee el siguiente?
+                    //tiempo para que spawnee el siguiente? ver milanote
                     _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
                     spawn = spawnPointList[i].position;
                     _enemy = _newEnemy.GetComponent<IEnemy>();
-                    _enemy.Initialize(health, damage, speed);
+                    _enemy.Initialize(health, damage, speed, value);
                     _newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
+                    EnemyController.Instance.enemiesList.Add(_newEnemy);
                 }
             }
         }
+        
         private Vector3 SpawnsPoints(int index)
         {
             Vector3 spawn = spawnPointList[index].position;
@@ -158,6 +186,12 @@ namespace Enemys
             
             return closestGameObject;
         }
-        
+
+        private void SpawnAllEnemies()
+        {
+            SpawnEnemy(EnemyType.Destroyer);
+            SpawnEnemy(EnemyType.Chaser);
+            SpawnEnemy(EnemyType.Ranger);
+        }
     }
 }

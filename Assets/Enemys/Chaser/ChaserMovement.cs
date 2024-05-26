@@ -17,6 +17,7 @@ namespace Enemys.Chaser
 
         private float _damage;
         private float _health;
+        private int _value;
         private bool _isAttacking = false;
         private NavMeshAgent _agent;
         private Coroutine _attackCoroutine;
@@ -25,6 +26,8 @@ namespace Enemys.Chaser
         private GameObject _target;
         private Quaternion _targetRotation;
         private IDamageable _damageable;
+        private EnemyController _enemyController;
+
 
         private void Awake()
         {
@@ -43,16 +46,17 @@ namespace Enemys.Chaser
 
         }
 
-        public void Initialize(float health, float damage, float speed)
+        public void Initialize(float health, float damage, float speed, int value)
         {
             _health = health;
             _damage = damage;
             _agent.speed = speed;
+            _value = value;
         }
         
         private void Chase()
         {
-            Debug.Log($"Is attacking chase  {_isAttacking} to {_target}");
+          //  Debug.Log($"Is attacking chase  {_isAttacking} to {_target}");
             if (_target != null && !_isAttacking)
             {
                 _agent.SetDestination(_target.transform.position);
@@ -73,16 +77,48 @@ namespace Enemys.Chaser
             {
                 _damageable.TakeDamage(_damage);
             }
+            else if (currentTarget == null)
+            {
+                ChangeTarget();
+            }
             else
             {
                 Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
             }
         }
+        private void ChangeTarget()
+        {
+            int doorCount = _enemyController.Doors.Count;
+            GameObject closestGameObject = null;
+            float closestDistance = Mathf.Infinity;
+            float currentDistance;
+
+            if (doorCount != 0)
+            {
+                foreach (var door in EnemyController.Instance.Doors)
+                {
+                    currentDistance = Vector3.Distance(gameObject.transform.position, door.transform.position);
+                    if (currentDistance < closestDistance)
+                    {
+                        closestDistance = currentDistance;
+                        closestGameObject = door;
+                    }
+                }
+                SetDestination(closestGameObject); 
+            }
+            else
+            {
+                closestGameObject = EnemyController.Instance.Nexo;
+                SetDestination(closestGameObject);
+            }
+        }
+
 
         public void Death()
         {
-            //EnemyController.Instance.RemoveChaserFromList(gameObject);
             StopAttacking();
+            EnemyController.Instance.DropCoin(gameObject.transform, _value);
+            EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
         }
 
@@ -95,7 +131,9 @@ namespace Enemys.Chaser
                 _destination = _target.transform.position;
                 _agent.SetDestination(_destination);
             }
+            
         }
+
 
         private void StartAttacking()
         {
@@ -131,6 +169,11 @@ namespace Enemys.Chaser
                 _agent.isStopped = false;
                 StopAttacking();
             }
+            LookTarget();
+        }
+
+        private void LookTarget()
+        {
             if (_isAttacking) //mira al obeetivo
             {
                 _direction = _target.transform.position - transform.position;
