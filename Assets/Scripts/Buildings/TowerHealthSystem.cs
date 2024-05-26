@@ -7,8 +7,8 @@ public class TowerHealthSystem : MonoBehaviour
 {
     private BuildingTypeHolder buildingTypeHolder;
 
-    public event EventHandler onTowerHealthAmountMaxChanged;
-    public event EventHandler onTowerHealed;
+    //public event EventHandler onTowerHealthAmountMaxChanged;
+    //public event EventHandler onTowerHealed;
 
     // public delegate void TowerDeathEventHandler(TowerHealthSystem tower);
     // public static event TowerDeathEventHandler OnTowerDeath;

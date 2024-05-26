@@ -24,7 +24,7 @@ public class ArrowProjectile : MonoBehaviour
     }
 
     [Header("Projectile Configuration")]
-    [SerializeField] float arrowMoveSpeed = 20f;
+    //[SerializeField] float arrowMoveSpeed = 20f;
     [SerializeField] int arrowMinDamage = 10;
     [SerializeField] int arrowMaxDamage = 15;
     [Tooltip("Manage the duration of the bullet. Lower numbers make bullet go faster")]
