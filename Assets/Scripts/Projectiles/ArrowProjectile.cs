@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class ArrowProjectile : MonoBehaviour
 {
     //public static method to create a bullet
-    public static ArrowProjectile Create(Vector3 position, EnemyTestLeo enemy, float towerAccuracy)
+    public static ArrowProjectile Create(Vector3 position, Transform enemy, float towerAccuracy)
     {
         Transform pfArrowProjectile  = GameAssets.Instance.pfArrowProjectile;
         Transform ArrowProjectileTransform = Instantiate(pfArrowProjectile,position,Quaternion.identity);
@@ -43,7 +43,7 @@ public class ArrowProjectile : MonoBehaviour
     private Transform hitGroundVFX;
 
     //Position Variables
-    private EnemyTestLeo targetEnemy;
+    private Transform targetEnemy;
     private Vector3 initialPosition;
 
     //bullet Accuracy
@@ -99,7 +99,7 @@ public class ArrowProjectile : MonoBehaviour
     }
 
     //Set enemy target
-    private void SetTarget(EnemyTestLeo enemy)
+    private void SetTarget(Transform enemy)
     {
         this.targetEnemy = enemy;
     }
