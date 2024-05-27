@@ -22021,8 +22021,24 @@ PrefabInstance:
       value: TowerS
       objectReference: {fileID: 0}
     - target: {fileID: 4039704011521570291, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039704011521570291, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
       propertyPath: m_TagString
       value: Nexo
+      objectReference: {fileID: 0}
+    - target: {fileID: 5653150063776998677, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450039304921117298, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887987059673984588, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8966055456161848921, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22031,33 +22047,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4039704011521570291, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1381694322}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
 --- !u!4 &1381694320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3694141132868349769, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
   m_PrefabInstance: {fileID: 1381694319}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1381694321 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4039704011521570291, guid: 62bebc5ad00467c4c8dc046506d81a68, type: 3}
-  m_PrefabInstance: {fileID: 1381694319}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1381694322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381694321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9351df44cb33d5645b2596d0a56c6a1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1387598508
 PrefabInstance:
   m_ObjectHideFlags: 0
