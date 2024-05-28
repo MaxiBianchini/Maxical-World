@@ -187,7 +187,7 @@ namespace Enemys
             return closestGameObject;
         }
 
-        private void SpawnAllEnemies()
+        public void SpawnAllEnemies()
         {
             SpawnEnemy(EnemyType.Destroyer);
             SpawnEnemy(EnemyType.Chaser);
