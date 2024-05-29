@@ -8,7 +8,7 @@ namespace Nexo
         [SerializeField] private float health;
         public void TakeDamage(float amount)
         {
-            Debug.Log($"NEXO {gameObject.name} recibio  {amount} damage");
+           // Debug.Log($"NEXO {gameObject.name} recibio  {amount} damage");
             health -= amount;
             if (health <= 0)
             {

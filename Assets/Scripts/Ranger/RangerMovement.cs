@@ -65,6 +65,7 @@ namespace Enemys.Ranger
         public void TakeDamage(float amount)
         {
             _health -= amount;
+            Debug.Log($"CHASER RECIBIO: {amount} LE QUEDA {_health} DE VIDA");
             if (_health <= 0)
             {
                 Death();

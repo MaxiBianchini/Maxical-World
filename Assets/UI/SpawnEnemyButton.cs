@@ -20,7 +20,5 @@ namespace UI
             }
             
         }
-        
-        public void ShowEnemyHealth()
     }
 }

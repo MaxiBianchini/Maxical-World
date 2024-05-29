@@ -76,7 +76,7 @@ public class Tower : MonoBehaviour
             
             if (collider.CompareTag("Enemy"))
             {
-                Debug.Log($"Enemy {collider.name}");
+              //  Debug.Log($"Enemy {collider.name}");
                 _enemy = collider.transform;
                 if (_targetEnemy == null)
                 {

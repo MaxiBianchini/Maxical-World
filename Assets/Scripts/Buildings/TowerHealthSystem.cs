@@ -61,7 +61,7 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
             onTowerDeath?.Invoke(this, EventArgs.Empty);
             Debug.Log("La torre murio");
         }
-
+        EnemyController.Instance.RemoveTower(gameObject);
         Destroy(gameObject);
     }
 
@@ -78,7 +78,6 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
         {
             currentHealth = 0;
             isDead = true;
-            EnemyController.Instance.RemoveTower(gameObject);
         }
 
     }
