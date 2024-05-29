@@ -16,12 +16,6 @@ namespace Enemys.Chaser
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
         
-        //UI
-        [SerializeField] private Image healthBarPrefab;
-        [SerializeField, Range(0, 10)] private float offset;
-
-        private Image _healthBarFill;
-        
         private float _damage;
         private float _health;
         private float _maxHealth;
@@ -35,7 +29,6 @@ namespace Enemys.Chaser
         private Quaternion _targetRotation;
         private IDamageable _damageable;
         private EnemyController _enemyController;
-        private GameObject _canvas;
 
 
         private void Awake()
@@ -45,17 +38,14 @@ namespace Enemys.Chaser
 
         private void Start()
         {
-            _canvas = GameObject.Find("CanvasEnemyHealth");
             StopAttacking();
             _maxHealth = _health;
-            InstantiateHealthBar();
         }
 
         private void Update()
         {
             CheckRange();
             Chase();
-            UpdateHealthBar();
 
         }
 
@@ -80,28 +70,10 @@ namespace Enemys.Chaser
         public void TakeDamage(float amount)
         {
             _health -= amount;
-            Debug.Log($"CHASER RECIBIO: {amount} LE QUEDA {_health} DE VIDA");
-            UpdateHealthBarFill();
             if (_health <= 0)
             {
                 Death();
             }
-        }
-
-        private void UpdateHealthBar()
-        {
-            _healthBarFill.transform.position = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * offset);
-        }
-
-        private void UpdateHealthBarFill()
-        {
-            _healthBarFill.fillAmount = _health / _maxHealth;
-        }
-
-        private void InstantiateHealthBar()
-        {
-            GameObject healthBarInstance = Instantiate(healthBarPrefab.gameObject, _canvas.transform);
-            _healthBarFill = healthBarInstance.GetComponent<Image>();
         }
 
         public void Attack(GameObject currentTarget)
@@ -166,8 +138,7 @@ namespace Enemys.Chaser
             }
             
         }
-
-
+        
         private void StartAttacking()
         {
             if (_attackCoroutine == null)
