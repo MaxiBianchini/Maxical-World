@@ -11,6 +11,7 @@ namespace Enemys.Ranger
     public class RangerMovement : MonoBehaviour, IDamageable, IEnemy
     {
         [SerializeField] private float attackRange;
+        [SerializeField] private float meleAttack;
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
         
@@ -74,7 +75,6 @@ namespace Enemys.Ranger
         {
             if (_damageable != null && currentTarget != null)
             {
-                //_damageable.TakeDamage(_damage);
                 GameObject projectile = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
                 _shootBullet = projectile.GetComponent<Bullet>();
                 _shootBullet.Initialize(_damage, bulletSpeed, _damageable, currentTarget.transform.position);
@@ -105,6 +105,11 @@ namespace Enemys.Ranger
             {
                 _destination = _target.transform.position;
                 _agent.SetDestination(_destination);
+                
+                if (_target.CompareTag("Nexo"))
+                {
+                    attackRange = meleAttack;
+                }
             }
         }
         
@@ -167,14 +172,22 @@ namespace Enemys.Ranger
         
         private void CheckRangeAndAttack()
         {
+            
             float distanceToDestination = Vector3.Distance(transform.position, _destination);
-
-          //  LookTarget();
+            LookTarget();
+            
             if (distanceToDestination <= attackRange && !_isAttacking)
             {
-                _isAttacking = true;
-                _agent.isStopped = true;
-                StartAttacking();
+              //  if (IsTargetVisible())
+              //  {
+                    _isAttacking = true;
+                    _agent.isStopped = true;
+                    StartAttacking();
+               // }
+               // else
+               // {
+               //    Debug.Log($"No se ve el target");
+               // }
             }
             
             else if (distanceToDestination > attackRange)
@@ -184,15 +197,30 @@ namespace Enemys.Ranger
                 StopAttacking();
             }
         }
-     /*   private void LookTarget()
+        private void LookTarget()
         {
-            if (_isAttacking) //mira al obeetivo
+            if (_isAttacking && _target != null) //mira al obeetivo
             {
                 _direction = _target.transform.position - transform.position;
                 _targetRotation = Quaternion.LookRotation(_direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
             }
         }
+    /*    
+        private bool IsTargetVisible()
+        {
+            Vector3 directionToTarget = _target.transform.position - transform.position;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, directionToTarget, out hit, attackRange))
+            {
+                if (hit.transform == _target.transform)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         */
         
         private IEnumerator AttackPerform()
@@ -201,7 +229,7 @@ namespace Enemys.Ranger
             {
                 yield return new WaitForSeconds(10/attackSpeed);
                 Attack(_target);
-                Debug.Log($"Attack {_target}");
+                //Debug.Log($"Attack {_target}");
             }
         }
     }

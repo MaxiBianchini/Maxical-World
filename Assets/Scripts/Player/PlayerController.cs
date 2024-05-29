@@ -78,7 +78,7 @@ namespace Player.Scripts
 
         public void TakeDamage(float amount)
         {
-            Debug.Log("PLayter recibico danio " + amount);
+           // Debug.Log("PLayter recibico danio " + amount);
         }
     }
 }
