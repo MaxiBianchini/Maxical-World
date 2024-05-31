@@ -11,9 +11,9 @@ namespace Enemys.Ranger
     public class RangerMovement : MonoBehaviour, IDamageable, IEnemy
     {
         [SerializeField] private float attackRange;
-        [SerializeField] private float meleAttack;
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
+        [SerializeField] private LayerMask damageable;
         
         [Header("Projectile")]
         [SerializeField] private GameObject bulletPrefab;
@@ -24,7 +24,7 @@ namespace Enemys.Ranger
         private float _damage;
         private float _health;
         private int _value;
-        private bool _isAttacking = false;
+       // private bool _isAttacking = false;
         private NavMeshAgent _agent;
         private Coroutine _attackCoroutine;
         private Vector3 _destination;
@@ -37,6 +37,13 @@ namespace Enemys.Ranger
         private EnemyController _enemyController;
         private float _distance;
 
+        private State _state;
+        
+        private enum State
+        {
+            Chasing,
+            Attacking,
+        }
         
         private void Awake()
         {
@@ -51,7 +58,8 @@ namespace Enemys.Ranger
         }
         private void Update()
         {
-            CheckRangeAndAttack();
+            Behaviour();
+
         }
 
         public void Initialize(float health, float damage, float speed, int value)
@@ -60,6 +68,7 @@ namespace Enemys.Ranger
             _damage = damage;
             _agent.speed = speed;
             _value = value;
+            _state = State.Chasing;
         }
 
         public void TakeDamage(float amount)
@@ -73,16 +82,14 @@ namespace Enemys.Ranger
 
         public void Attack(GameObject currentTarget)
         {
+            LookTarget();
             if (_damageable != null && currentTarget != null)
             {
                 GameObject projectile = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
                 _shootBullet = projectile.GetComponent<Bullet>();
                 _shootBullet.Initialize(_damage, bulletSpeed, _damageable, currentTarget.transform.position);
             }
-            else if (currentTarget == null)
-            {
-                ChangeTarget();
-            }
+            
             else
             {
                 Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
@@ -105,12 +112,50 @@ namespace Enemys.Ranger
             {
                 _destination = _target.transform.position;
                 _agent.SetDestination(_destination);
-                
-                if (_target.CompareTag("Nexo"))
-                {
-                    attackRange = meleAttack;
-                }
             }
+            else
+            {
+                ChangeTarget();
+            }
+        }
+
+        private void Behaviour() //checkeando constantemente
+        {
+
+            bool isTargetVisible = IsTargetVisible();
+            bool isInRange = IsInRange();
+            Debug.Log($"State: {_state}, IsTargetVisible: {isTargetVisible}, IsInRange: {isInRange}");
+            switch (_state)
+            {
+                case State.Chasing:
+                    if (isTargetVisible && isInRange)
+                    {
+                        Debug.Log($"Chasing to Attacking");
+
+                        _state = State.Attacking;
+                        StartAttacking();
+                       
+                    }
+                    break;
+                case State.Attacking:
+                    if (_target != null) 
+                    {
+                        if (!isTargetVisible || !isInRange)
+                        {
+                            Debug.Log($"Attacking to Chasing");
+                            _state = State.Chasing;
+                            StopAttacking();
+                            SetDestination(_target);
+                        }
+                        
+                    }
+                    else
+                    {
+                        ChangeTarget();
+                    }
+                    break;
+            }
+            
         }
         
         private void ChangeTarget()
@@ -151,13 +196,15 @@ namespace Enemys.Ranger
                 closestGameObject = EnemyController.Instance.Nexo;
                 SetDestination(closestGameObject);
             }
+            Debug.Log($"Cambiando target a {closestGameObject}");
         }
         
         private void StartAttacking()
         {
             if (_attackCoroutine == null)
             {
-                _attackCoroutine = StartCoroutine(AttackPerform());
+                _agent.isStopped = true;
+                _attackCoroutine = StartCoroutine(AttackDelay());
             }
         }
 
@@ -165,54 +212,45 @@ namespace Enemys.Ranger
         {
             if (_attackCoroutine != null)
             {
+                _agent.isStopped = false;
                 StopCoroutine(_attackCoroutine);
                 _attackCoroutine = null;
             }
         }
         
-        private void CheckRangeAndAttack()
+        private bool IsInRange()
         {
-            
             float distanceToDestination = Vector3.Distance(transform.position, _destination);
-            LookTarget();
-            
-            if (distanceToDestination <= attackRange && !_isAttacking)
-            {
-              //  if (IsTargetVisible())
-              //  {
-                    _isAttacking = true;
-                    _agent.isStopped = true;
-                    StartAttacking();
-               // }
-               // else
-               // {
-               //    Debug.Log($"No se ve el target");
-               // }
-            }
-            
-            else if (distanceToDestination > attackRange)
-            {
-                _isAttacking = false;
-                _agent.isStopped = false;
-                StopAttacking();
-            }
+
+            return distanceToDestination <= attackRange;
         }
         private void LookTarget()
         {
-            if (_isAttacking && _target != null) //mira al obeetivo
+            if (_state == State.Attacking && _target != null) //mira al obeetivo
             {
                 _direction = _target.transform.position - transform.position;
                 _targetRotation = Quaternion.LookRotation(_direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
             }
         }
-    /*    
+        
         private bool IsTargetVisible()
         {
-            Vector3 directionToTarget = _target.transform.position - transform.position;
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, directionToTarget, out hit, attackRange))
+            if (_target == null)
             {
+                Debug.LogWarning("IsTargetVisible() - target nulo");
+                return false;
+            }
+            Debug.Log($"Target: {_target}");
+    
+            Vector3 directionToTarget = _target.transform.position - transform.position;
+
+            RaycastHit hit;
+            
+            if (Physics.Raycast(transform.position, directionToTarget, out hit, attackRange, damageable))
+            {
+                Debug.DrawRay(transform.position, hit.transform.position - transform.position, Color.red); //todo borrar cuando ande todo
+                Debug.Log($"Raycast hit: {hit.transform.name}");
                 if (hit.transform == _target.transform)
                 {
                     return true;
@@ -221,14 +259,14 @@ namespace Enemys.Ranger
             return false;
         }
         
-        */
         
-        private IEnumerator AttackPerform()
+        
+        private IEnumerator AttackDelay()
         {
-            while (_isAttacking)
+            while (_state == State.Attacking)
             {
-                yield return new WaitForSeconds(10/attackSpeed);
                 Attack(_target);
+                yield return new WaitForSeconds(10/attackSpeed);
                 //Debug.Log($"Attack {_target}");
             }
         }

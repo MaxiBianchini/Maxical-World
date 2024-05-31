@@ -146,9 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 24
-  meleAttack: 9
   attackSpeed: 8
   rotationSpeed: 10
+  damageable:
+    serializedVersion: 2
+    m_Bits: 1156
   bulletPrefab: {fileID: 6605577101491823418, guid: b9e16523ee41c2044bde7ad008592790, type: 3}
   firePoint: {fileID: 2397869588255491975}
   bulletSpeed: 25
