@@ -59,6 +59,7 @@ namespace Enemys.Ranger
         private void Update()
         {
             Behaviour();
+            LookTarget();
 
         }
 

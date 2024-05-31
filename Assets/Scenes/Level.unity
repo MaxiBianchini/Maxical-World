@@ -13513,7 +13513,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.35
+      value: 29.39
       objectReference: {fileID: 0}
     - target: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
       propertyPath: m_LocalPosition.y
@@ -28601,7 +28601,7 @@ MonoBehaviour:
   destroyerSpeed: 8
   destroyerValue: 0
   rangerPrefab: {fileID: 547409883634415930, guid: bc02e56bc75a52747a22051b5dfa1216, type: 3}
-  rangerAmount: 1
+  rangerAmount: 3
   rangerHealth: 1000
   rangerDamage: 40
   rangerSpeed: 6
@@ -30776,7 +30776,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.32
+      value: 8.78
       objectReference: {fileID: 0}
     - target: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
       propertyPath: m_LocalPosition.y
