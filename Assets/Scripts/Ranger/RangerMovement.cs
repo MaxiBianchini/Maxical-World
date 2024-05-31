@@ -1,11 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Common;
+using Enemys;
+using Enemys.Ranger;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Enemys.Ranger
+namespace Ranger
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class RangerMovement : MonoBehaviour, IDamageable, IEnemy
@@ -13,7 +13,7 @@ namespace Enemys.Ranger
         [SerializeField] private float attackRange;
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
-        [SerializeField] private LayerMask damageable;
+        [SerializeField] private LayerMask validTarget;
         
         [Header("Projectile")]
         [SerializeField] private GameObject bulletPrefab;
@@ -83,7 +83,6 @@ namespace Enemys.Ranger
 
         public void Attack(GameObject currentTarget)
         {
-            LookTarget();
             if (_damageable != null && currentTarget != null)
             {
                 GameObject projectile = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
@@ -242,16 +241,14 @@ namespace Enemys.Ranger
                 Debug.LogWarning("IsTargetVisible() - target nulo");
                 return false;
             }
-            Debug.Log($"Target: {_target}");
     
             Vector3 directionToTarget = _target.transform.position - transform.position;
 
             RaycastHit hit;
             
-            if (Physics.Raycast(transform.position, directionToTarget, out hit, attackRange, damageable))
+            if (Physics.Raycast(transform.position, directionToTarget, out hit, attackRange, validTarget))
             {
                 Debug.DrawRay(transform.position, hit.transform.position - transform.position, Color.red); //todo borrar cuando ande todo
-                Debug.Log($"Raycast hit: {hit.transform.name}");
                 if (hit.transform == _target.transform)
                 {
                     return true;
@@ -268,7 +265,6 @@ namespace Enemys.Ranger
             {
                 Attack(_target);
                 yield return new WaitForSeconds(10/attackSpeed);
-                //Debug.Log($"Attack {_target}");
             }
         }
     }
