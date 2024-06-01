@@ -44,11 +44,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5789191515601876406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe42116ca54128e47b883937d4cfe793, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b9a8e38443774b40b5856a76cf2a72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowMinDamage: 30
-  arrowMaxDamage: 40
+  minDamage: 10
+  maxDamage: 15
   duration: 1
   heightY: 3
   animCurve:
@@ -57,45 +57,36 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 2.8483305
+      outSlope: 2.8483305
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.10210194
     - serializedVersion: 3
-      time: 0.292545
-      value: 0.7482052
-      inSlope: 2.2387247
-      outSlope: 2.2387247
+      time: 0.47392654
+      value: 1.0137638
+      inSlope: 0.604985
+      outSlope: 0.604985
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.24716009
-    - serializedVersion: 3
-      time: 0.527632
-      value: 1.060981
-      inSlope: 0.08537895
-      outSlope: 0.08537895
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.20268984
+      outWeight: 0.1689245
     - serializedVersion: 3
       time: 1
-      value: -0.0041503906
-      inSlope: -4.419739
-      outSlope: -4.419739
+      value: -0.09988403
+      inSlope: -4.206114
+      outSlope: -4.206114
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10296181
+      inWeight: 0.08592416
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   groundHitVFX: {fileID: 4390186289661675091, guid: 6a9041e363a2e7d428c45d1655cb566a, type: 3}
   enemyHitVFX: {fileID: 4390186289661675091, guid: 29f38b765ba647341b299acf2488e79c, type: 3}
-  xVFXRotation: -90
+  xVFXRotation: 0
 --- !u!135 &8625005630787152849
 SphereCollider:
   m_ObjectHideFlags: 0

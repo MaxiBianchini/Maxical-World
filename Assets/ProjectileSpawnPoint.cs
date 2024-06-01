@@ -6,7 +6,12 @@ using UnityEngine;
 
 public class ProjectileSpawnPoint : MonoBehaviour
 {
+    
     private Coroutine coroutine;
+
+    public event EventHandler<Quaternion> onRotate;
+
+ 
 
     private void Update()
     {
@@ -35,11 +40,14 @@ public class ProjectileSpawnPoint : MonoBehaviour
 
         while (enemy)
         {
-                Vector3 rotateDirection = enemy.transform.position - transform.position;
-                Quaternion rotation = Quaternion.LookRotation(rotateDirection);
-                transform.rotation = rotation;
+            Vector3 direction = enemy.transform.position - transform.position;
+            //Vector3 rotateDirection = new Vector3(transform.rotation.x, direction.y, transform.rotation.z);
+            //direction.x = 0f;
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = rotation;
+            onRotate?.Invoke(this, rotation);
 
-                yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.1f);
         }
 
         

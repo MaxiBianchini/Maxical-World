@@ -124,7 +124,7 @@ public class BuildManager : MonoBehaviour
     private bool CanSpawnBuilding(Vector3 position)
     {
 
-        Transform torre = GameAssets.Instance.pfArrowTower;
+        Transform torre = GameAssets.Instance.pfTower;
         Collider[] colliderArray = Physics.OverlapBox(position, spawnPointRadius * Vector3.one,Quaternion.identity, layerMask);
         
         return colliderArray.Length == 0;

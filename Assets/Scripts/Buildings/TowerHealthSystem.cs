@@ -154,14 +154,11 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
             Debug.Log("La torre murio");
         }
 
-
         GameObject explosion = GameAssets.Instance.pfBuildingDestroyedParticles.gameObject;
         GameObject explosionGO = Instantiate(explosion, transform.position + new Vector3(0f, 4f, 0f), Quaternion.identity);
         explosionGO.GetComponent<ParticleSystem>().Play();
         Destroy(explosionGO, 5f);
-
         EnemyController.Instance.RemoveTower(gameObject);
-
         Destroy(gameObject);
     }
 
@@ -170,11 +167,9 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
         currentHealth -= (int)damage;
         //Notify suscriptors tower has been damaged
         onTowerDamaged?.Invoke(this,  currentHealth);
-        Debug.Log("La torre recibio "+ damage + " de dato");
         
         if(currentHealth <= 0)
         {
-           // EnemyController.Instance.RemoveTower(gameObject);
             currentHealth = 0;
             isDead = true;
         }
