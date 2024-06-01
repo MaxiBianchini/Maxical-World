@@ -201,7 +201,7 @@ namespace Enemys.Ranger
             {
                 yield return new WaitForSeconds(10/attackSpeed);
                 Attack(_target);
-                Debug.Log($"Attack {_target}");
+                //Debug.Log($"Attack {_target}");
             }
         }
     }

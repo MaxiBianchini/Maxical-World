@@ -49,3 +49,7 @@ MonoBehaviour:
   pfGhostArrowTowerMesh: {fileID: 176561352003582481, guid: 53214f7e8df3f464cbec7032059edbbc, type: 3}
   pfHitGroundVFX: {fileID: 4390186289661675091, guid: 6a9041e363a2e7d428c45d1655cb566a, type: 3}
   pfBuildingPlacedParticles: {fileID: 4390186289661675091, guid: 454404a40e168434c99d4f0a75df494f, type: 3}
+  pfSmallFireVFX: {fileID: 1781949194303238865, guid: e92a0207ed6f749459a3646c2aaf3cd9, type: 3}
+  pfMediumFireVFX: {fileID: 8295591563862043288, guid: e01f2e62cf41a3449be2dade3b2c2d79, type: 3}
+  pfBigFireVFX: {fileID: 8829451551789304537, guid: 8206b722d11501a449d6a278cca2adfa, type: 3}
+  pfBuildingDestroyedParticles: {fileID: 8714244275622671901, guid: abf8d5b763621654486813c5c8af8234, type: 3}

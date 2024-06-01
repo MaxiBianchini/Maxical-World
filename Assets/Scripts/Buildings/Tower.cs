@@ -26,6 +26,7 @@ public class Tower : MonoBehaviour
     private float lookForTargetTimer;
     private float lookForTargetTimerMax = 0.2f;
 
+    private ProjectileSpawnPoint projectileSpawnPoint;
     private Vector3 projectileSpawnPosition;
 
     //noe modif
@@ -34,7 +35,9 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
-        projectileSpawnPosition = transform.Find("ProjectileSpawnPosition").position;
+        //projectileSpawnPosition = transform.Find("ProjectileSpawnPosition").position;
+        projectileSpawnPoint = GetComponentInChildren<ProjectileSpawnPoint>();
+        projectileSpawnPosition = projectileSpawnPoint.transform.position;
     }
 
     private void Update()
@@ -42,6 +45,11 @@ public class Tower : MonoBehaviour
         HandleTargeting();
         HandleShooting();
     }
+
+    //public Vector3 EnemyTargetPosition()
+    //{
+    //    return _targetEnemy.position;
+    //}
 
     private void HandleShooting()
     {
@@ -51,7 +59,7 @@ public class Tower : MonoBehaviour
             shootTimer += shootTimerMax;
             if(_targetEnemy != null && canAttack)
             {
-                ArrowProjectile.Create(projectileSpawnPosition, _targetEnemy, towerAccuracy);
+                ArrowProjectile.Create(projectileSpawnPosition, _targetEnemy, towerAccuracy, projectileSpawnPoint.transform.rotation);
             }
         }
     }
@@ -76,11 +84,13 @@ public class Tower : MonoBehaviour
             
             if (collider.CompareTag("Enemy"))
             {
-                Debug.Log($"Enemy {collider.name}");
+                //Debug.Log($"Enemy {collider.name}");
                 _enemy = collider.transform;
                 if (_targetEnemy == null)
                 {
                     _targetEnemy = _enemy;
+                    projectileSpawnPoint.RotateTowardsEnemy(_targetEnemy);
+
                 }
                 else
                 {
@@ -93,30 +103,7 @@ public class Tower : MonoBehaviour
                 }
                 
             }
-            
-            
-            
-            
-           /* Leo original script
-            EnemyTestLeo enemy = collider.GetComponent<EnemyTestLeo>();
-            if (enemy != null)
-            {
-                //it's an enemy
-                if (targetEnemy == null)
-                {
-                    targetEnemy = enemy;
-                }
-                else
-                {
-                    if (Vector3.Distance(transform.position, enemy.transform.position) <
-                        Vector3.Distance(transform.position, targetEnemy.transform.position))
-                    {
-                        //Enemy is on range
-                        targetEnemy = enemy;
-                    }
-                }
-            }
-            */
+       
         }
 
 

@@ -7,14 +7,15 @@ using UnityEngine.UIElements;
 public class ArrowProjectile : MonoBehaviour
 {
     //public static method to create a bullet
-    public static ArrowProjectile Create(Vector3 position, Transform enemy, float towerAccuracy)
+    public static ArrowProjectile Create(Vector3 position, Transform enemy, float towerAccuracy, Quaternion rotation)
     {
         Transform pfArrowProjectile  = GameAssets.Instance.pfArrowProjectile;
-        Transform ArrowProjectileTransform = Instantiate(pfArrowProjectile,position,Quaternion.identity);
+        Transform ArrowProjectileTransform = Instantiate(pfArrowProjectile,position,rotation);
 
         ArrowProjectile arrowProjectile = ArrowProjectileTransform.GetComponent<ArrowProjectile>();
         arrowProjectile.SetAccuracy(towerAccuracy);
         arrowProjectile.SetTarget(enemy);
+        
         return arrowProjectile;
     }
 
@@ -45,11 +46,13 @@ public class ArrowProjectile : MonoBehaviour
     //Position Variables
     private Transform targetEnemy;
     private Vector3 initialPosition;
+    private Vector3 previousPosition;
 
     //bullet Accuracy
     private float accuracy;
     float hitChance;
 
+    
     private void Start()
     {
         hitGroundVFX = GameAssets.Instance.pfHitGroundVFX;
@@ -67,6 +70,7 @@ public class ArrowProjectile : MonoBehaviour
         float timePassed = 0f;
         float x = UnityEngine.Random.Range(1f, 3.5f);
         float z = UnityEngine.Random.Range(1f, 3.5f);
+       // previousPosition = endPosition - startPosition;
 
         while (timePassed < duration)
         {
@@ -91,7 +95,10 @@ public class ArrowProjectile : MonoBehaviour
             float height = Mathf.Lerp(0f, heightY, heightT);
 
             transform.position = Vector3.Lerp(startPosition, endPosition, linearT) + new Vector3(0f, height);
-            RotateProjectileDirection(heightT);
+            //transform.rotation = Quaternion.LookRotation(transform.position - previousPosition);
+            //RotateProjectileDirection(heightT);
+
+           // previousPosition = transform.position;
 
             yield return null;
         }
@@ -140,20 +147,6 @@ public class ArrowProjectile : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-    //Apunto la flecha a la direccion del enemigo.
-    private void RotateProjectileDirection(float curve)
-    {
-        if (!targetEnemy) return;
-
-        Vector3 direction = targetEnemy.transform.position - transform.position;
-        Vector3 xDirection = new Vector3(-curve, transform.position.y, direction.z);
-        Quaternion lookRotation = Quaternion.LookRotation(xDirection);
-        transform.rotation = lookRotation;
-    }
-
-
-
 
 
 }
