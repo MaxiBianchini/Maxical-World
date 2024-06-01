@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -113,15 +114,15 @@ public class ArrowProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        EnemyHealthTest enemy = other.GetComponent<EnemyHealthTest>();
+        IDamageable enemy = other.GetComponent<IDamageable>();
         if (enemy != null)
         {
             if (hitChance <= accuracy)
             {
                 //Damage the enemy
-                int damage = UnityEngine.Random.Range(arrowMinDamage, arrowMaxDamage);
+                float damage = UnityEngine.Random.Range(arrowMinDamage, arrowMaxDamage);
                 //Debug.Log("Enemy get " + damage + " of damage");
-                enemy.GetDamage(damage);
+                enemy.TakeDamage(damage);
                 
                 Transform hitVFX = Instantiate(enemyHitVFX, this.transform.position, Quaternion.identity);
                 hitVFX.eulerAngles = new Vector3(xVFXRotation, 0f, 0f);

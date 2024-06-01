@@ -5,6 +5,7 @@ using Enemys.Data;
 using Player.Scripts;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace Enemys.Chaser
 {
@@ -14,9 +15,10 @@ namespace Enemys.Chaser
         [SerializeField] private float attackRange;
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
-
+        
         private float _damage;
         private float _health;
+        private float _maxHealth;
         private int _value;
         private bool _isAttacking = false;
         private NavMeshAgent _agent;
@@ -37,6 +39,7 @@ namespace Enemys.Chaser
         private void Start()
         {
             StopAttacking();
+            _maxHealth = _health;
         }
 
         private void Update()
@@ -52,6 +55,7 @@ namespace Enemys.Chaser
             _damage = damage;
             _agent.speed = speed;
             _value = value;
+            
         }
         
         private void Chase()
@@ -62,6 +66,7 @@ namespace Enemys.Chaser
                 _agent.SetDestination(_target.transform.position);
             }
         }
+
         public void TakeDamage(float amount)
         {
             _health -= amount;
@@ -133,8 +138,7 @@ namespace Enemys.Chaser
             }
             
         }
-
-
+        
         private void StartAttacking()
         {
             if (_attackCoroutine == null)

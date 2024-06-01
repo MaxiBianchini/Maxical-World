@@ -147,6 +147,8 @@ MonoBehaviour:
   attackRange: 8
   attackSpeed: 10
   rotationSpeed: 5
+  healthBarPrefab: {fileID: 5910310080633791631, guid: 6861cbf44f0181d428c550dbd01f1bef, type: 3}
+  offset: 10
 --- !u!1 &3640408967681538028
 GameObject:
   m_ObjectHideFlags: 0
