@@ -2,6 +2,7 @@ using System.Collections;
 using Common;
 using Enemys;
 using Enemys.Ranger;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +15,7 @@ namespace Ranger
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
         [SerializeField] private LayerMask validTarget;
+        [SerializeField] private EnemyHealthBar healthBar;
         
         [Header("Projectile")]
         [SerializeField] private GameObject bulletPrefab;
@@ -24,7 +26,6 @@ namespace Ranger
         private float _damage;
         private float _health;
         private int _value;
-       // private bool _isAttacking = false;
         private NavMeshAgent _agent;
         private Coroutine _attackCoroutine;
         private Vector3 _destination;
@@ -33,11 +34,11 @@ namespace Ranger
         private Bullet _shootBullet;
         private IDamageable _damageable;
         private Quaternion _targetRotation;
-        
         private EnemyController _enemyController;
         private float _distance;
-
         private State _state;
+
+        private float _maxHealth;
         
         private enum State
         {
@@ -54,6 +55,7 @@ namespace Ranger
         {
             StopAttacking();
             _enemyController = EnemyController.Instance;
+            healthBar.UpdateHealthBar(_maxHealth, _health);
 
         }
         private void Update()
@@ -66,6 +68,7 @@ namespace Ranger
         public void Initialize(float health, float damage, float speed, int value)
         {
             _health = health;
+            _maxHealth = _health;
             _damage = damage;
             _agent.speed = speed;
             _value = value;
@@ -75,6 +78,7 @@ namespace Ranger
         public void TakeDamage(float amount)
         {
             _health -= amount;
+            healthBar.UpdateHealthBar(_maxHealth, _health);
             if (_health <= 0)
             {
                 Death();
@@ -121,38 +125,41 @@ namespace Ranger
 
         private void Behaviour() //checkeando constantemente
         {
-
-            bool isTargetVisible = IsTargetVisible();
-            bool isInRange = IsInRange();
-            Debug.Log($"State: {_state}, IsTargetVisible: {isTargetVisible}, IsInRange: {isInRange}");
-            switch (_state)
+            if (_target == null)
             {
-                case State.Chasing:
-                    if (isTargetVisible && isInRange)
-                    {
-                        Debug.Log($"Chasing to Attacking");
-                        _state = State.Attacking;
-                        StartAttacking();
-                       
-                    }
-                    break;
-                case State.Attacking:
-                    if (_target != null) 
-                    {
-                        if (!isTargetVisible || !isInRange)
+                ChangeTarget();
+            }
+            else
+            {
+                //  Debug.Log($"State: {_state}, IsTargetVisible: {IsTargetVisible()}, IsInRange: {IsInRange()}");
+                switch (_state)
+                {
+                    case State.Chasing:
+                        if (IsTargetVisible() && IsInRange())
                         {
-                            Debug.Log($"Attacking to Chasing");
-                            _state = State.Chasing;
-                            StopAttacking();
-                            SetDestination(_target);
+                            // Debug.Log($"Chasing to Attacking");
+                            _state = State.Attacking;
+                            StartAttacking();
+                       
                         }
-                        
-                    }
-                    else
-                    {
-                        ChangeTarget();
-                    }
-                    break;
+                        break;
+                    case State.Attacking:
+                        if (_target != null) 
+                        {
+                            if (!IsTargetVisible() || !IsInRange())
+                            {
+                                // Debug.Log($"Attacking to Chasing");
+                                _state = State.Chasing;
+                                StopAttacking();
+                                SetDestination(_target);
+                            }
+                        }
+                        else
+                        {
+                            ChangeTarget();
+                        }
+                        break;
+                }
             }
             
         }

@@ -3,6 +3,7 @@ using System.Collections;
 using Common;
 using Enemys.Data;
 using Player.Scripts;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ namespace Enemys.Chaser
         [SerializeField] private float attackRange;
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
+        [SerializeField] private EnemyHealthBar healthBar;
         
         private float _damage;
         private float _health;
@@ -40,6 +42,7 @@ namespace Enemys.Chaser
         {
             StopAttacking();
             _maxHealth = _health;
+            healthBar.UpdateHealthBar(_maxHealth, _health);
         }
 
         private void Update()
@@ -52,6 +55,7 @@ namespace Enemys.Chaser
         public void Initialize(float health, float damage, float speed, int value)
         {
             _health = health;
+            _maxHealth = _health;
             _damage = damage;
             _agent.speed = speed;
             _value = value;
@@ -70,6 +74,7 @@ namespace Enemys.Chaser
         public void TakeDamage(float amount)
         {
             _health -= amount;
+            healthBar.UpdateHealthBar(_maxHealth, _health);
             if (_health <= 0)
             {
                 Death();
