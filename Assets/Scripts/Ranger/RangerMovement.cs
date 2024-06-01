@@ -131,7 +131,6 @@ namespace Ranger
                     if (isTargetVisible && isInRange)
                     {
                         Debug.Log($"Chasing to Attacking");
-
                         _state = State.Attacking;
                         StartAttacking();
                        

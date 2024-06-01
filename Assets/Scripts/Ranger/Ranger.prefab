@@ -148,7 +148,7 @@ MonoBehaviour:
   attackRange: 24
   attackSpeed: 8
   rotationSpeed: 10
-  damageable:
+  validTarget:
     serializedVersion: 2
     m_Bits: 1156
   bulletPrefab: {fileID: 6605577101491823418, guid: b9e16523ee41c2044bde7ad008592790, type: 3}
@@ -322,7 +322,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 22e00375d5376d141af1c68793960301, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
