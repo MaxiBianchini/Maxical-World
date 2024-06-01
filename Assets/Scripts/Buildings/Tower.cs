@@ -7,7 +7,7 @@ public class Tower : MonoBehaviour
 {
     public static Tower Create(Vector3 position)
     {
-        Transform pfArrowTower = GameAssets.Instance.pfArrowTower;
+        Transform pfArrowTower = GameAssets.Instance.pfTower;
         Transform TowerTransform = Instantiate(pfArrowTower, position, Quaternion.identity);
 
         Tower tower = TowerTransform.GetComponent<Tower>();
@@ -19,22 +19,23 @@ public class Tower : MonoBehaviour
     [SerializeField] private float targetMaxRadius = 20f;
     [SerializeField] private float towerAccuracy = .75f;
 
-    public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
     [SerializeField] private bool canAttack = false;
+    public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
+    
     private float shootTimer;
-    private EnemyTestLeo targetEnemy;
     private float lookForTargetTimer;
     private float lookForTargetTimerMax = 0.2f;
-
-    private Vector3 projectileSpawnPosition;
-
-    //noe modif
+    private ProjectileSpawnPoint projectileSpawnPoint;
+    [SerializeField] private Transform projectileSpawnPosition;
     private Transform _targetEnemy;
     private Transform _enemy;
+    private BuildingTypeHolder buildingTypeHolder;
 
-    private void Start()
+    private void Awake()
     {
-        projectileSpawnPosition = transform.Find("ProjectileSpawnPosition").position;
+        buildingTypeHolder = GetComponent<BuildingTypeHolder>();
+        projectileSpawnPoint = GetComponentInChildren<ProjectileSpawnPoint>();
+        
     }
 
     private void Update()
@@ -42,6 +43,7 @@ public class Tower : MonoBehaviour
         HandleTargeting();
         HandleShooting();
     }
+
 
     private void HandleShooting()
     {
@@ -51,7 +53,7 @@ public class Tower : MonoBehaviour
             shootTimer += shootTimerMax;
             if(_targetEnemy != null && canAttack)
             {
-                ArrowProjectile.Create(projectileSpawnPosition, _targetEnemy, towerAccuracy);
+                Projectile.Create(projectileSpawnPosition.transform.position, _targetEnemy, towerAccuracy, projectileSpawnPoint.transform.rotation, buildingTypeHolder.buildingType);
             }
         }
     }
@@ -76,11 +78,14 @@ public class Tower : MonoBehaviour
             
             if (collider.CompareTag("Enemy"))
             {
-              //  Debug.Log($"Enemy {collider.name}");
+                //Debug.Log($"Enemy {collider.name}");
                 _enemy = collider.transform;
                 if (_targetEnemy == null)
                 {
                     _targetEnemy = _enemy;
+                    projectileSpawnPoint.RotateTowardsEnemy(_targetEnemy);
+                    GetComponentInChildren<TowerRotater>().RotateTowardsEnemy(_targetEnemy);
+
                 }
                 else
                 {
@@ -93,30 +98,7 @@ public class Tower : MonoBehaviour
                 }
                 
             }
-            
-            
-            
-            
-           /* Leo original script
-            EnemyTestLeo enemy = collider.GetComponent<EnemyTestLeo>();
-            if (enemy != null)
-            {
-                //it's an enemy
-                if (targetEnemy == null)
-                {
-                    targetEnemy = enemy;
-                }
-                else
-                {
-                    if (Vector3.Distance(transform.position, enemy.transform.position) <
-                        Vector3.Distance(transform.position, targetEnemy.transform.position))
-                    {
-                        //Enemy is on range
-                        targetEnemy = enemy;
-                    }
-                }
-            }
-            */
+       
         }
 
 

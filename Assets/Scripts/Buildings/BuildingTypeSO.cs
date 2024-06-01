@@ -8,7 +8,9 @@ public class BuildingTypeSO : ScriptableObject
     [Tooltip("Tower Name")]
     public string nameString;
     [Tooltip("Tower prefab")]
-    public Transform prefab;
+    public Transform buildingPrefab;
+    [Tooltip("Bullet prefab if applies")]
+    public Transform bullet;
     [Tooltip("Amount of gold required to build this tower")]
     public int goldAmountCost;
     [Tooltip("Max health amount for this tower")]

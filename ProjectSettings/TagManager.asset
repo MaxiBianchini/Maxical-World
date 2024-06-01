@@ -14,6 +14,7 @@ TagManager:
   - InstancesGroupingObje
   - InstancesGroupingObject
   - Enemy
+  - Lights
   layers:
   - Default
   - TransparentFX

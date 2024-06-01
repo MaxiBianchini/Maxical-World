@@ -18,11 +18,15 @@ public class GameAssets : MonoBehaviour
     }
 
     public Transform pfArrowProjectile;
-    public Transform pfArrowTower;
+    public Transform pfCanonProjectile;
+    public Transform pfTower;
     public Transform pfGhostArrowTowerMesh;
     public Transform pfHitGroundVFX;
     public Transform pfBuildingPlacedParticles;
-    //public Transform pfArrowDestroyedParticles;
-    //public Transform pfBuildingDestroyedParticles;
+    public Transform pfSmallFireVFX;
+    public Transform pfMediumFireVFX;
+    public Transform pfBigFireVFX;
+    public Transform pfBuildingDestroyedParticles;
+    public Transform pfCanonSplash;
     //public Transform pfBuildingConstruction;
 }
