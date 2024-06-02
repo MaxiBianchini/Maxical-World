@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enemys
 {
-    public class WaveManager : MonoBehaviour
+    public class Wave : MonoBehaviour
     {
         [Header("Destroyer")] 
         [SerializeField] private GameObject destroyerPrefab;

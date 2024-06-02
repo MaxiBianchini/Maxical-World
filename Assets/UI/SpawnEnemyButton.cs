@@ -5,7 +5,7 @@ namespace UI
 {
     public class SpawnEnemyButton : MonoBehaviour
     {
-        [SerializeField] private WaveManager waveManager;
+        [SerializeField] private Wave waveManager;
     
         public void OnSpawnEnemyButton()
         {
