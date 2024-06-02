@@ -59,21 +59,6 @@ namespace Enemys
             SpawnAllEnemies();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.X)) //todo borrar cuando se haga lo de spawn de enemigos cada N tiempo
-            {
-                if (EnemyController.Instance.enemiesList.Count == 0)
-                {
-                    SpawnAllEnemies();
-                }
-                else
-                {
-                    Debug.Log("Quedan enemigos!");
-                }
-            }
-            
-        }
 
         //metodos
         

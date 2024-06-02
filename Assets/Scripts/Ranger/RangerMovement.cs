@@ -37,8 +37,9 @@ namespace Ranger
         private EnemyController _enemyController;
         private float _distance;
         private State _state;
-
         private float _maxHealth;
+        
+        private AnimationsController _animationsController;
         
         private enum State
         {
@@ -49,6 +50,7 @@ namespace Ranger
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _animationsController = GetComponent<AnimationsController>();
         }
         
         private void Start()
@@ -78,6 +80,7 @@ namespace Ranger
         public void TakeDamage(float amount)
         {
             _health -= amount;
+            _animationsController.Hit();
             healthBar.UpdateHealthBar(_maxHealth, _health);
             if (_health <= 0)
             {
@@ -89,6 +92,8 @@ namespace Ranger
         {
             if (_damageable != null && currentTarget != null)
             {
+                _animationsController.SetMovingState(false);
+                _animationsController.Attack();
                 GameObject projectile = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
                 _shootBullet = projectile.GetComponent<Bullet>();
                 _shootBullet.Initialize(_damage, bulletSpeed, _damageable, currentTarget.transform.position);
@@ -103,6 +108,7 @@ namespace Ranger
         public void Death()
         {
             StopAttacking();
+            _animationsController.SetDead();
             EnemyController.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
@@ -135,20 +141,24 @@ namespace Ranger
                 switch (_state)
                 {
                     case State.Chasing:
+                        
                         if (IsTargetVisible() && IsInRange())
                         {
                             // Debug.Log($"Chasing to Attacking");
+                            _animationsController.SetMovingState(false);
                             _state = State.Attacking;
                             StartAttacking();
                        
                         }
                         break;
                     case State.Attacking:
+                        
                         if (_target != null) 
                         {
                             if (!IsTargetVisible() || !IsInRange())
                             {
                                 // Debug.Log($"Attacking to Chasing");
+                                _animationsController.SetMovingState(true);
                                 _state = State.Chasing;
                                 StopAttacking();
                                 SetDestination(_target);
@@ -262,8 +272,6 @@ namespace Ranger
             }
             return false;
         }
-        
-        
         
         private IEnumerator AttackDelay()
         {

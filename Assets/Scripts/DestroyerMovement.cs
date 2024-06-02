@@ -27,10 +27,12 @@ namespace Enemys.Destroyer
         private IDamageable _damageable;
         private float _maxHealth;
 
+        private AnimationsController _animationsController;
         
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _animationsController = GetComponent<AnimationsController>();
         }
 
         private void Start()
@@ -56,6 +58,7 @@ namespace Enemys.Destroyer
         public void TakeDamage(float amount)
         {
             _health -= amount;
+            _animationsController.Hit();
             healthBar.UpdateHealthBar(_maxHealth, _health);
             if (_health <= 0)
             {
@@ -67,6 +70,8 @@ namespace Enemys.Destroyer
         {
             if (_damageable != null)
             {
+                _animationsController.SetMovingState(false);
+                _animationsController.Attack();
                 _damageable.TakeDamage(_damage);
             }
             else
@@ -78,6 +83,7 @@ namespace Enemys.Destroyer
         public void Death()
         {
             StopAttacking();
+            _animationsController.SetDead();
             EnemyController.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
@@ -125,6 +131,7 @@ namespace Enemys.Destroyer
             else if (distanceToDestination > attackRange)
             {
                 _isAttacking = false;
+                _animationsController.SetMovingState(true);
                 _agent.isStopped = false;
                 StopAttacking();
             }
