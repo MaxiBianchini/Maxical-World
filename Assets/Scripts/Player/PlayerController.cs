@@ -7,6 +7,7 @@ namespace Player.Scripts
     {
         [Header("Settings")]
         [SerializeField] private float playerSpeed = 5.0f;
+        [SerializeField] private float health;
 
         public static bool Safe;
         public static bool Dead;
@@ -79,6 +80,16 @@ namespace Player.Scripts
         public void TakeDamage(float amount)
         {
            // Debug.Log("PLayter recibico danio " + amount);
+           health -= amount;
+           if (health <= 0)
+           {
+               Die();
+           }
+        }
+
+        private void Die()
+        {
+            Debug.Log("Murio");
         }
     }
 }

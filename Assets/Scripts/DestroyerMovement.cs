@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Common;
 using Doors;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -13,6 +14,7 @@ namespace Enemys.Destroyer
     {
         [SerializeField] private float attackRange;
         [SerializeField] private float attackSpeed;
+        [SerializeField] private EnemyHealthBar healthBar;
 
         private float _damage;
         private float _health;
@@ -23,15 +25,20 @@ namespace Enemys.Destroyer
         private Vector3 _destination;
         private GameObject _target;
         private IDamageable _damageable;
+        private float _maxHealth;
+
+        private AnimationsController _animationsController;
         
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _animationsController = GetComponent<AnimationsController>();
         }
 
         private void Start()
         {
             StopAttacking();
+            healthBar.UpdateHealthBar(_maxHealth, _health);
         }
 
         private void Update()
@@ -42,6 +49,7 @@ namespace Enemys.Destroyer
         public void Initialize(float health, float damage, float speed, int value)
         {
             _health = health;
+            _maxHealth = _health;
             _damage = damage;
             _agent.speed = speed;
             _value = value;
@@ -50,6 +58,8 @@ namespace Enemys.Destroyer
         public void TakeDamage(float amount)
         {
             _health -= amount;
+            _animationsController.Hit();
+            healthBar.UpdateHealthBar(_maxHealth, _health);
             if (_health <= 0)
             {
                 Death();
@@ -60,6 +70,8 @@ namespace Enemys.Destroyer
         {
             if (_damageable != null)
             {
+                _animationsController.SetMovingState(false);
+                _animationsController.Attack();
                 _damageable.TakeDamage(_damage);
             }
             else
@@ -71,6 +83,7 @@ namespace Enemys.Destroyer
         public void Death()
         {
             StopAttacking();
+            _animationsController.SetDead();
             EnemyController.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
@@ -118,6 +131,7 @@ namespace Enemys.Destroyer
             else if (distanceToDestination > attackRange)
             {
                 _isAttacking = false;
+                _animationsController.SetMovingState(true);
                 _agent.isStopped = false;
                 StopAttacking();
             }

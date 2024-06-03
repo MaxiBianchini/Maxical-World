@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Styles/mainMenuStyle.uss?fileID=7433441132597879392&amp;guid=aec625f2d772b9546ae6851e47ce49db&amp;type=3#mainMenuStyle" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/images/mainMenuBG.jpg?fileID=2800000&amp;guid=519986826ce4f874cb4b0da9eb2525bd&amp;type=3#mainMenuBG&quot;); width: auto; height: auto; -unity-background-scale-mode: scale-to-fit; align-items: auto; padding-bottom: 10px;">
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" />
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartGameButton" class="button" style="width: 267px; height: 60px; background-color: rgb(101, 94, 164); font-size: 20px; color: rgb(255, 255, 255); margin-right: 20%; margin-left: 20%;" />
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreditsGameButton" class="button" style="background-color: rgb(101, 94, 164); color: rgb(255, 255, 255); font-size: 20px;" />
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitGameButton" class="button" style="background-color: rgb(101, 94, 164); color: rgb(255, 255, 255); font-size: 20px;" />
+    </ui:VisualElement>
+</ui:UXML>

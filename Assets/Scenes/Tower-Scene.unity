@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1329,7 +1329,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33af9d472f6acac46abc791b17dcea8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 100
   pfFloatingText: {fileID: 484851735333464540, guid: b8362e21f2063ed4fa89f001bcc7e430, type: 3}
 --- !u!135 &2002756387
 SphereCollider:

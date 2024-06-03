@@ -3,6 +3,7 @@ using System.Collections;
 using Common;
 using Enemys.Data;
 using Player.Scripts;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ namespace Enemys.Chaser
         [SerializeField] private float attackRange;
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
+        [SerializeField] private EnemyHealthBar healthBar;
         
         private float _damage;
         private float _health;
@@ -29,17 +31,21 @@ namespace Enemys.Chaser
         private Quaternion _targetRotation;
         private IDamageable _damageable;
         private EnemyController _enemyController;
+        
+        private AnimationsController _animationsController;
 
 
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _animationsController = GetComponent<AnimationsController>();
         }
 
         private void Start()
         {
             StopAttacking();
             _maxHealth = _health;
+            healthBar.UpdateHealthBar(_maxHealth, _health);
         }
 
         private void Update()
@@ -52,6 +58,7 @@ namespace Enemys.Chaser
         public void Initialize(float health, float damage, float speed, int value)
         {
             _health = health;
+            _maxHealth = _health;
             _damage = damage;
             _agent.speed = speed;
             _value = value;
@@ -63,6 +70,7 @@ namespace Enemys.Chaser
           //  Debug.Log($"Is attacking chase  {_isAttacking} to {_target}");
             if (_target != null && !_isAttacking)
             {
+                _animationsController.SetMovingState(true);
                 _agent.SetDestination(_target.transform.position);
             }
         }
@@ -70,6 +78,8 @@ namespace Enemys.Chaser
         public void TakeDamage(float amount)
         {
             _health -= amount;
+            _animationsController.Hit();
+            healthBar.UpdateHealthBar(_maxHealth, _health);
             if (_health <= 0)
             {
                 Death();
@@ -80,6 +90,8 @@ namespace Enemys.Chaser
         {
             if (_damageable != null)
             {
+                _animationsController.SetMovingState(false);
+                _animationsController.Attack();
                 _damageable.TakeDamage(_damage);
             }
             else if (currentTarget == null)
@@ -122,6 +134,7 @@ namespace Enemys.Chaser
         public void Death()
         {
             StopAttacking();
+            _animationsController.SetDead();
             EnemyController.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);

@@ -12,8 +12,13 @@ namespace Nexo
             health -= amount;
             if (health <= 0)
             {
-                Debug.Log("GAME OVER");
+                GameOver();
             }
+        }
+
+        private void GameOver()
+        {
+            Debug.Log($"Game Over");
         }
     }
 }

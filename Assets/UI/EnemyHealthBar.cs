@@ -1,20 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealthBar : MonoBehaviour
+namespace UI
 {
-    public Image healthBarFill;
-    public Transform target; 
-    void Start()
+    public class EnemyHealthBar : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private Image healthBarImage;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void UpdateHealthBar(float maxHealth, float currentHealth)
+        {
+            healthBarImage.fillAmount = currentHealth / maxHealth;
+        }
     }
 }
