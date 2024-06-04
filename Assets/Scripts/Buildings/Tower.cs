@@ -28,7 +28,7 @@ public class Tower : MonoBehaviour
     private ProjectileSpawnPoint projectileSpawnPoint;
     [SerializeField] private Transform projectileSpawnPosition;
     private Transform _targetEnemy;
-    private Transform _enemy;
+   // private Transform _enemy;
     private BuildingTypeHolder buildingTypeHolder;
 
     private void Awake()
@@ -73,33 +73,40 @@ public class Tower : MonoBehaviour
     private void LookForTargets()
     {
         Collider[] colliderArray = Physics.OverlapSphere(transform.position, targetMaxRadius);
+        Transform closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
+
         foreach (Collider collider in colliderArray)
         {
-            
+
             if (collider.CompareTag("Enemy"))
             {
-                //Debug.Log($"Enemy {collider.name}");
-                _enemy = collider.transform;
-                if (_targetEnemy == null)
+                float distanceToEnemy = Vector3.Distance(transform.position, collider.transform.position);
+                if (distanceToEnemy < closestDistance)
                 {
-                    _targetEnemy = _enemy;
-                    projectileSpawnPoint.RotateTowardsEnemy(_targetEnemy);
-                    GetComponentInChildren<TowerRotater>().RotateTowardsEnemy(_targetEnemy);
-
+                    closestEnemy = collider.transform;
+                    closestDistance = distanceToEnemy;
                 }
-                else
-                {
-                    if (Vector3.Distance(transform.position, _enemy.transform.position) <
-                        Vector3.Distance(transform.position, _targetEnemy.transform.position))
-                    {
-                        //Enemy is on range
-                        _targetEnemy = _enemy;
-                    }
-                }
-                
             }
-       
         }
+
+        if(closestEnemy != null )
+        {
+            _targetEnemy = closestEnemy;
+            projectileSpawnPoint.RotateTowardsEnemy(_targetEnemy);
+            GetComponentInChildren<TowerRotater>().RotateTowardsEnemy(_targetEnemy);
+
+        }
+        else
+        {
+            _targetEnemy = null;
+        }
+              
+        if(_targetEnemy != null && Vector3.Distance(transform.position, _targetEnemy.position) > targetMaxRadius)
+        {
+            _targetEnemy = null;
+        }
+       
 
 
     }
