@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Enemys;
 using Enemys.Data;
@@ -116,6 +117,8 @@ public class Group : MonoBehaviour
             }
         }
     }
+    
+    
         
     private Vector3 SpawnsPoints(int index)
     {
@@ -170,4 +173,5 @@ public class Group : MonoBehaviour
         SpawnEnemy(EnemyType.Chaser);
         SpawnEnemy(EnemyType.Ranger);
     }
+
 }
