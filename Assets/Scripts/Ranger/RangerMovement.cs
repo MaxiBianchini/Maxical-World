@@ -38,6 +38,7 @@ namespace Ranger
         private float _distance;
         private State _state;
         private float _maxHealth;
+        private bool _isDead = false;
         
         private AnimationsController _animationsController;
         
@@ -58,6 +59,7 @@ namespace Ranger
             StopAttacking();
             _enemyController = EnemyController.Instance;
             healthBar.UpdateHealthBar(_maxHealth, _health);
+            _isDead = false;
 
         }
         private void Update()
@@ -82,7 +84,7 @@ namespace Ranger
             _health -= amount;
             _animationsController.Hit();
             healthBar.UpdateHealthBar(_maxHealth, _health);
-            if (_health <= 0)
+            if (_health <= 0 && !_isDead)
             {
                 Death();
             }
@@ -108,8 +110,9 @@ namespace Ranger
         public void Death()
         {
             StopAttacking();
+            _isDead = true;
             _animationsController.SetDead();
-            EnemyController.Instance.DropCoin(gameObject.transform, _value);
+            CoinManager.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
         }

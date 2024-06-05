@@ -8,7 +8,6 @@ namespace Enemys
 {
     public class EnemyController : MonoBehaviour
     {
-        [SerializeField] private GameObject coinPrefab;
         public static EnemyController Instance { get; private set; }
         public static event Action DoorDestroyedEvent;
         
@@ -117,12 +116,6 @@ namespace Enemys
                 destroyer.SetDestination(Nexo);
             }
         }
-
-      public void DropCoin(Transform position, int value)
-         {
-             GameObject newCoin = Instantiate(coinPrefab, position.position, Quaternion.identity);
-             //todo newCoin.Initialize(value) con esto llamo a ese metodo de la coin para cuando el player pase por encima reciba value monedas
-         }
-
+        
     }
 }

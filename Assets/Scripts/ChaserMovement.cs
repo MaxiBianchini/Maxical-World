@@ -31,6 +31,7 @@ namespace Enemys.Chaser
         private Quaternion _targetRotation;
         private IDamageable _damageable;
         private EnemyController _enemyController;
+        private bool _isDead = false;
         
         private AnimationsController _animationsController;
 
@@ -46,6 +47,7 @@ namespace Enemys.Chaser
             StopAttacking();
             _maxHealth = _health;
             healthBar.UpdateHealthBar(_maxHealth, _health);
+            _isDead = false;
         }
 
         private void Update()
@@ -80,7 +82,7 @@ namespace Enemys.Chaser
             _health -= amount;
             _animationsController.Hit();
             healthBar.UpdateHealthBar(_maxHealth, _health);
-            if (_health <= 0)
+            if (_health <= 0 && !_isDead)
             {
                 Death();
             }
@@ -134,8 +136,9 @@ namespace Enemys.Chaser
         public void Death()
         {
             StopAttacking();
+            _isDead = true;
             _animationsController.SetDead();
-            EnemyController.Instance.DropCoin(gameObject.transform, _value);
+            CoinManager.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
         }

@@ -26,6 +26,7 @@ namespace Enemys.Destroyer
         private GameObject _target;
         private IDamageable _damageable;
         private float _maxHealth;
+        private bool _isDead = false;
 
         private AnimationsController _animationsController;
         
@@ -39,6 +40,7 @@ namespace Enemys.Destroyer
         {
             StopAttacking();
             healthBar.UpdateHealthBar(_maxHealth, _health);
+            _isDead = false;
         }
 
         private void Update()
@@ -60,7 +62,7 @@ namespace Enemys.Destroyer
             _health -= amount;
             _animationsController.Hit();
             healthBar.UpdateHealthBar(_maxHealth, _health);
-            if (_health <= 0)
+            if (_health <= 0 && !_isDead)
             {
                 Death();
             }
@@ -82,9 +84,11 @@ namespace Enemys.Destroyer
 
         public void Death()
         {
+            Debug.Log("Death method called");
             StopAttacking();
+            _isDead = true;
             _animationsController.SetDead();
-            EnemyController.Instance.DropCoin(gameObject.transform, _value);
+            CoinManager.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
         }
