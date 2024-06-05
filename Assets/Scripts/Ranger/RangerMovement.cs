@@ -15,7 +15,6 @@ namespace Ranger
         [SerializeField] private float attackSpeed;
         [SerializeField] private float rotationSpeed;
         [SerializeField] private LayerMask validTarget;
-        [SerializeField] private EnemyHealthBar healthBar;
         
         [Header("Projectile")]
         [SerializeField] private GameObject bulletPrefab;
@@ -23,6 +22,7 @@ namespace Ranger
         [SerializeField] private float bulletSpeed;
 
 
+        private HealthBar healthBar;
         private float _damage;
         private float _health;
         private int _value;
@@ -51,13 +51,17 @@ namespace Ranger
         {
             _agent = GetComponent<NavMeshAgent>();
             _animationsController = GetComponent<AnimationsController>();
+            healthBar = GetComponentInChildren<HealthBar>();
         }
         
         private void Start()
         {
             StopAttacking();
             _enemyController = EnemyController.Instance;
-            healthBar.UpdateHealthBar(_maxHealth, _health);
+
+            _maxHealth = _health;
+            GetComponentInChildren<HealthBar>().SetMaxHealthValue((int)_maxHealth);
+            healthBar.UpdateHealthBar((int)_health);
 
         }
         private void Update()
@@ -81,7 +85,7 @@ namespace Ranger
         {
             _health -= amount;
             _animationsController.Hit();
-            healthBar.UpdateHealthBar(_maxHealth, _health);
+            healthBar.UpdateHealthBar((int)_health);
             if (_health <= 0)
             {
                 Death();

@@ -14,8 +14,8 @@ namespace Enemys.Destroyer
     {
         [SerializeField] private float attackRange;
         [SerializeField] private float attackSpeed;
-        [SerializeField] private EnemyHealthBar healthBar;
 
+        private HealthBar healthBar;
         private float _damage;
         private float _health;
         private int _value;
@@ -33,12 +33,16 @@ namespace Enemys.Destroyer
         {
             _agent = GetComponent<NavMeshAgent>();
             _animationsController = GetComponent<AnimationsController>();
+            healthBar = GetComponentInChildren<HealthBar>();
         }
 
         private void Start()
         {
             StopAttacking();
-            healthBar.UpdateHealthBar(_maxHealth, _health);
+
+            _maxHealth = _health;
+            GetComponentInChildren<HealthBar>().SetMaxHealthValue((int)_maxHealth);
+            healthBar.UpdateHealthBar((int)_health);
         }
 
         private void Update()
@@ -59,7 +63,7 @@ namespace Enemys.Destroyer
         {
             _health -= amount;
             _animationsController.Hit();
-            healthBar.UpdateHealthBar(_maxHealth, _health);
+            healthBar.UpdateHealthBar((int)_health);
             if (_health <= 0)
             {
                 Death();
