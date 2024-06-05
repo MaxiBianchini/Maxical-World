@@ -6914,7 +6914,7 @@ Transform:
   m_GameObject: {fileID: 370031669}
   serializedVersion: 2
   m_LocalRotation: {x: 0.37189233, y: -0.19452395, z: 0.079736106, w: 0.9041564}
-  m_LocalPosition: {x: 19.714607, y: 10.519795, z: 26.865547}
+  m_LocalPosition: {x: 17.374607, y: 10.519795, z: 21.745546}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19501,7 +19501,7 @@ Transform:
   m_GameObject: {fileID: 1002321505}
   serializedVersion: 2
   m_LocalRotation: {x: 0.37189233, y: -0.19452395, z: 0.079736106, w: 0.9041564}
-  m_LocalPosition: {x: 19.714607, y: 10.519795, z: 26.865547}
+  m_LocalPosition: {x: 17.374607, y: 10.519795, z: 21.745546}
   m_LocalScale: {x: 1.5000005, y: 1.5000004, z: 1.5000005}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20450,8 +20450,8 @@ MonoBehaviour:
   rangerSpeed: 2
   rangerValue: 0
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
-  chaserAmount: 1
-  chaserHealth: 100
+  chaserAmount: 2
+  chaserHealth: 10000
   chaserDamage: 20
   chaserSpeed: 6
   chaserValue: 20
@@ -26289,6 +26289,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4169168387777590, guid: 8f8e8b461fdf4c140a82a526fc737dfb, type: 3}
   m_PrefabInstance: {fileID: 1395943068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1396110987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8455822936002439726, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
+  m_PrefabInstance: {fileID: 2013703229}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1397253810
 GameObject:
@@ -34607,7 +34612,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_UseGeometry: 1
   m_DefaultArea: 0
-  m_GenerateLinks: 0
+  m_GenerateLinks: 1
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
@@ -37065,7 +37070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6816253164600949723, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.8
+      value: 15.46
       objectReference: {fileID: 0}
     - target: {fileID: 6816253164600949723, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
       propertyPath: m_LocalPosition.y
@@ -37073,7 +37078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6816253164600949723, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 31.1
+      value: 25.98
       objectReference: {fileID: 0}
     - target: {fileID: 6816253164600949723, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
       propertyPath: m_LocalRotation.w
@@ -37122,7 +37127,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8455822936002439726, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2126392819}
   m_SourcePrefab: {fileID: 100100000, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
 --- !u!1001 &2016408373
 PrefabInstance:
@@ -39647,6 +39655,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6816253164600949723, guid: 06e69238f25f63c4fbd7011cc5192029, type: 3}
   m_PrefabInstance: {fileID: 2013703229}
   m_PrefabAsset: {fileID: 0}
+--- !u!208 &2126392819
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396110987}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &2128904581
 PrefabInstance:
   m_ObjectHideFlags: 0

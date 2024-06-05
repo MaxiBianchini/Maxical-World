@@ -47,6 +47,7 @@ namespace Enemys.Destroyer
         {
             CheckRange();
         }
+       
 
         public void Initialize(float health, float damage, float speed, int value)
         {

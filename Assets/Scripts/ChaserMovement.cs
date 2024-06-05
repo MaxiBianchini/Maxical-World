@@ -52,7 +52,6 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
 
     private void Update()
     {
-        Debug.Log($"target: {_target} | destination: {_destination} | ");
         Behaviour();
         if (_agent.isStopped)
         {
@@ -62,6 +61,7 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
         {
             _animationsController.SetMovingState(true);
         }
+        Debug.Log($"agent has path: {_agent.hasPath}");
 
     }
 
@@ -120,6 +120,27 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
         }
             
     }
+    //todo borrar si funciona bien
+    // private void OnDrawGizmos()
+    // {
+    //     if (_target != null)
+    //     {
+    //         Gizmos.color = Color.red;
+    //         Gizmos.DrawSphere(_destination, 0.5f); // Dibuja una esfera roja en el destino
+    //     }
+    //
+    //     if (_agent != null && _agent.hasPath)
+    //     {
+    //         Gizmos.color = Color.red;
+    //         Vector3[] path = _agent.path.corners;
+    //
+    //         for (int i = 0; i < path.Length - 1; i++)
+    //         {
+    //             Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas verdes para la trayectoria
+    //         }
+    //     }
+    //     
+    // }
         
     private void Chase()
     {
