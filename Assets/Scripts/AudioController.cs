@@ -6,8 +6,8 @@ public class AudioController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
-    {
-       AudioManager.Instance.PlayMusic("Main");
+    { 
+        AudioManager.Instance.PlayMusic("Main");
     }
 
     // Update is called once per frame
