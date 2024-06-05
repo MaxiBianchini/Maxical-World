@@ -15,6 +15,10 @@ public class BuildManager : MonoBehaviour
    // [SerializeField] private bool readyToBuild = false;
     [SerializeField] private bool isBuilding = false;
     [SerializeField] private bool isOverTowerSpawnPoint;
+
+
+    [SerializeField] private int inventoryGold;
+
     private Transform pfGhostTower;
     private Transform ghostTowerInstance;
 
@@ -68,8 +72,15 @@ public class BuildManager : MonoBehaviour
                 // TO DO: Hacer que solo se pueda construir cerca de un rango del player.
                 //TO DO: call EnemyController add tower method --- Noe
                 //Tower.Create(UtilsClass.GetMouseWorldPosition());
-                var tower = Tower.Create(ghostTowerInstance.position);
-                EnemyController.Instance.AddTower(tower.gameObject);
+                
+                //Traigo el prefab de la torre y su costo en oro para validarlo
+                Transform pfTower = GameAssets.Instance.pfTower;
+                int towerCost = pfTower.GetComponent<BuildingTypeHolder>().buildingType.goldAmountCost;
+                if (CanAffordCost(towerCost))
+                {
+                    var tower = Tower.Create(ghostTowerInstance.position, pfTower);
+                    EnemyController.Instance.AddTower(tower.gameObject);
+                }
 
             }
         }
@@ -85,6 +96,22 @@ public class BuildManager : MonoBehaviour
 
             Destroy(ghostTowerInstance.gameObject);
         }
+    }
+
+    //Chequea si hay oro suficiente para construir la torre
+    private bool CanAffordCost(int towerCost)
+    {
+        if(inventoryGold >= towerCost)
+        {
+            inventoryGold -= towerCost;
+            return true;
+        }
+        else
+        {
+            Debug.Log("No tengo plata para construir");
+            return false;
+        }
+
     }
 
     public void SetTowerPosition(Vector3 spawnPosition, bool value)

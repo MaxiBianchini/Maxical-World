@@ -3552,6 +3552,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7956408392176167846, guid: c6d9b1c719e162c4db4234b930643cf9, type: 3}
+      propertyPath: inventoryGold
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7956408392176167846, guid: c6d9b1c719e162c4db4234b930643cf9, type: 3}
+      propertyPath: goldInInventory
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1986225320505617218, guid: c6d9b1c719e162c4db4234b930643cf9, type: 3}

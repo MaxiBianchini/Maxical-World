@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    public static Tower Create(Vector3 position)
+    public static Tower Create(Vector3 position, Transform pfTower)
     {
-        Transform pfArrowTower = GameAssets.Instance.pfTower;
-        Transform TowerTransform = Instantiate(pfArrowTower, position, Quaternion.identity);
+        
+        Transform TowerTransform = Instantiate(pfTower, position, Quaternion.identity);
 
         Tower tower = TowerTransform.GetComponent<Tower>();
         return tower;
