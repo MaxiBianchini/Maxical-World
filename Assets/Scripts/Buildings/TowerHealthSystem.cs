@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Common;
 using Enemys;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TowerHealthSystem : MonoBehaviour, IDamageable
 {
@@ -51,14 +52,23 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
     //Test Variables
     public bool isDead;
 
+    private Slider healthBar;
+
     private void Awake()
     {
         buildingTypeHolder = GetComponent<BuildingTypeHolder>();
+        healthBar = GetComponentInChildren<Slider>();
 
         if (buildingTypeHolder != null)
         {
             maxHealth = buildingTypeHolder.buildingType.healthAmountMax;
             currentHealth = maxHealth;
+        }
+
+        if(healthBar != null)
+        {
+            healthBar.maxValue = maxHealth;
+            HealthBarUIUpdate();
         }
     }
 
@@ -72,6 +82,11 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
     private void Update()
     {
         CheckHealth();
+    }
+
+    private void HealthBarUIUpdate()
+    {
+        healthBar.value = currentHealth;
     }
 
     private void CheckHealth()
@@ -167,7 +182,8 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
         currentHealth -= (int)damage;
         //Notify suscriptors tower has been damaged
         onTowerDamaged?.Invoke(this,  currentHealth);
-        
+        HealthBarUIUpdate();
+
         if(currentHealth <= 0)
         {
             currentHealth = 0;

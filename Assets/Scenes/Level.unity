@@ -3932,6 +3932,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1728401420994122768, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
@@ -7234,7 +7242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &407353083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10977,6 +10985,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5942052343718603564, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -28522,6 +28538,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1728401420994122768, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
@@ -34106,33 +34130,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower
       objectReference: {fileID: 0}
-    - target: {fileID: 642386142145943725, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 652122196644888733, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 829292326687701286, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 829292326687719180, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 829292326687747518, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942052343718603564, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 6628285364344648506, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1728401420994122768, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
@@ -37966,7 +37973,7 @@ MonoBehaviour:
   destroyerSpeed: 6
   destroyerValue: 0
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
-  rangerAmount: 0
+  rangerAmount: 3
   rangerHealth: 1
   rangerDamage: 40
   rangerSpeed: 5
