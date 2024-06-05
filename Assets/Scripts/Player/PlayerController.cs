@@ -1,7 +1,8 @@
 using Common;
+using Enemys;
 using UnityEngine;
 
-namespace Player.Scripts
+namespace Player
 {
     public class PlayerController : MonoBehaviour, IDamageable
     {
@@ -9,7 +10,6 @@ namespace Player.Scripts
         [SerializeField] private float playerSpeed = 5.0f;
         [SerializeField] private float health;
 
-        public static bool Safe;
         public static bool Dead;
         private CharacterController _controller;
         private Camera _mainCamera;
@@ -20,15 +20,10 @@ namespace Player.Scripts
         {
             _controller = GetComponent<CharacterController>();
             _mainCamera = Camera.main;
-            Safe = false;
             Dead = false;
             
         }
 
-        public static bool IsSafe()
-        {
-            return Safe;
-        }
 
         void Update()
         {
@@ -36,18 +31,6 @@ namespace Player.Scripts
             PerformMovement(move);
             RotatePlayerTowardsMouse();
             
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                Safe = true;
-            }
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                Dead = true;
-            }
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                Safe = false;
-            }
         }
 
         private Vector3 CalculateMovement()
@@ -90,6 +73,7 @@ namespace Player.Scripts
         private void Die()
         {
             Debug.Log("Murio");
+            Destroy(gameObject);
         }
     }
 }

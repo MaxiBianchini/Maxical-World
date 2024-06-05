@@ -117,8 +117,6 @@ public class Group : MonoBehaviour
             }
         }
     }
-    
-    
         
     private Vector3 SpawnsPoints(int index)
     {

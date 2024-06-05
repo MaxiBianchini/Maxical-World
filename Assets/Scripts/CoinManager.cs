@@ -38,7 +38,6 @@ public class CoinManager : MonoBehaviour
     
     public void DropCoin(Transform position, int value)
     {
-        Debug.Log("DropCoin method called");
         GameObject newCoin = Instantiate(coinPrefab, position.position, Quaternion.identity);
         Coin coin = newCoin.GetComponent<Coin>();
         coin.Initialize(value);

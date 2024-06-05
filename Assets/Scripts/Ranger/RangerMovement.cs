@@ -155,7 +155,7 @@ namespace Ranger
                         }
                         break;
                     case State.Attacking:
-                        
+                        LookTarget();
                         if (_target != null) 
                         {
                             if (!IsTargetVisible() || !IsInRange())
@@ -215,7 +215,7 @@ namespace Ranger
                 closestGameObject = EnemyController.Instance.Nexo;
                 SetDestination(closestGameObject);
             }
-            Debug.Log($"Cambiando target a {closestGameObject}");
+           // Debug.Log($"Cambiando target a {closestGameObject}");
         }
         
         private void StartAttacking()
