@@ -16,7 +16,6 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         _waveTimer = timeBetweenWaves;
-        Debug.Log($"lista de waves {waveList.Count}");
     }
 
 

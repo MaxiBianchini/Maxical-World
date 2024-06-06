@@ -22,7 +22,7 @@ namespace Ranger
         [SerializeField] private float bulletSpeed;
 
 
-        private HealthBar healthBar;
+        private HealthBar _healthBar;
         private float _damage;
         private float _health;
         private int _value;
@@ -38,6 +38,7 @@ namespace Ranger
         private float _distance;
         private State _state;
         private float _maxHealth;
+        private bool _isDead = false;
         
         private AnimationsController _animationsController;
         
@@ -51,17 +52,17 @@ namespace Ranger
         {
             _agent = GetComponent<NavMeshAgent>();
             _animationsController = GetComponent<AnimationsController>();
-            healthBar = GetComponentInChildren<HealthBar>();
+            _healthBar = GetComponentInChildren<HealthBar>();
         }
         
         private void Start()
         {
             StopAttacking();
             _enemyController = EnemyController.Instance;
-
             _maxHealth = _health;
-            GetComponentInChildren<HealthBar>().SetMaxHealthValue((int)_maxHealth);
-            healthBar.UpdateHealthBar((int)_health);
+            GetComponentInChildren<HealthBar>().SetMaxHealthValue(_maxHealth);
+            _healthBar.UpdateHealthBar(_health);
+            _isDead = false;
 
         }
         private void Update()
@@ -85,8 +86,8 @@ namespace Ranger
         {
             _health -= amount;
             _animationsController.Hit();
-            healthBar.UpdateHealthBar((int)_health);
-            if (_health <= 0)
+            _healthBar.UpdateHealthBar(_health);
+            if (_health <= 0 && !_isDead)
             {
                 Death();
             }
@@ -112,8 +113,9 @@ namespace Ranger
         public void Death()
         {
             StopAttacking();
+            _isDead = true;
             _animationsController.SetDead();
-            EnemyController.Instance.DropCoin(gameObject.transform, _value);
+            CoinManager.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
         }
@@ -156,7 +158,7 @@ namespace Ranger
                         }
                         break;
                     case State.Attacking:
-                        
+                        LookTarget();
                         if (_target != null) 
                         {
                             if (!IsTargetVisible() || !IsInRange())
@@ -216,7 +218,7 @@ namespace Ranger
                 closestGameObject = EnemyController.Instance.Nexo;
                 SetDestination(closestGameObject);
             }
-            Debug.Log($"Cambiando target a {closestGameObject}");
+           // Debug.Log($"Cambiando target a {closestGameObject}");
         }
         
         private void StartAttacking()

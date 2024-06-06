@@ -71,6 +71,14 @@ public class Group : MonoBehaviour
                 damage = destroyerDamage;
                 speed = destroyerSpeed;
                 value = destroyerValue;
+                if (target == null)
+                {
+                    target = destroyerTargets.secondaryTarget;
+                    if (target == null)
+                    {
+                        target = destroyerTargets.finalTarget;
+                    }
+                }
                 break;
             case EnemyType.Ranger:
                 prefab = rangerPrefab;
@@ -80,17 +88,38 @@ public class Group : MonoBehaviour
                 damage = rangerDamage;
                 speed = rangerSpeed;
                 value = rangerValue;
-
+                if (target == null)
+                {
+                    target = rangerTargets.secondaryTarget;
+                    if (target == null)
+                    {
+                        target = rangerTargets.finalTarget;
+                    }
+                }
                 break;
             case EnemyType.Chaser:
                 prefab = chaserPrefab;
-                target = chaserTargets.primaryTarget;
+               // target = chaserTargets.primaryTarget;
                 amount = chaserAmount;
                 health = chaserHealth;
                 damage = chaserDamage;
                 speed = chaserSpeed;
                 value = chaserValue;
-
+                if (chaserTargets.primaryTarget == null)
+                {
+                    if (chaserTargets.secondaryTarget == null)
+                    {
+                        target = chaserTargets.finalTarget;
+                    }
+                    else
+                    {
+                        target = chaserTargets.secondaryTarget;
+                    }
+                }
+                else
+                {
+                    target = chaserTargets.primaryTarget;
+                }
                 break;
             default:
                 Debug.LogError("SpawnEnemy - Error tipo de enemigo");
@@ -107,18 +136,21 @@ public class Group : MonoBehaviour
         for (int i = 0; i < spawnPointList.Count; i++) {
             for (int j = 0; j < amount; j++)
             {
+
                 //tiempo para que spawnee el siguiente? ver milanote
                 _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
+                Debug.Log($"newEnemy Name: {_newEnemy.name}");
                 spawn = spawnPointList[i].position;
                 _enemy = _newEnemy.GetComponent<IEnemy>();
                 _enemy.Initialize(health, damage, speed, value);
+
+                // ------
                 _newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
+                
                 EnemyController.Instance.enemiesList.Add(_newEnemy);
             }
         }
     }
-    
-    
         
     private Vector3 SpawnsPoints(int index)
     {

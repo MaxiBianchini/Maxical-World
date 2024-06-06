@@ -1,217 +1,298 @@
-using System;
 using System.Collections;
 using Common;
-using Enemys.Data;
-using Player.Scripts;
+using Enemys;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
-namespace Enemys.Chaser
+[RequireComponent(typeof(NavMeshAgent))]
+public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private float rotationSpeed;
+    
+    
+    private HealthBar _healthBar;
+    private float _damage;
+    private float _health;
+    private float _maxHealth;
+    private int _value;
+    private NavMeshAgent _agent;
+    private Coroutine _attackCoroutine;
+    private Vector3 _destination;
+    private Vector3 _direction;
+    private GameObject _target;
+    private Quaternion _targetRotation;
+    private IDamageable _damageable;
+    private EnemyController _enemyController;
+    private bool _isDead = false;
+    private State _state;
+        
+    private AnimationsController _animationsController;
+
+    private enum State
     {
-        [SerializeField] private float attackRange;
-        [SerializeField] private float attackSpeed;
-        [SerializeField] private float rotationSpeed;
-        
-        
-        private HealthBar healthBar;
-        private float _damage;
-        private float _health;
-        private float _maxHealth;
-        private int _value;
-        private bool _isAttacking = false;
-        private NavMeshAgent _agent;
-        private Coroutine _attackCoroutine;
-        private Vector3 _destination;
-        private Vector3 _direction;
-        private GameObject _target;
-        private Quaternion _targetRotation;
-        private IDamageable _damageable;
-        private EnemyController _enemyController;
-        
-        private AnimationsController _animationsController;
+        Chasing,
+        Attacking,
+    }
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _animationsController = GetComponent<AnimationsController>();
+        _healthBar = GetComponentInChildren<HealthBar>();
+    }
 
-
-        private void Awake()
-        {
-            _agent = GetComponent<NavMeshAgent>();
-            _animationsController = GetComponent<AnimationsController>();
-            healthBar = GetComponentInChildren<HealthBar>();
-        }
-
-        private void Start()
+    private void Start()
         {
             StopAttacking();
-
             _maxHealth = _health;
             GetComponentInChildren<HealthBar>().SetMaxHealthValue((int)_maxHealth);
-            healthBar.UpdateHealthBar((int)_health);
+            _healthBar.UpdateHealthBar(_health);
+            _state = State.Chasing;
+            _isDead = false;
+        }
+    
+
+    private void Update()
+    {
+        Behaviour();
+        if (_agent.isStopped)
+        {
+            _animationsController.SetMovingState(false);
+        }
+        else
+        {
+            _animationsController.SetMovingState(true);
         }
 
-        private void Update()
-        {
-            CheckRange();
-            Chase();
+    }
 
-        }
-
-        public void Initialize(float health, float damage, float speed, int value)
-        {
-            _health = health;
-            _maxHealth = _health;
-            _damage = damage;
-            _agent.speed = speed;
-            _value = value;
+    public void Initialize(float health, float damage, float speed, int value)
+    {
+        _health = health;
+        _maxHealth = _health;
+        _damage = damage;
+        _agent.speed = speed;
+        _value = value;
             
-        }
-        
-        private void Chase()
+    }
+    private void Behaviour() //checkeando constantemente
+    {
+        Chase();
+        if (_target == null)
         {
-          //  Debug.Log($"Is attacking chase  {_isAttacking} to {_target}");
-            if (_target != null && !_isAttacking)
+            ChangeTarget();
+        }
+        else
+        {
+            switch (_state)
             {
-                _animationsController.SetMovingState(true);
-                _agent.SetDestination(_target.transform.position);
+                case State.Chasing:
+                    
+                    if (IsInRange())
+                    {
+                        //_animationsController.SetMovingState(false);
+                        _state = State.Attacking;
+                        StartAttacking();
+                       
+                    }
+                    break;
+                case State.Attacking:
+                        
+                    if (_target != null) 
+                    {
+                        LookTarget();
+                        if (!IsInRange())
+                        {
+                           // _animationsController.SetMovingState(true);
+                            _state = State.Chasing;
+                            StopAttacking();
+                            SetDestination(_target);
+                        }
+                    }
+                    else
+                    {
+                        StopAttacking();
+                        _agent.isStopped = true;
+                        _state = State.Chasing;
+                        ChangeTarget();
+                    }
+                    break;
             }
         }
+            
+    }
+    //todo borrar si funciona bien
+    // private void OnDrawGizmos()
+    // {
+    //     if (_target != null)
+    //     {
+    //         Gizmos.color = Color.red;
+    //         Gizmos.DrawSphere(_destination, 0.5f); // Dibuja una esfera roja en el destino
+    //     }
+    //
+    //     if (_agent != null && _agent.hasPath)
+    //     {
+    //         Gizmos.color = Color.red;
+    //         Vector3[] path = _agent.path.corners;
+    //
+    //         for (int i = 0; i < path.Length - 1; i++)
+    //         {
+    //             Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas verdes para la trayectoria
+    //         }
+    //     }
+    //     
+    // }
+        
+    private void Chase()
+    {
+        if (_target != null && _state != State.Attacking)
+        {
+            //_animationsController.SetMovingState(true);
+            SetDestination(_target);
+        }
 
-        public void TakeDamage(float amount)
+        if (_target == null)
+        {
+            ChangeTarget();
+        }
+    }
+
+    public void TakeDamage(float amount)
         {
             _health -= amount;
             _animationsController.Hit();
-            healthBar.UpdateHealthBar((int)_health);
-            if (_health <= 0)
+            _healthBar.UpdateHealthBar(_health);
+            if (_health <= 0 && !_isDead)
             {
                 Death();
             }
         }
 
-        public void Attack(GameObject currentTarget)
+    public void Attack(GameObject currentTarget)
+    {
+        if (_damageable != null && currentTarget != null)
         {
-            if (_damageable != null)
-            {
-                _animationsController.SetMovingState(false);
-                _animationsController.Attack();
-                _damageable.TakeDamage(_damage);
-            }
-            else if (currentTarget == null)
-            {
-                ChangeTarget();
-            }
-            else
-            {
-                Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
-            }
+           // _animationsController.SetMovingState(false);
+            _animationsController.Attack();
+            _damageable.TakeDamage(_damage);
         }
-        private void ChangeTarget()
+        else
         {
-            int doorCount = _enemyController.Doors.Count;
-            GameObject closestGameObject = null;
-            float closestDistance = Mathf.Infinity;
-            float currentDistance;
-
-            if (doorCount != 0)
-            {
-                foreach (var door in EnemyController.Instance.Doors)
-                {
-                    currentDistance = Vector3.Distance(gameObject.transform.position, door.transform.position);
-                    if (currentDistance < closestDistance)
-                    {
-                        closestDistance = currentDistance;
-                        closestGameObject = door;
-                    }
-                }
-                SetDestination(closestGameObject); 
-            }
-            else
-            {
-                closestGameObject = EnemyController.Instance.Nexo;
-                SetDestination(closestGameObject);
-            }
+            Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
         }
 
-
-        public void Death()
+        if (currentTarget == null)
         {
             StopAttacking();
-            _animationsController.SetDead();
-            EnemyController.Instance.DropCoin(gameObject.transform, _value);
-            EnemyController.Instance.enemiesList.Remove(gameObject);
-            Destroy(gameObject);
+            ChangeTarget();
         }
-
-        public void SetDestination(GameObject newDestination)
-        {
-            _target = newDestination;
-            _damageable = _target.GetComponent<IDamageable>();
-            if (_target != null)
-            {
-                _destination = _target.transform.position;
-                _agent.SetDestination(_destination);
-            }
-            
-        }
-        
-        private void StartAttacking()
-        {
-            if (_attackCoroutine == null)
-            {
-                _attackCoroutine = StartCoroutine(AttackPerform());
-            }
-        }
-
-        private void StopAttacking()
-        {
-            if (_attackCoroutine != null)
-            {
-                StopCoroutine(_attackCoroutine);
-                _attackCoroutine = null;
-            }
-        }
-
-        private void CheckRange()
-        {
-            float distanceToDestination = Vector3.Distance(transform.position, _target.transform.position);
-            
-            if (distanceToDestination <= attackRange && !_isAttacking)
-            {
-                _isAttacking = true;
-                _agent.isStopped = true;
-                StartAttacking();
-            }
-            
-            else if (distanceToDestination > attackRange && _isAttacking)
-            {
-                _isAttacking = false;
-                _agent.isStopped = false;
-                StopAttacking();
-            }
-            LookTarget();
-        }
-
-        private void LookTarget()
-        {
-            if (_isAttacking) //mira al obeetivo
-            {
-                _direction = _target.transform.position - transform.position;
-                _targetRotation = Quaternion.LookRotation(_direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
-            }
-        }
-        
-        private IEnumerator AttackPerform()
-        {
-            while (_isAttacking)
-            {
-                yield return new WaitForSeconds(10/attackSpeed);
-                Attack(_target);
-              //  Debug.Log($"Attack {_target}");
-            }
-        }
-        
     }
+    private void ChangeTarget()
+    {
+        _target = null;
+        _agent.isStopped = true;
+        int doorCount = EnemyController.Instance.Doors.Count;
+        GameObject closestGameObject = null;
+        float closestDistance = Mathf.Infinity;
+        float currentDistance;
+        if (doorCount != 0)
+        {
+            foreach (var door in EnemyController.Instance.Doors)
+            {
+                currentDistance = Vector3.Distance(gameObject.transform.position, door.transform.position);
+                if (currentDistance < closestDistance)
+                {
+                    closestDistance = currentDistance;
+                    closestGameObject = door;
+                }
+            }
+            SetDestination(closestGameObject); 
+        }
+        else
+        {
+            closestGameObject = EnemyController.Instance.Nexo;
+            SetDestination(closestGameObject);
+        } 
+        //Debug.Log($"Cambiando target a {closestGameObject}");
+    }
+
+
+    public void Death()
+    {
+        StopAttacking();
+        _isDead = true;
+        _animationsController.SetDead();
+        CoinManager.Instance.DropCoin(gameObject.transform, _value);
+        EnemyController.Instance.enemiesList.Remove(gameObject);
+        Destroy(gameObject);
+    }
+
+    public void SetDestination(GameObject newDestination)
+    {
+        _target = newDestination;
+        _damageable = _target?.GetComponent<IDamageable>();
+        if (_target != null)
+        {
+            _destination = _target.transform.position;
+            _agent.isStopped = false;
+            _agent.SetDestination(_destination);
+        }
+        else
+        {
+            ChangeTarget();
+        }
+            
+    }
+        
+    private void StartAttacking()
+    {
+        if (_attackCoroutine == null)
+        {
+            _agent.isStopped = true;
+            _attackCoroutine = StartCoroutine(AttackPerform());
+        }
+    }
+
+    private void StopAttacking()
+    {
+        if (_attackCoroutine != null)
+        {
+            _agent.isStopped = false;
+            StopCoroutine(_attackCoroutine);
+            _attackCoroutine = null;
+        }
+    }
+
+    private bool IsInRange()
+    {
+        if (_target == null)
+        {
+            return false;
+        }
+        float distanceToDestination = Vector3.Distance(transform.position, _target.transform.position);
+
+        return distanceToDestination <= attackRange;
+    }
+
+    private void LookTarget()
+    {
+        if (_state == State.Attacking  && _target != null) //mira al obeetivo
+        {
+            _direction = _target.transform.position - transform.position;
+            _targetRotation = Quaternion.LookRotation(_direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
+        }
+    }
+        
+    private IEnumerator AttackPerform()
+    {
+        while (_state == State.Attacking)
+        {
+            Attack(_target);
+            yield return new WaitForSeconds(10/attackSpeed);
+        }
+    }
+        
 }

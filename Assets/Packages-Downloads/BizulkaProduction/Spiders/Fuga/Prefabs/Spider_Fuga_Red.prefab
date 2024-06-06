@@ -667,9 +667,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997142e3e38a88d418cd59bd4dd8aa55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 8
+  attackRange: 5
   attackSpeed: 10
   rotationSpeed: 20
+  healthBar: {fileID: 6075774066735920137, guid: 9a920e7cb400a6348aaacfa52bb6a669, type: 3}
 --- !u!1 &7122654101855521597
 GameObject:
   m_ObjectHideFlags: 0
