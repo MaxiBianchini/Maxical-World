@@ -52,12 +52,13 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
     //Test Variables
     public bool isDead;
 
-    private Slider healthBar;
+    private HealthBar healthBar;
 
     private void Awake()
     {
         buildingTypeHolder = GetComponent<BuildingTypeHolder>();
-        healthBar = GetComponentInChildren<Slider>();
+        healthBar = GetComponentInChildren<HealthBar>();
+        
 
         if (buildingTypeHolder != null)
         {
@@ -65,11 +66,6 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
             currentHealth = maxHealth;
         }
 
-        if(healthBar != null)
-        {
-            healthBar.maxValue = maxHealth;
-            HealthBarUIUpdate();
-        }
     }
 
     private void Start()
@@ -77,6 +73,9 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
         pfSmallFire = GameAssets.Instance.pfSmallFireVFX.GetComponent<ParticleSystem>();
         pfMediumFire = GameAssets.Instance.pfMediumFireVFX.GetComponent<ParticleSystem>();
         pfBigFire = GameAssets.Instance.pfBigFireVFX.GetComponent<ParticleSystem>();
+
+        healthBar.SetMaxHealthValue(maxHealth);
+        healthBar.UpdateHealthBar(currentHealth);
     }
 
     private void Update()
@@ -84,10 +83,10 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
         CheckHealth();
     }
 
-    private void HealthBarUIUpdate()
-    {
-        healthBar.value = currentHealth;
-    }
+    //private void HealthBarUIUpdate()
+    //{
+    //    GetComponentInChildren<HealthBar>().UpdateHealthBar(currentHealth);
+    //}
 
     private void CheckHealth()
     {
@@ -182,9 +181,9 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
         currentHealth -= (int)damage;
         //Notify suscriptors tower has been damaged
         onTowerDamaged?.Invoke(this,  currentHealth);
-        HealthBarUIUpdate();
+        healthBar.UpdateHealthBar(currentHealth);
 
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             isDead = true;

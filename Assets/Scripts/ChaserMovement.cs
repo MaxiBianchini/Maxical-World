@@ -11,8 +11,9 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
     [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private EnemyHealthBar healthBar;
-        
+    
+    
+    private HealthBar _healthBar;
     private float _damage;
     private float _health;
     private float _maxHealth;
@@ -39,16 +40,19 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
     {
         _agent = GetComponent<NavMeshAgent>();
         _animationsController = GetComponent<AnimationsController>();
+        _healthBar = GetComponentInChildren<HealthBar>();
     }
 
     private void Start()
-    {
-        StopAttacking();
-        _maxHealth = _health;
-        healthBar.UpdateHealthBar(_maxHealth, _health);
-        _state = State.Chasing;
-        _isDead = false;
-    }
+        {
+            StopAttacking();
+            _maxHealth = _health;
+            GetComponentInChildren<HealthBar>().SetMaxHealthValue((int)_maxHealth);
+            _healthBar.UpdateHealthBar(_health);
+            _state = State.Chasing;
+            _isDead = false;
+        }
+    
 
     private void Update()
     {
@@ -157,15 +161,15 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
     }
 
     public void TakeDamage(float amount)
-    {
-        _health -= amount;
-        _animationsController.Hit();
-        healthBar.UpdateHealthBar(_maxHealth, _health);
-        if (_health <= 0 && !_isDead)
         {
-            Death();
+            _health -= amount;
+            _animationsController.Hit();
+            _healthBar.UpdateHealthBar(_health);
+            if (_health <= 0 && !_isDead)
+            {
+                Death();
+            }
         }
-    }
 
     public void Attack(GameObject currentTarget)
     {

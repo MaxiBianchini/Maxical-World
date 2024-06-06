@@ -7,7 +7,7 @@ namespace UI
     {
         [SerializeField] private Image healthBarImage;
 
-        public void UpdateHealthBar(float maxHealth, float currentHealth)
+        public void UpdateHealthBarA(float maxHealth, float currentHealth)
         {
             healthBarImage.fillAmount = currentHealth / maxHealth;
         }

@@ -28,5 +28,6 @@ public class GameAssets : MonoBehaviour
     public Transform pfBigFireVFX;
     public Transform pfBuildingDestroyedParticles;
     public Transform pfCanonSplash;
+    public Transform pfDeathEnemyVFX_1;
     //public Transform pfBuildingConstruction;
 }
