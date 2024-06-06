@@ -68,7 +68,9 @@ public class BuildManager : MonoBehaviour
 
         Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
 
-        if (CanSpawnBuilding(mousePosition) && isOverTowerSpawnPoint && !OutOfBuildingRangeDistance(mousePosition))
+        bool outOfRange = OutOfBuildingRangeDistance(mousePosition);
+
+        if (CanSpawnBuilding(mousePosition) && isOverTowerSpawnPoint && !outOfRange)
         {
             //Apago mensaje de que esta lejos para construir
             GetComponentInChildren<TMP_Text>().enabled = false;
@@ -95,15 +97,8 @@ public class BuildManager : MonoBehaviour
         else
         {
             ChangeGhostTowerMeshMaterial(redMaterial);
-
-            if (OutOfBuildingRangeDistance(mousePosition))
-            {
-                GetComponentInChildren<TMP_Text>().enabled = true;
-            }
-            else
-            {
-                GetComponentInChildren<TMP_Text>().enabled = false;
-            }
+            GetComponentInChildren<TMP_Text>().enabled = outOfRange;
+           
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
