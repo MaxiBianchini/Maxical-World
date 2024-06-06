@@ -115,6 +115,7 @@ namespace Ranger
             StopAttacking();
             _isDead = true;
             _animationsController.SetDead();
+            AudioManager.Instance.PlayEffect("Enemy Death");
             CoinManager.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);

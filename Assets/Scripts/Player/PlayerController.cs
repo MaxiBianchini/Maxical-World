@@ -25,6 +25,7 @@ namespace Player
         }
 
 
+        
         void Update()
         {
             Vector3 move = CalculateMovement();

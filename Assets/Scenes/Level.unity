@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f729e25c4e0c34799ae6dfc067ed04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveManager: {fileID: 1511407692}
+  waveManager: {fileID: 1742739095}
   text: {fileID: 1051149668}
 --- !u!4 &79119989
 Transform:
@@ -2281,7 +2281,19 @@ MonoBehaviour:
   musicSounds:
   - soundName: Main
     clip: {fileID: 8300000, guid: 74ea78e7f6190ac4f8126293bcfe9569, type: 3}
-  sfxSounds: []
+  sfxSounds:
+  - soundName: Sword Slash
+    clip: {fileID: 8300000, guid: 57782e914d29c614d99f1695ac598f18, type: 3}
+  - soundName: Building Boom
+    clip: {fileID: 8300000, guid: 84d162b25e091314d9cce3b57ebb1eff, type: 3}
+  - soundName: Cannon Ball
+    clip: {fileID: 8300000, guid: aab0f4d1c03e8a640936269e76d26717, type: 3}
+  - soundName: Coin Pickup
+    clip: {fileID: 8300000, guid: 795bdea5b5bd6e74b89c8fb5cc6311a6, type: 3}
+  - soundName: Build
+    clip: {fileID: 8300000, guid: 7ca1975a5b88d324a84e15707a4a13ba, type: 3}
+  - soundName: Enemy Death
+    clip: {fileID: 8300000, guid: be0208d96f64fed4cbcf7f422029168a, type: 3}
   musicSource: {fileID: 1768066243}
   sfxSource: {fileID: 1818339613}
 --- !u!4 &128467953
@@ -7686,7 +7698,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407353082}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6a16e7f66a3c6d41b27b9960709f5c0, type: 3}
   m_Name: 
@@ -25945,74 +25957,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!1 &1382562513
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1382562515}
-  - component: {fileID: 1382562514}
-  m_Layer: 0
-  m_Name: TEST WAVE
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1382562514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382562513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a1e16cea045ea4bb0b54a7ffea025d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyerPrefab: {fileID: 8187015543198388644, guid: 6b12735268a70114186cb0ea66d06763, type: 3}
-  destroyerAmount: 0
-  destroyerHealth: 100
-  destroyerDamage: 40
-  destroyerSpeed: 6
-  destroyerValue: 10
-  rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
-  rangerAmount: 0
-  rangerHealth: 100
-  rangerDamage: 40
-  rangerSpeed: 3
-  rangerValue: 10
-  chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
-  chaserAmount: 2
-  chaserHealth: 136
-  chaserDamage: 40
-  chaserSpeed: 5
-  chaserValue: 10
-  spawnPointList:
-  - {fileID: 586536675}
-  - {fileID: 1203438522}
-  destroyerTargets: {fileID: 11400000, guid: c64b397a2320baf46a7c8804f07b4a98, type: 2}
-  rangerTargets: {fileID: 11400000, guid: 9737a8b8d8791d04e8e1f04681de7067, type: 2}
-  chaserTargets: {fileID: 11400000, guid: fc4056a2aab487e4b9e49bbc4808d192, type: 2}
---- !u!4 &1382562515
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382562513}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1387598508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26828,6 +26772,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4478235978383186, guid: d8ebd34c38d3d0a40b5422c0fd136471, type: 3}
   m_PrefabInstance: {fileID: 1475371803}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1481174302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481174304}
+  - component: {fileID: 1481174303}
+  m_Layer: 0
+  m_Name: WAVE TEST
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1481174303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481174302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a1e16cea045ea4bb0b54a7ffea025d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyerPrefab: {fileID: 8187015543198388644, guid: 6b12735268a70114186cb0ea66d06763, type: 3}
+  destroyerAmount: 1
+  destroyerHealth: 50
+  destroyerDamage: 40
+  destroyerSpeed: 6
+  destroyerValue: 10
+  rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
+  rangerAmount: 0
+  rangerHealth: 100
+  rangerDamage: 100
+  rangerSpeed: 3
+  rangerValue: 10
+  chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
+  chaserAmount: 0
+  chaserHealth: 25
+  chaserDamage: 40
+  chaserSpeed: 5
+  chaserValue: 10
+  spawnPointList:
+  - {fileID: 586536675}
+  destroyerTargets: {fileID: 11400000, guid: c64b397a2320baf46a7c8804f07b4a98, type: 2}
+  rangerTargets: {fileID: 11400000, guid: 9737a8b8d8791d04e8e1f04681de7067, type: 2}
+  chaserTargets: {fileID: 11400000, guid: fc4056a2aab487e4b9e49bbc4808d192, type: 2}
+--- !u!4 &1481174304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481174302}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 31, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1484837215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27014,53 +27025,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4169168387777590, guid: 8f8e8b461fdf4c140a82a526fc737dfb, type: 3}
   m_PrefabInstance: {fileID: 1502051747}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1511407691
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1511407693}
-  - component: {fileID: 1511407692}
-  m_Layer: 0
-  m_Name: WaveManager (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1511407692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511407691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6a16e7f66a3c6d41b27b9960709f5c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waveList:
-  - {fileID: 1544524746}
-  timeBetweenWaves: 5
---- !u!4 &1511407693
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511407691}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.195591, y: -25.07492, z: 6.7614164}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1512779702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32330,6 +32294,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4826540439777805613, guid: aa00e151003fa9c4caf37e06da0c431d, type: 3}
   m_PrefabInstance: {fileID: 1741546788}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1742739094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742739096}
+  - component: {fileID: 1742739095}
+  m_Layer: 0
+  m_Name: WaveManager (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1742739095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742739094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a16e7f66a3c6d41b27b9960709f5c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveList:
+  - {fileID: 1481174302}
+  timeBetweenWaves: 5
+--- !u!4 &1742739096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742739094}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -26.195591, y: -25.07492, z: 6.7614164}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1744960948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33490,74 +33501,6 @@ Transform:
   - {fileID: 1090268370}
   - {fileID: 1592452198}
   - {fileID: 866642036}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1798092062
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1798092064}
-  - component: {fileID: 1798092063}
-  m_Layer: 0
-  m_Name: TEST WAVE 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1798092063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798092062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a1e16cea045ea4bb0b54a7ffea025d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyerPrefab: {fileID: 8187015543198388644, guid: 6b12735268a70114186cb0ea66d06763, type: 3}
-  destroyerAmount: 0
-  destroyerHealth: 100
-  destroyerDamage: 40
-  destroyerSpeed: 6
-  destroyerValue: 10
-  rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
-  rangerAmount: 0
-  rangerHealth: 100
-  rangerDamage: 40
-  rangerSpeed: 3
-  rangerValue: 10
-  chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
-  chaserAmount: 2
-  chaserHealth: 136
-  chaserDamage: 40
-  chaserSpeed: 5
-  chaserValue: 10
-  spawnPointList:
-  - {fileID: 586536675}
-  - {fileID: 1203438522}
-  destroyerTargets: {fileID: 11400000, guid: c64b397a2320baf46a7c8804f07b4a98, type: 2}
-  rangerTargets: {fileID: 11400000, guid: 9737a8b8d8791d04e8e1f04681de7067, type: 2}
-  chaserTargets: {fileID: 11400000, guid: fc4056a2aab487e4b9e49bbc4808d192, type: 2}
---- !u!4 &1798092064
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798092062}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1798325117
@@ -40548,7 +40491,7 @@ SceneRoots:
   - {fileID: 352553024}
   - {fileID: 1541791586}
   - {fileID: 407353084}
-  - {fileID: 1511407693}
+  - {fileID: 1742739096}
   - {fileID: 3294170770403391912}
   - {fileID: 1910308221}
   - {fileID: 1804507511}
@@ -40559,8 +40502,7 @@ SceneRoots:
   - {fileID: 1838661019}
   - {fileID: 1720234796}
   - {fileID: 1544524748}
-  - {fileID: 1798092064}
-  - {fileID: 1382562515}
+  - {fileID: 1481174304}
   - {fileID: 1416015658}
   - {fileID: 79119989}
   - {fileID: 1675020041}

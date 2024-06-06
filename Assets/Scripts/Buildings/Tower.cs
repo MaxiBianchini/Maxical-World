@@ -7,7 +7,7 @@ public class Tower : MonoBehaviour
 {
     public static Tower Create(Vector3 position, Transform pfTower)
     {
-        
+        AudioManager.Instance.PlayEffect("Build");
         Transform TowerTransform = Instantiate(pfTower, position, Quaternion.identity);
 
         Tower tower = TowerTransform.GetComponent<Tower>();
@@ -53,6 +53,7 @@ public class Tower : MonoBehaviour
             shootTimer += shootTimerMax;
             if(_targetEnemy != null && canAttack)
             {
+                AudioManager.Instance.PlayEffect("Cannon Ball");
                 Projectile.Create(projectileSpawnPosition.transform.position, _targetEnemy, towerAccuracy, projectileSpawnPoint.transform.rotation, buildingTypeHolder.buildingType);
             }
         }

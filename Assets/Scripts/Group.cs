@@ -136,15 +136,11 @@ public class Group : MonoBehaviour
         for (int i = 0; i < spawnPointList.Count; i++) {
             for (int j = 0; j < amount; j++)
             {
-
                 //tiempo para que spawnee el siguiente? ver milanote
                 _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
-                Debug.Log($"newEnemy Name: {_newEnemy.name}");
                 spawn = spawnPointList[i].position;
                 _enemy = _newEnemy.GetComponent<IEnemy>();
                 _enemy.Initialize(health, damage, speed, value);
-
-                // ------
                 _newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
                 
                 EnemyController.Instance.enemiesList.Add(_newEnemy);
@@ -160,6 +156,7 @@ public class Group : MonoBehaviour
         
     private GameObject ClosestTarget(Vector3 spawnPoint, GameObject target)
     {
+        // en el momento que se crea un enemigo se le setea el target ranger = door, pero si no hay ninguna door esta igual le setea la door. Tengo que hacer que vaya al siguiente tipo de target
         GameObject closestGameObject = null;
         float closestDistance = Mathf.Infinity;
         float currentDistance;
@@ -167,6 +164,7 @@ public class Group : MonoBehaviour
         switch (target.tag)
         {
             case "Door":
+
                 foreach (var door in EnemyController.Instance.Doors)
                 {
                     currentDistance = Vector3.Distance(spawnPoint, door.transform.position);
