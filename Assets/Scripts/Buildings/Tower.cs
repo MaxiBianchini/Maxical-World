@@ -9,7 +9,6 @@ public class Tower : MonoBehaviour
     {
         AudioManager.Instance.PlayEffect("Build");
         Transform TowerTransform = Instantiate(pfTower, position, Quaternion.identity);
-
         Tower tower = TowerTransform.GetComponent<Tower>();
         return tower;
     }
