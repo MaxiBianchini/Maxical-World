@@ -9,7 +9,6 @@ public class Tower : MonoBehaviour
     {
         
         Transform TowerTransform = Instantiate(pfTower, position, Quaternion.identity);
-
         Tower tower = TowerTransform.GetComponent<Tower>();
         return tower;
     }

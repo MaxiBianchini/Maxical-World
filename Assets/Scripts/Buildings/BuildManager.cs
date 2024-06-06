@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Enemys;
+using Player;
+using TMPro;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
@@ -15,12 +17,14 @@ public class BuildManager : MonoBehaviour
    // [SerializeField] private bool readyToBuild = false;
     [SerializeField] private bool isBuilding = false;
     [SerializeField] private bool isOverTowerSpawnPoint;
+    [SerializeField] private float maxBuildingDistance = 5f;
 
 
     [SerializeField] private int inventoryGold;
 
     private Transform pfGhostTower;
     private Transform ghostTowerInstance;
+    private Vector3 lastGhostTowerPosition;
 
     private void Awake()
     {
@@ -62,8 +66,12 @@ public class BuildManager : MonoBehaviour
     {
         SetGhostBuildingMeshPosition();
 
-        if (CanSpawnBuilding(UtilsClass.GetMouseWorldPosition()) && isOverTowerSpawnPoint)
+        Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
+
+        if (CanSpawnBuilding(mousePosition) && isOverTowerSpawnPoint && !OutOfBuildingRangeDistance(mousePosition))
         {
+            //Apago mensaje de que esta lejos para construir
+            GetComponentInChildren<TMP_Text>().enabled = false;
 
             ChangeGhostTowerMeshMaterial(blueMaterial);
 
@@ -87,15 +95,32 @@ public class BuildManager : MonoBehaviour
         else
         {
             ChangeGhostTowerMeshMaterial(redMaterial);
+
+            if (OutOfBuildingRangeDistance(mousePosition))
+            {
+                GetComponentInChildren<TMP_Text>().enabled = true;
+            }
+            else
+            {
+                GetComponentInChildren<TMP_Text>().enabled = false;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
          //   readyToBuild = false;
             isBuilding = false;
-
+            GetComponentInChildren<TMP_Text>().enabled = false;
             Destroy(ghostTowerInstance.gameObject);
         }
+    }
+
+    private bool OutOfBuildingRangeDistance(Vector3 mousePosition)
+    {
+        Vector3 playerPosition = FindObjectOfType<PlayerController>().transform.position;
+        float distance = Vector3.Distance(mousePosition, playerPosition);
+
+        return distance > maxBuildingDistance;
     }
 
     //Chequea si hay oro suficiente para construir la torre
@@ -143,8 +168,17 @@ public class BuildManager : MonoBehaviour
         {
             ghostTowerInstance.position = UtilsClass.GetMouseWorldPosition();
             ghostTowerInstance.position = new Vector3(ghostTowerInstance.position.x, 0f, ghostTowerInstance.position.z);
+            PlayerController player = FindObjectOfType<PlayerController>();
+            float distance = Vector3.Distance(ghostTowerInstance.position, player.transform.position);
+
+                lastGhostTowerPosition = ghostTowerInstance.position;
+                ghostTowerInstance.position = lastGhostTowerPosition;
+                
+
         }
     }
+
+   
 
 
 
