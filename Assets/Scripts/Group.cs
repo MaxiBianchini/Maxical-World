@@ -136,7 +136,7 @@ public class Group : MonoBehaviour
         for (int i = 0; i < spawnPointList.Count; i++) {
             for (int j = 0; j < amount; j++)
             {
-                //tiempo para que spawnee el siguiente? ver milanote
+                //todo ? tiempo para que spawnee el siguiente? ver milanote
                 _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
                 spawn = spawnPointList[i].position;
                 _enemy = _newEnemy.GetComponent<IEnemy>();
@@ -147,6 +147,17 @@ public class Group : MonoBehaviour
             }
         }
     }
+    
+    
+    //que necesito? filtrar si existe un target inicial, y si no, avanzar con el segundo target, filtrarlo y si no, avanzar con el ultimo.
+    
+    //1. que a ClosestTarget() le pase una lista? con todos los targets que puede llegar a tener y luego en el metodo closestarget evalue esa lista?
+    //2. Hacer un metodo que reciba el tipo de enemigo y verifique los targets y devuelva un target (que se haga en el switch) ++++++++++++++
+    //3. 
+    
+    
+    
+    
         
     private Vector3 SpawnsPoints(int index)
     {
