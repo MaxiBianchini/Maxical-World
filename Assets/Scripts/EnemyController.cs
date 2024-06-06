@@ -104,6 +104,11 @@ public class EnemyController : MonoBehaviour
         DoorDestroyedEvent -= HandleDoorDestroyed;
 
     }
+
+    public void SetPlayerDeath()
+    {
+        _player = null;
+    }
         
     private void HandleDoorDestroyed()
     {

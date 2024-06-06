@@ -73,6 +73,7 @@ namespace Player
         private void Die()
         {
             Debug.Log("Murio");
+            EnemyController.Instance.SetPlayerDeath();
             Destroy(gameObject);
         }
     }

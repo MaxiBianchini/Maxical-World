@@ -65,7 +65,6 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
         {
             _animationsController.SetMovingState(true);
         }
-        Debug.Log($"agent has path: {_agent.hasPath}");
 
     }
 
@@ -216,7 +215,7 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
             closestGameObject = EnemyController.Instance.Nexo;
             SetDestination(closestGameObject);
         } 
-        Debug.Log($"Cambiando target a {closestGameObject}");
+        //Debug.Log($"Cambiando target a {closestGameObject}");
     }
 
 
