@@ -2294,6 +2294,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 7ca1975a5b88d324a84e15707a4a13ba, type: 3}
   - soundName: Enemy Death
     clip: {fileID: 8300000, guid: be0208d96f64fed4cbcf7f422029168a, type: 3}
+  - soundName: Player Hit
+    clip: {fileID: 8300000, guid: b95466303aaac14428d04294f9fcc7d4, type: 3}
   musicSource: {fileID: 1768066243}
   sfxSource: {fileID: 1818339613}
 --- !u!4 &128467953
