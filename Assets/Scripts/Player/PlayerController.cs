@@ -16,12 +16,14 @@ namespace Player
         private Camera _mainCamera;
         private Animator anim;
         private float actualSpeed = 0;
+        private CombatSystem combatSystem;
 
         private bool isMoving = false;
 
         private void Awake()
         {
             anim = GetComponent<Animator>();
+            combatSystem = GetComponent<CombatSystem>();
         }
 
         void Start()
@@ -39,6 +41,21 @@ namespace Player
             PerformMovement(move);
             RotatePlayerTowardsMouse();
             
+            
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Attack();
+            }
+
+           
+            
+        }
+
+        private void Attack()
+        {
+            anim.SetTrigger("attack");
+            Debug.Log("Atacoooo");
+
         }
 
         private void LateUpdate()

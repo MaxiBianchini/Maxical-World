@@ -1,18 +1,44 @@
+using Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float damage = 10f;
+
+    private BoxCollider boxCollider;
+    private bool isAttacking =false;
+
+    public bool IsAttacking { get { return isAttacking; } }
+
+    private void Awake()
     {
-        
+        boxCollider = GetComponent<BoxCollider>();
+        boxCollider.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+
+        IDamageable enemy = other.GetComponent<IDamageable>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+            Debug.Log($"Le hago {damage} al enemigo0");
+        }
+    }
+
+    private void DamageEventOn()
+    {
+        if (isAttacking) return;
+        boxCollider.enabled = true;
+        isAttacking = true;
+    }
+
+    private void DamageEventOff()
+    {
+        boxCollider.enabled = false;
+        isAttacking = false;
     }
 }
