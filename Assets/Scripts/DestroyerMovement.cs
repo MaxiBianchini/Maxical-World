@@ -80,6 +80,11 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
         {
             Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
         }
+        if (currentTarget == null)
+        {
+            StopAttacking();
+            ChangeTarget();
+        }
     }
 
     public void Death()
@@ -102,6 +107,10 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
             _destination = _target.transform.position;
             _agent.SetDestination(_destination);
         }
+        else
+        {
+            ChangeTarget();
+        }
     }
 
     private void StartAttacking()
@@ -123,6 +132,10 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
 
     private void CheckRange()
     {
+        if (_target == null)
+        {
+            ChangeTarget();
+        }
         float distanceToDestination = Vector3.Distance(transform.position, _destination);
             
         if (distanceToDestination <= attackRange && !_isAttacking)
@@ -139,6 +152,35 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
             _agent.isStopped = false;
             StopAttacking();
         }
+    }
+    
+    private void ChangeTarget()
+    {
+        _target = null;
+        _agent.isStopped = true;
+        int doorCount = EnemyController.Instance.Doors.Count;
+        GameObject closestGameObject = null;
+        float closestDistance = Mathf.Infinity;
+        float currentDistance;
+        if (doorCount != 0)
+        {
+            foreach (var door in EnemyController.Instance.Doors)
+            {
+                currentDistance = Vector3.Distance(gameObject.transform.position, door.transform.position);
+                if (currentDistance < closestDistance)
+                {
+                    closestDistance = currentDistance;
+                    closestGameObject = door;
+                }
+            }
+            SetDestination(closestGameObject); 
+        }
+        else
+        {
+            closestGameObject = EnemyController.Instance.Nexo;
+            SetDestination(closestGameObject);
+        } 
+        //Debug.Log($"Cambiando target a {closestGameObject}");
     }
         
     private IEnumerator AttackPerform()

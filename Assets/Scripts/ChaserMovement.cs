@@ -65,7 +65,9 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
         {
             _animationsController.SetMovingState(true);
         }
-
+        
+       // Debug.Log($"path: {_agent.hasPath}");
+        //Debug.Log($"path status: {_agent.pathStatus}");
     }
 
     public void Initialize(float health, float damage, float speed, int value)
@@ -139,7 +141,7 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
     //
     //         for (int i = 0; i < path.Length - 1; i++)
     //         {
-    //             Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas verdes para la trayectoria
+    //             Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas rojas para la trayectoria
     //         }
     //     }
     //     

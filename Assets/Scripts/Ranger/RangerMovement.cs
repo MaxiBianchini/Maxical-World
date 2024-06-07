@@ -68,7 +68,14 @@ namespace Ranger
         private void Update()
         {
             Behaviour();
-            LookTarget();
+            if (_agent.isStopped)
+            {
+                _animationsController.SetMovingState(false);
+            }
+            else
+            {
+                _animationsController.SetMovingState(true);
+            }
 
         }
 
@@ -107,6 +114,11 @@ namespace Ranger
             else
             {
                 Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
+            }
+            if (currentTarget == null)
+            {
+                StopAttacking();
+                ChangeTarget();
             }
         }
 
@@ -152,7 +164,6 @@ namespace Ranger
                         if (IsTargetVisible() && IsInRange())
                         {
                             // Debug.Log($"Chasing to Attacking");
-                            _animationsController.SetMovingState(false);
                             _state = State.Attacking;
                             StartAttacking();
                        
@@ -165,7 +176,6 @@ namespace Ranger
                             if (!IsTargetVisible() || !IsInRange())
                             {
                                 // Debug.Log($"Attacking to Chasing");
-                                _animationsController.SetMovingState(true);
                                 _state = State.Chasing;
                                 StopAttacking();
                                 SetDestination(_target);
@@ -173,6 +183,9 @@ namespace Ranger
                         }
                         else
                         {
+                            StopAttacking();
+                            _agent.isStopped = true;
+                            _state = State.Chasing;
                             ChangeTarget();
                         }
                         break;
@@ -183,8 +196,10 @@ namespace Ranger
         
         private void ChangeTarget()
         {
-            int towerCount = _enemyController.Towers.Count;
-            int doorCount = _enemyController.Doors.Count;
+            _target = null;
+            _agent.isStopped = true;
+            int towerCount = EnemyController.Instance.Towers.Count;
+            int doorCount = EnemyController.Instance.Doors.Count;
             GameObject closestGameObject = null;
             float closestDistance = Mathf.Infinity;
             float currentDistance;
@@ -243,6 +258,10 @@ namespace Ranger
         
         private bool IsInRange()
         {
+            if (_target == null)
+            {
+                return false;
+            }
             float distanceToDestination = Vector3.Distance(transform.position, _destination);
 
             return distanceToDestination <= attackRange;

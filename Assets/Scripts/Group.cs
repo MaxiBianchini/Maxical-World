@@ -40,6 +40,7 @@ public class Group : MonoBehaviour
 
     private float _spawnTime;
     private GameObject _player;
+    private GameObject _nexo;
     private Coroutine _waveTimerCoroutine;
     private IEnemy _enemy;
     private GameObject _newEnemy;
@@ -65,61 +66,30 @@ public class Group : MonoBehaviour
         switch (type) {
             case EnemyType.Destroyer:
                 prefab = destroyerPrefab;
-                target = destroyerTargets.primaryTarget;
+                target = TargetFilter(type);
                 amount = destroyerAmount;
                 health = destroyerHealth;
                 damage = destroyerDamage;
                 speed = destroyerSpeed;
                 value = destroyerValue;
-                if (target == null)
-                {
-                    target = destroyerTargets.secondaryTarget;
-                    if (target == null)
-                    {
-                        target = destroyerTargets.finalTarget;
-                    }
-                }
                 break;
             case EnemyType.Ranger:
                 prefab = rangerPrefab;
-                target = rangerTargets.primaryTarget;
+                target = TargetFilter(type);
                 amount = rangerAmount;
                 health = rangerHealth;
                 damage = rangerDamage;
                 speed = rangerSpeed;
                 value = rangerValue;
-                if (target == null)
-                {
-                    target = rangerTargets.secondaryTarget;
-                    if (target == null)
-                    {
-                        target = rangerTargets.finalTarget;
-                    }
-                }
                 break;
             case EnemyType.Chaser:
                 prefab = chaserPrefab;
-               // target = chaserTargets.primaryTarget;
+                target = TargetFilter(type);
                 amount = chaserAmount;
                 health = chaserHealth;
                 damage = chaserDamage;
                 speed = chaserSpeed;
                 value = chaserValue;
-                if (chaserTargets.primaryTarget == null)
-                {
-                    if (chaserTargets.secondaryTarget == null)
-                    {
-                        target = chaserTargets.finalTarget;
-                    }
-                    else
-                    {
-                        target = chaserTargets.secondaryTarget;
-                    }
-                }
-                else
-                {
-                    target = chaserTargets.primaryTarget;
-                }
                 break;
             default:
                 Debug.LogError("SpawnEnemy - Error tipo de enemigo");
@@ -142,7 +112,6 @@ public class Group : MonoBehaviour
                 _enemy = _newEnemy.GetComponent<IEnemy>();
                 _enemy.Initialize(health, damage, speed, value);
                 _newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
-                
                 EnemyController.Instance.enemiesList.Add(_newEnemy);
             }
         }
@@ -154,8 +123,56 @@ public class Group : MonoBehaviour
     //1. que a ClosestTarget() le pase una lista? con todos los targets que puede llegar a tener y luego en el metodo closestarget evalue esa lista?
     //2. Hacer un metodo que reciba el tipo de enemigo y verifique los targets y devuelva un target (que se haga en el switch) ++++++++++++++
     //3. 
-    
-    
+
+    private GameObject TargetFilter(EnemyType type)
+    {
+        GameObject target;
+        
+        switch (type) {
+            case EnemyType.Destroyer:
+                if (EnemyController.Instance.Doors.Count > 0)
+                {
+                    target = destroyerTargets.primaryTarget;
+                }
+                else
+                {
+                    target = destroyerTargets.finalTarget;
+                }
+                break;
+            case EnemyType.Ranger:
+                if (EnemyController.Instance.Towers.Count > 0)
+                {
+                    target = destroyerTargets.primaryTarget;
+                }
+                else if (EnemyController.Instance.Doors.Count > 0)
+                {
+                    target = rangerTargets.secondaryTarget;
+                }
+                else
+                {
+                    target = rangerTargets.finalTarget;
+                }
+                break;
+            case EnemyType.Chaser:
+                if (EnemyController.Instance.Player != null)
+                {
+                    target = chaserTargets.primaryTarget;
+                }
+                else if (EnemyController.Instance.Doors.Count > 0)
+                {
+                    target = chaserTargets.secondaryTarget;
+                }
+                else
+                {
+                    target = chaserTargets.finalTarget;
+                }
+                break;
+            default:
+                target = EnemyController.Instance.Nexo;
+                break;
+        }
+        return target;
+    }
     
     
         
@@ -202,6 +219,11 @@ public class Group : MonoBehaviour
             case "Player":
                 _player = EnemyController.Instance.Player;
                 closestGameObject = _player;
+                break;
+            
+            case "Nexo":
+                _nexo = EnemyController.Instance.Nexo;
+                closestGameObject = _nexo;
                 break;
         }
             
