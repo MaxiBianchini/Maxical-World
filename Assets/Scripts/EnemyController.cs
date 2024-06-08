@@ -44,7 +44,8 @@ public class EnemyController : MonoBehaviour
         FindAndAddPlayer();
         FindAndAddNexo();
            
-            
+        Debug.Log($"Total towers: {_towerList.Count}");
+
     }
         
     private void FindAndAddAllTowers()
@@ -82,6 +83,7 @@ public class EnemyController : MonoBehaviour
     public void RemoveTower(GameObject tower)
     {
         _towerList.Remove(tower);
+        Debug.Log($"Total towers: {_towerList.Count}");
     }
 
     public void AddDoor(GameObject door)

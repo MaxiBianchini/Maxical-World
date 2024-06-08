@@ -1235,8 +1235,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7978624207812061653}
   - {fileID: 7978624207812061649}
@@ -1339,7 +1339,6 @@ MonoBehaviour:
   validTarget:
     serializedVersion: 2
     m_Bits: 1156
-  healthBar: {fileID: 0}
   bulletPrefab: {fileID: 6605577101491823418, guid: b9e16523ee41c2044bde7ad008592790, type: 3}
   firePoint: {fileID: 8060152081476560661}
   bulletSpeed: 25

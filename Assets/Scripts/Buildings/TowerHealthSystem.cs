@@ -158,7 +158,7 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
      
     }
 
-    private void Die()
+    public void Die()
     {
         // Notify suscriptors tower is dead
         if (onTowerDeath != null)
@@ -170,9 +170,10 @@ public class TowerHealthSystem : MonoBehaviour, IDamageable
 
         GameObject explosion = GameAssets.Instance.pfBuildingDestroyedParticles.gameObject;
         GameObject explosionGO = Instantiate(explosion, transform.position + new Vector3(0f, 4f, 0f), Quaternion.identity);
+        AudioManager.Instance.PlayEffect("Building Boom");
+        EnemyController.Instance.RemoveTower(gameObject);
         explosionGO.GetComponent<ParticleSystem>().Play();
         Destroy(explosionGO, 5f);
-        EnemyController.Instance.RemoveTower(gameObject);
         Destroy(gameObject);
     }
 
