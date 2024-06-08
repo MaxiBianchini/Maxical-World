@@ -2415,7 +2415,21 @@ MonoBehaviour:
   musicSounds:
   - soundName: Main
     clip: {fileID: 8300000, guid: 74ea78e7f6190ac4f8126293bcfe9569, type: 3}
-  sfxSounds: []
+  sfxSounds:
+  - soundName: Cannon Ball
+    clip: {fileID: 8300000, guid: aab0f4d1c03e8a640936269e76d26717, type: 3}
+  - soundName: Coin Pickup
+    clip: {fileID: 8300000, guid: 795bdea5b5bd6e74b89c8fb5cc6311a6, type: 3}
+  - soundName: Enemy Death
+    clip: {fileID: 8300000, guid: be0208d96f64fed4cbcf7f422029168a, type: 3}
+  - soundName: Player Hit
+    clip: {fileID: 8300000, guid: b95466303aaac14428d04294f9fcc7d4, type: 3}
+  - soundName: Sword Slash
+    clip: {fileID: 8300000, guid: 57782e914d29c614d99f1695ac598f18, type: 3}
+  - soundName: Build
+    clip: {fileID: 8300000, guid: 7ca1975a5b88d324a84e15707a4a13ba, type: 3}
+  - soundName: Building Boom
+    clip: {fileID: 8300000, guid: 84d162b25e091314d9cce3b57ebb1eff, type: 3}
   musicSource: {fileID: 1768066243}
   sfxSource: {fileID: 1818339613}
 --- !u!4 &128467953
