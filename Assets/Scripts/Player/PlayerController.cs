@@ -1,5 +1,6 @@
 using Common;
 using Enemys;
+using System;
 using UnityEngine;
 
 namespace Player
@@ -13,8 +14,15 @@ namespace Player
         public static bool Dead;
         private CharacterController _controller;
         private Camera _mainCamera;
-        
-        
+        private Animator anim;
+        private float actualSpeed = 0;
+
+        private bool isMoving = false;
+
+        private void Awake()
+        {
+            anim = GetComponent<Animator>();
+        }
 
         void Start()
         {
@@ -34,17 +42,37 @@ namespace Player
             
         }
 
+        private void LateUpdate()
+        {
+            SetMovingAnimation();
+        }
+
+        private void SetMovingAnimation()
+        {
+            
+           anim.SetFloat("xVelocity", actualSpeed);
+        }
+
         private Vector3 CalculateMovement()
         {
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             move = Vector3.ClampMagnitude(move, 1.0f);
             move *= playerSpeed;
+            actualSpeed = move.magnitude;
             return move;
         }
 
         private void PerformMovement(Vector3 move)
         {
             _controller.Move(move * Time.deltaTime);
+            if(actualSpeed != 0)
+            {
+                isMoving = true;
+            }
+            else
+            {
+                isMoving = false;
+            }
         }
 
         private void RotatePlayerTowardsMouse()
