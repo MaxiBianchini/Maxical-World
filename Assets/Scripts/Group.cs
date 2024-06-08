@@ -145,7 +145,6 @@ public class Group : MonoBehaviour
                 }
                 break;
             case EnemyType.Ranger:
-                Debug.LogWarning($"Condicion if towers; {EnemyController.Instance.Towers.Count > 0}");
                 if (EnemyController.Instance.Towers.Count > 0)
                 {
                     target = rangerTargets.primaryTarget;

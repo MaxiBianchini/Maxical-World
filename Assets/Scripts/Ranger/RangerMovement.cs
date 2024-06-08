@@ -203,26 +203,26 @@ namespace Ranger
             
         }
         //todo borrar si funciona bien
-        private void OnDrawGizmos()
-        {
-            if (_target != null)
-            {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawSphere(_destination, 0.5f); // Dibuja una esfera roja en el destino
-            }
-        
-            if (_agent != null && _agent.hasPath)
-            {
-                Gizmos.color = Color.yellow;
-                Vector3[] path = _agent.path.corners;
-        
-                for (int i = 0; i < path.Length - 1; i++)
-                {
-                    Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas rojas para la trayectoria
-                }
-            }
-            
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     if (_target != null)
+        //     {
+        //         Gizmos.color = Color.yellow;
+        //         Gizmos.DrawSphere(_destination, 0.5f); // Dibuja una esfera roja en el destino
+        //     }
+        //
+        //     if (_agent != null && _agent.hasPath)
+        //     {
+        //         Gizmos.color = Color.yellow;
+        //         Vector3[] path = _agent.path.corners;
+        //
+        //         for (int i = 0; i < path.Length - 1; i++)
+        //         {
+        //             Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas rojas para la trayectoria
+        //         }
+        //     }
+        //     
+        // }
         
         private void ChangeTarget()
         {
@@ -265,11 +265,7 @@ namespace Ranger
                 closestGameObject = EnemyController.Instance.Nexo;
                 SetDestination(closestGameObject);
             }
-            Debug.Log($"Cambiando target a {closestGameObject}");
-            if (closestGameObject == null)
-            {
-                Debug.LogError("NULO");
-            }
+            
         }
         
         private void StartAttacking()
@@ -325,7 +321,7 @@ namespace Ranger
             
             if (Physics.Raycast(transform.position, directionToTarget, out hit, attackRange, validTarget))
             {
-                Debug.DrawRay(transform.position, hit.transform.position - transform.position, Color.red); //todo borrar cuando ande todo
+                //Debug.DrawRay(transform.position, hit.transform.position - transform.position, Color.red); //todo borrar cuando ande todo
                 if (hit.transform == _target.transform)
                 {
                     return true;
