@@ -21,7 +21,9 @@ namespace Ranger
         [SerializeField] private Transform firePoint;
         [SerializeField] private float bulletSpeed;
 
-
+        [SerializeField] private bool isInRange;
+        [SerializeField] private bool isVisible;
+        
         private HealthBar _healthBar;
         private float _damage;
         private float _health;
@@ -77,6 +79,8 @@ namespace Ranger
                 _animationsController.SetMovingState(true);
             }
 
+            isInRange = IsInRange();
+            isVisible = IsTargetVisible();
         }
 
         public void Initialize(float health, float damage, float speed, int value)
@@ -140,6 +144,7 @@ namespace Ranger
             if (_target != null)
             {
                 _destination = _target.transform.position;
+                _agent.isStopped = false;
                 _agent.SetDestination(_destination);
             }
             else
@@ -168,6 +173,10 @@ namespace Ranger
                             StartAttacking();
                        
                         }
+                        else
+                        {
+                            SetDestination(_target);
+                        }
                         break;
                     case State.Attacking:
                         LookTarget();
@@ -193,9 +202,31 @@ namespace Ranger
             }
             
         }
+        //todo borrar si funciona bien
+        private void OnDrawGizmos()
+        {
+            if (_target != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(_destination, 0.5f); // Dibuja una esfera roja en el destino
+            }
+        
+            if (_agent != null && _agent.hasPath)
+            {
+                Gizmos.color = Color.yellow;
+                Vector3[] path = _agent.path.corners;
+        
+                for (int i = 0; i < path.Length - 1; i++)
+                {
+                    Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas rojas para la trayectoria
+                }
+            }
+            
+        }
         
         private void ChangeTarget()
         {
+            Debug.LogWarning($"Target {_target}");
             _target = null;
             _agent.isStopped = true;
             int towerCount = EnemyController.Instance.Towers.Count;
@@ -234,7 +265,11 @@ namespace Ranger
                 closestGameObject = EnemyController.Instance.Nexo;
                 SetDestination(closestGameObject);
             }
-           // Debug.Log($"Cambiando target a {closestGameObject}");
+            Debug.Log($"Cambiando target a {closestGameObject}");
+            if (closestGameObject == null)
+            {
+                Debug.LogError("NULO");
+            }
         }
         
         private void StartAttacking()

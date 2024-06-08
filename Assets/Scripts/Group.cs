@@ -45,6 +45,11 @@ public class Group : MonoBehaviour
     private IEnemy _enemy;
     private GameObject _newEnemy;
     private bool _isEnemiesAlive;
+    
+    private Coroutine _destroyerCoroutine;
+    private Coroutine _rangerCoroutine;
+    private Coroutine _chaserCoroutine;
+    private Coroutine _allEnemiesCoroutine;
         
 
     private enum EnemyType {
@@ -56,66 +61,66 @@ public class Group : MonoBehaviour
 
     //metodos
         
-    private void SpawnEnemy(EnemyType type)
-    {
-        Vector3 spawn;
-        GameObject prefab, target;
-        int amount, value;
-        float health, damage, speed;
+    private IEnumerator SpawnEnemiesOfType(EnemyType type)
+{
+    Vector3 spawn;
+    GameObject prefab, target;
+    int amount, value;
+    float health, damage, speed;
 
-        switch (type) {
-            case EnemyType.Destroyer:
-                prefab = destroyerPrefab;
-                target = TargetFilter(type);
-                amount = destroyerAmount;
-                health = destroyerHealth;
-                damage = destroyerDamage;
-                speed = destroyerSpeed;
-                value = destroyerValue;
-                break;
-            case EnemyType.Ranger:
-                prefab = rangerPrefab;
-                target = TargetFilter(type);
-                amount = rangerAmount;
-                health = rangerHealth;
-                damage = rangerDamage;
-                speed = rangerSpeed;
-                value = rangerValue;
-                break;
-            case EnemyType.Chaser:
-                prefab = chaserPrefab;
-                target = TargetFilter(type);
-                amount = chaserAmount;
-                health = chaserHealth;
-                damage = chaserDamage;
-                speed = chaserSpeed;
-                value = chaserValue;
-                break;
-            default:
-                Debug.LogError("SpawnEnemy - Error tipo de enemigo");
-                prefab = null;
-                target = null;
-                amount = 0;
-                health = 0;
-                damage = 0;
-                speed = 0;
-                value = 0;
-                break;
-        }
-            
-        for (int i = 0; i < spawnPointList.Count; i++) {
-            for (int j = 0; j < amount; j++)
-            {
-                //todo ? tiempo para que spawnee el siguiente? ver milanote
-                _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
-                spawn = spawnPointList[i].position;
-                _enemy = _newEnemy.GetComponent<IEnemy>();
-                _enemy.Initialize(health, damage, speed, value);
-                _newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
-                EnemyController.Instance.enemiesList.Add(_newEnemy);
-            }
+    switch (type) {
+        case EnemyType.Destroyer:
+            prefab = destroyerPrefab;
+            target = TargetFilter(type);
+            amount = destroyerAmount;
+            health = destroyerHealth;
+            damage = destroyerDamage;
+            speed = destroyerSpeed;
+            value = destroyerValue;
+            break;
+        case EnemyType.Ranger:
+            prefab = rangerPrefab;
+            target = TargetFilter(type);
+            amount = rangerAmount;
+            health = rangerHealth;
+            damage = rangerDamage;
+            speed = rangerSpeed;
+            value = rangerValue;
+            break;
+        case EnemyType.Chaser:
+            prefab = chaserPrefab;
+            target = TargetFilter(type);
+            amount = chaserAmount;
+            health = chaserHealth;
+            damage = chaserDamage;
+            speed = chaserSpeed;
+            value = chaserValue;
+            break;
+        default:
+            Debug.LogError("SpawnEnemy - Error tipo de enemigo");
+            prefab = null;
+            target = null;
+            amount = 0;
+            health = 0;
+            damage = 0;
+            speed = 0;
+            value = 0;
+            break;
+    }
+        
+    for (int i = 0; i < spawnPointList.Count; i++) {
+        for (int j = 0; j < amount; j++)
+        {
+            yield return new WaitForSeconds(1f);
+            _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
+            spawn = spawnPointList[i].position;
+             _enemy = _newEnemy.GetComponent<IEnemy>();
+            _enemy.Initialize(health, damage, speed, value);
+            _enemy.SetDestination(ClosestTarget(spawn, TargetFilter(type)));
+            EnemyController.Instance.enemiesList.Add(_newEnemy);
         }
     }
+}
     
     
     //que necesito? filtrar si existe un target inicial, y si no, avanzar con el segundo target, filtrarlo y si no, avanzar con el ultimo.
@@ -140,9 +145,10 @@ public class Group : MonoBehaviour
                 }
                 break;
             case EnemyType.Ranger:
+                Debug.LogWarning($"Condicion if towers; {EnemyController.Instance.Towers.Count > 0}");
                 if (EnemyController.Instance.Towers.Count > 0)
                 {
-                    target = destroyerTargets.primaryTarget;
+                    target = rangerTargets.primaryTarget;
                 }
                 else if (EnemyController.Instance.Doors.Count > 0)
                 {
@@ -174,8 +180,6 @@ public class Group : MonoBehaviour
         return target;
     }
     
-    
-        
     private Vector3 SpawnsPoints(int index)
     {
         Vector3 spawn = spawnPointList[index].position;
@@ -229,12 +233,49 @@ public class Group : MonoBehaviour
             
         return closestGameObject;
     }
+    
+    public void StopAllSpawning()
+    {
+        if (_allEnemiesCoroutine != null)
+        {
+            StopCoroutine(_allEnemiesCoroutine);
+            _allEnemiesCoroutine = null;
+        }
+
+        if (_destroyerCoroutine != null)
+        {
+            StopCoroutine(_destroyerCoroutine);
+            _destroyerCoroutine = null;
+        }
+
+        if (_rangerCoroutine != null)
+        {
+            StopCoroutine(_rangerCoroutine);
+            _rangerCoroutine = null;
+        }
+
+        if (_chaserCoroutine != null)
+        {
+            StopCoroutine(_chaserCoroutine);
+            _chaserCoroutine = null;
+        }
+    }
 
     public void SpawnAllEnemies()
     {
-        SpawnEnemy(EnemyType.Destroyer);
-        SpawnEnemy(EnemyType.Chaser);
-        SpawnEnemy(EnemyType.Ranger);
+        StopAllSpawning();
+        _allEnemiesCoroutine = StartCoroutine(SpawnAllEnemiesCoroutine());
+    }
+    private IEnumerator SpawnAllEnemiesCoroutine()
+    {
+        _destroyerCoroutine = StartCoroutine(SpawnEnemiesOfType(EnemyType.Destroyer));
+        yield return _destroyerCoroutine;
+
+        _rangerCoroutine = StartCoroutine(SpawnEnemiesOfType(EnemyType.Ranger));
+        yield return _rangerCoroutine;
+
+        _chaserCoroutine = StartCoroutine(SpawnEnemiesOfType(EnemyType.Chaser));
+        yield return _chaserCoroutine;
     }
 
 }

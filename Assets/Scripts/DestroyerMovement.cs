@@ -105,6 +105,7 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
         if (_target != null)
         {
             _destination = _target.transform.position;
+            _agent.isStopped = false;
             _agent.SetDestination(_destination);
         }
         else
@@ -147,6 +148,7 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
             
         else if (distanceToDestination > attackRange)
         {
+            SetDestination(_target);
             _isAttacking = false;
             _animationsController.SetMovingState(true);
             _agent.isStopped = false;
