@@ -15,6 +15,7 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            AudioManager.Instance.PlayEffect("Coin Pickup");
             CoinManager.Instance.AddCoinMount(_value);
             Destroy();
         }

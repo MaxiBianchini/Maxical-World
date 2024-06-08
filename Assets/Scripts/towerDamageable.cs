@@ -1,26 +1,19 @@
+using System;
 using Common;
 using Enemys;
 using UnityEngine;
 
 namespace Towers
 {
-    public class TowerDamageable : MonoBehaviour, IDamageable
+    public class TowerDamageable : MonoBehaviour
     {
-        private float _health = 100;
-        public void TakeDamage(float amount)
+        [SerializeField] private GameObject tower;
+        private void Update()
         {
-           // Debug.Log($"TOWER {gameObject.name} recibio  {amount} damage ");
-            _health -= amount;
-            if (_health <= 0)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                Destroy();
+                tower.GetComponent<TowerHealthSystem>().Die();
             }
-        }
-
-        private void Destroy()
-        {
-            EnemyController.Instance.RemoveTower(gameObject);
-            Destroy(gameObject);
         }
     }
 }

@@ -40,10 +40,16 @@ public class Group : MonoBehaviour
 
     private float _spawnTime;
     private GameObject _player;
+    private GameObject _nexo;
     private Coroutine _waveTimerCoroutine;
     private IEnemy _enemy;
     private GameObject _newEnemy;
     private bool _isEnemiesAlive;
+    
+    private Coroutine _destroyerCoroutine;
+    private Coroutine _rangerCoroutine;
+    private Coroutine _chaserCoroutine;
+    private Coroutine _allEnemiesCoroutine;
         
 
     private enum EnemyType {
@@ -55,103 +61,124 @@ public class Group : MonoBehaviour
 
     //metodos
         
-    private void SpawnEnemy(EnemyType type)
-    {
-        Vector3 spawn;
-        GameObject prefab, target;
-        int amount, value;
-        float health, damage, speed;
+    private IEnumerator SpawnEnemiesOfType(EnemyType type)
+{
+    Vector3 spawn;
+    GameObject prefab, target;
+    int amount, value;
+    float health, damage, speed;
 
+    switch (type) {
+        case EnemyType.Destroyer:
+            prefab = destroyerPrefab;
+            target = TargetFilter(type);
+            amount = destroyerAmount;
+            health = destroyerHealth;
+            damage = destroyerDamage;
+            speed = destroyerSpeed;
+            value = destroyerValue;
+            break;
+        case EnemyType.Ranger:
+            prefab = rangerPrefab;
+            target = TargetFilter(type);
+            amount = rangerAmount;
+            health = rangerHealth;
+            damage = rangerDamage;
+            speed = rangerSpeed;
+            value = rangerValue;
+            break;
+        case EnemyType.Chaser:
+            prefab = chaserPrefab;
+            target = TargetFilter(type);
+            amount = chaserAmount;
+            health = chaserHealth;
+            damage = chaserDamage;
+            speed = chaserSpeed;
+            value = chaserValue;
+            break;
+        default:
+            Debug.LogError("SpawnEnemy - Error tipo de enemigo");
+            prefab = null;
+            target = null;
+            amount = 0;
+            health = 0;
+            damage = 0;
+            speed = 0;
+            value = 0;
+            break;
+    }
+        
+    for (int i = 0; i < spawnPointList.Count; i++) {
+        for (int j = 0; j < amount; j++)
+        {
+            yield return new WaitForSeconds(1f);
+            _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
+            spawn = spawnPointList[i].position;
+             _enemy = _newEnemy.GetComponent<IEnemy>();
+            _enemy.Initialize(health, damage, speed, value);
+            _enemy.SetDestination(ClosestTarget(spawn, TargetFilter(type)));
+            EnemyController.Instance.enemiesList.Add(_newEnemy);
+        }
+    }
+}
+    
+    
+    //que necesito? filtrar si existe un target inicial, y si no, avanzar con el segundo target, filtrarlo y si no, avanzar con el ultimo.
+    
+    //1. que a ClosestTarget() le pase una lista? con todos los targets que puede llegar a tener y luego en el metodo closestarget evalue esa lista?
+    //2. Hacer un metodo que reciba el tipo de enemigo y verifique los targets y devuelva un target (que se haga en el switch) ++++++++++++++
+    //3. 
+
+    private GameObject TargetFilter(EnemyType type)
+    {
+        GameObject target;
+        
         switch (type) {
             case EnemyType.Destroyer:
-                prefab = destroyerPrefab;
-                target = destroyerTargets.primaryTarget;
-                amount = destroyerAmount;
-                health = destroyerHealth;
-                damage = destroyerDamage;
-                speed = destroyerSpeed;
-                value = destroyerValue;
-                if (target == null)
+                if (EnemyController.Instance.Doors.Count > 0)
                 {
-                    target = destroyerTargets.secondaryTarget;
-                    if (target == null)
-                    {
-                        target = destroyerTargets.finalTarget;
-                    }
-                }
-                break;
-            case EnemyType.Ranger:
-                prefab = rangerPrefab;
-                target = rangerTargets.primaryTarget;
-                amount = rangerAmount;
-                health = rangerHealth;
-                damage = rangerDamage;
-                speed = rangerSpeed;
-                value = rangerValue;
-                if (target == null)
-                {
-                    target = rangerTargets.secondaryTarget;
-                    if (target == null)
-                    {
-                        target = rangerTargets.finalTarget;
-                    }
-                }
-                break;
-            case EnemyType.Chaser:
-                prefab = chaserPrefab;
-               // target = chaserTargets.primaryTarget;
-                amount = chaserAmount;
-                health = chaserHealth;
-                damage = chaserDamage;
-                speed = chaserSpeed;
-                value = chaserValue;
-                if (chaserTargets.primaryTarget == null)
-                {
-                    if (chaserTargets.secondaryTarget == null)
-                    {
-                        target = chaserTargets.finalTarget;
-                    }
-                    else
-                    {
-                        target = chaserTargets.secondaryTarget;
-                    }
+                    target = destroyerTargets.primaryTarget;
                 }
                 else
                 {
+                    target = destroyerTargets.finalTarget;
+                }
+                break;
+            case EnemyType.Ranger:
+                if (EnemyController.Instance.Towers.Count > 0)
+                {
+                    target = rangerTargets.primaryTarget;
+                }
+                else if (EnemyController.Instance.Doors.Count > 0)
+                {
+                    target = rangerTargets.secondaryTarget;
+                }
+                else
+                {
+                    target = rangerTargets.finalTarget;
+                }
+                break;
+            case EnemyType.Chaser:
+                if (EnemyController.Instance.Player != null)
+                {
                     target = chaserTargets.primaryTarget;
+                }
+                else if (EnemyController.Instance.Doors.Count > 0)
+                {
+                    target = chaserTargets.secondaryTarget;
+                }
+                else
+                {
+                    target = chaserTargets.finalTarget;
                 }
                 break;
             default:
-                Debug.LogError("SpawnEnemy - Error tipo de enemigo");
-                prefab = null;
-                target = null;
-                amount = 0;
-                health = 0;
-                damage = 0;
-                speed = 0;
-                value = 0;
+                target = EnemyController.Instance.Nexo;
                 break;
         }
-            
-        for (int i = 0; i < spawnPointList.Count; i++) {
-            for (int j = 0; j < amount; j++)
-            {
-
-                //tiempo para que spawnee el siguiente? ver milanote
-                _newEnemy = Instantiate(prefab, SpawnsPoints(i), Quaternion.identity);
-                Debug.Log($"newEnemy Name: {_newEnemy.name}");
-                spawn = spawnPointList[i].position;
-                _enemy = _newEnemy.GetComponent<IEnemy>();
-                _enemy.Initialize(health, damage, speed, value);
-
-                // ------
-                _newEnemy.GetComponent<IEnemy>().SetDestination(ClosestTarget(spawn, target));
-                
-                EnemyController.Instance.enemiesList.Add(_newEnemy);
-            }
-        }
+        return target;
     }
-        
+    
     private Vector3 SpawnsPoints(int index)
     {
         Vector3 spawn = spawnPointList[index].position;
@@ -160,6 +187,7 @@ public class Group : MonoBehaviour
         
     private GameObject ClosestTarget(Vector3 spawnPoint, GameObject target)
     {
+        // en el momento que se crea un enemigo se le setea el target ranger = door, pero si no hay ninguna door esta igual le setea la door. Tengo que hacer que vaya al siguiente tipo de target
         GameObject closestGameObject = null;
         float closestDistance = Mathf.Infinity;
         float currentDistance;
@@ -167,6 +195,7 @@ public class Group : MonoBehaviour
         switch (target.tag)
         {
             case "Door":
+
                 foreach (var door in EnemyController.Instance.Doors)
                 {
                     currentDistance = Vector3.Distance(spawnPoint, door.transform.position);
@@ -194,16 +223,58 @@ public class Group : MonoBehaviour
                 _player = EnemyController.Instance.Player;
                 closestGameObject = _player;
                 break;
+            
+            case "Nexo":
+                _nexo = EnemyController.Instance.Nexo;
+                closestGameObject = _nexo;
+                break;
         }
             
         return closestGameObject;
     }
+    
+    public void StopAllSpawning()
+    {
+        if (_allEnemiesCoroutine != null)
+        {
+            StopCoroutine(_allEnemiesCoroutine);
+            _allEnemiesCoroutine = null;
+        }
+
+        if (_destroyerCoroutine != null)
+        {
+            StopCoroutine(_destroyerCoroutine);
+            _destroyerCoroutine = null;
+        }
+
+        if (_rangerCoroutine != null)
+        {
+            StopCoroutine(_rangerCoroutine);
+            _rangerCoroutine = null;
+        }
+
+        if (_chaserCoroutine != null)
+        {
+            StopCoroutine(_chaserCoroutine);
+            _chaserCoroutine = null;
+        }
+    }
 
     public void SpawnAllEnemies()
     {
-        SpawnEnemy(EnemyType.Destroyer);
-        SpawnEnemy(EnemyType.Chaser);
-        SpawnEnemy(EnemyType.Ranger);
+        StopAllSpawning();
+        _allEnemiesCoroutine = StartCoroutine(SpawnAllEnemiesCoroutine());
+    }
+    private IEnumerator SpawnAllEnemiesCoroutine()
+    {
+        _destroyerCoroutine = StartCoroutine(SpawnEnemiesOfType(EnemyType.Destroyer));
+        yield return _destroyerCoroutine;
+
+        _rangerCoroutine = StartCoroutine(SpawnEnemiesOfType(EnemyType.Ranger));
+        yield return _rangerCoroutine;
+
+        _chaserCoroutine = StartCoroutine(SpawnEnemiesOfType(EnemyType.Chaser));
+        yield return _chaserCoroutine;
     }
 
 }

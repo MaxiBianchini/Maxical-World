@@ -43,8 +43,7 @@ public class EnemyController : MonoBehaviour
         FindAndAddAllDoors();
         FindAndAddPlayer();
         FindAndAddNexo();
-           
-            
+        
     }
         
     private void FindAndAddAllTowers()

@@ -21,7 +21,9 @@ namespace Ranger
         [SerializeField] private Transform firePoint;
         [SerializeField] private float bulletSpeed;
 
-
+        [SerializeField] private bool isInRange;
+        [SerializeField] private bool isVisible;
+        
         private HealthBar _healthBar;
         private float _damage;
         private float _health;
@@ -68,8 +70,17 @@ namespace Ranger
         private void Update()
         {
             Behaviour();
-            LookTarget();
+            if (_agent.isStopped)
+            {
+                _animationsController.SetMovingState(false);
+            }
+            else
+            {
+                _animationsController.SetMovingState(true);
+            }
 
+            isInRange = IsInRange();
+            isVisible = IsTargetVisible();
         }
 
         public void Initialize(float health, float damage, float speed, int value)
@@ -108,6 +119,11 @@ namespace Ranger
             {
                 Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
             }
+            if (currentTarget == null)
+            {
+                StopAttacking();
+                ChangeTarget();
+            }
         }
 
         public void Death()
@@ -115,6 +131,7 @@ namespace Ranger
             StopAttacking();
             _isDead = true;
             _animationsController.SetDead();
+            AudioManager.Instance.PlayEffect("Enemy Death");
             CoinManager.Instance.DropCoin(gameObject.transform, _value);
             EnemyController.Instance.enemiesList.Remove(gameObject);
             Destroy(gameObject);
@@ -127,6 +144,7 @@ namespace Ranger
             if (_target != null)
             {
                 _destination = _target.transform.position;
+                _agent.isStopped = false;
                 _agent.SetDestination(_destination);
             }
             else
@@ -151,10 +169,13 @@ namespace Ranger
                         if (IsTargetVisible() && IsInRange())
                         {
                             // Debug.Log($"Chasing to Attacking");
-                            _animationsController.SetMovingState(false);
                             _state = State.Attacking;
                             StartAttacking();
                        
+                        }
+                        else
+                        {
+                            SetDestination(_target);
                         }
                         break;
                     case State.Attacking:
@@ -164,7 +185,6 @@ namespace Ranger
                             if (!IsTargetVisible() || !IsInRange())
                             {
                                 // Debug.Log($"Attacking to Chasing");
-                                _animationsController.SetMovingState(true);
                                 _state = State.Chasing;
                                 StopAttacking();
                                 SetDestination(_target);
@@ -172,6 +192,9 @@ namespace Ranger
                         }
                         else
                         {
+                            StopAttacking();
+                            _agent.isStopped = true;
+                            _state = State.Chasing;
                             ChangeTarget();
                         }
                         break;
@@ -179,11 +202,35 @@ namespace Ranger
             }
             
         }
+        //todo borrar si funciona bien
+        // private void OnDrawGizmos()
+        // {
+        //     if (_target != null)
+        //     {
+        //         Gizmos.color = Color.yellow;
+        //         Gizmos.DrawSphere(_destination, 0.5f); // Dibuja una esfera roja en el destino
+        //     }
+        //
+        //     if (_agent != null && _agent.hasPath)
+        //     {
+        //         Gizmos.color = Color.yellow;
+        //         Vector3[] path = _agent.path.corners;
+        //
+        //         for (int i = 0; i < path.Length - 1; i++)
+        //         {
+        //             Gizmos.DrawLine(path[i], path[i + 1]); // Dibuja líneas rojas para la trayectoria
+        //         }
+        //     }
+        //     
+        // }
         
         private void ChangeTarget()
         {
-            int towerCount = _enemyController.Towers.Count;
-            int doorCount = _enemyController.Doors.Count;
+            Debug.LogWarning($"Target {_target}");
+            _target = null;
+            _agent.isStopped = true;
+            int towerCount = EnemyController.Instance.Towers.Count;
+            int doorCount = EnemyController.Instance.Doors.Count;
             GameObject closestGameObject = null;
             float closestDistance = Mathf.Infinity;
             float currentDistance;
@@ -218,7 +265,7 @@ namespace Ranger
                 closestGameObject = EnemyController.Instance.Nexo;
                 SetDestination(closestGameObject);
             }
-           // Debug.Log($"Cambiando target a {closestGameObject}");
+            
         }
         
         private void StartAttacking()
@@ -242,6 +289,10 @@ namespace Ranger
         
         private bool IsInRange()
         {
+            if (_target == null)
+            {
+                return false;
+            }
             float distanceToDestination = Vector3.Distance(transform.position, _destination);
 
             return distanceToDestination <= attackRange;
@@ -270,7 +321,7 @@ namespace Ranger
             
             if (Physics.Raycast(transform.position, directionToTarget, out hit, attackRange, validTarget))
             {
-                Debug.DrawRay(transform.position, hit.transform.position - transform.position, Color.red); //todo borrar cuando ande todo
+                //Debug.DrawRay(transform.position, hit.transform.position - transform.position, Color.red); //todo borrar cuando ande todo
                 if (hit.transform == _target.transform)
                 {
                     return true;

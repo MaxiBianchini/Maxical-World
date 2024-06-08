@@ -80,6 +80,11 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
         {
             Debug.LogError("Attack() - No se le puede hacer danio: " + currentTarget.name + " - Puede faltar componente IDamageable");
         }
+        if (currentTarget == null)
+        {
+            StopAttacking();
+            ChangeTarget();
+        }
     }
 
     public void Death()
@@ -87,6 +92,7 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
         StopAttacking();
         _isDead = true;
         _animationsController.SetDead();
+        AudioManager.Instance.PlayEffect("Enemy Death");
         CoinManager.Instance.DropCoin(gameObject.transform, _value);
         EnemyController.Instance.enemiesList.Remove(gameObject);
         Destroy(gameObject);
@@ -99,7 +105,12 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
         if (_target != null)
         {
             _destination = _target.transform.position;
+            _agent.isStopped = false;
             _agent.SetDestination(_destination);
+        }
+        else
+        {
+            ChangeTarget();
         }
     }
 
@@ -122,6 +133,10 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
 
     private void CheckRange()
     {
+        if (_target == null)
+        {
+            ChangeTarget();
+        }
         float distanceToDestination = Vector3.Distance(transform.position, _destination);
             
         if (distanceToDestination <= attackRange && !_isAttacking)
@@ -133,11 +148,41 @@ public class DestroyerMovement : MonoBehaviour, IEnemy, IDamageable
             
         else if (distanceToDestination > attackRange)
         {
+            SetDestination(_target);
             _isAttacking = false;
             _animationsController.SetMovingState(true);
             _agent.isStopped = false;
             StopAttacking();
         }
+    }
+    
+    private void ChangeTarget()
+    {
+        _target = null;
+        _agent.isStopped = true;
+        int doorCount = EnemyController.Instance.Doors.Count;
+        GameObject closestGameObject = null;
+        float closestDistance = Mathf.Infinity;
+        float currentDistance;
+        if (doorCount != 0)
+        {
+            foreach (var door in EnemyController.Instance.Doors)
+            {
+                currentDistance = Vector3.Distance(gameObject.transform.position, door.transform.position);
+                if (currentDistance < closestDistance)
+                {
+                    closestDistance = currentDistance;
+                    closestGameObject = door;
+                }
+            }
+            SetDestination(closestGameObject); 
+        }
+        else
+        {
+            closestGameObject = EnemyController.Instance.Nexo;
+            SetDestination(closestGameObject);
+        } 
+        //Debug.Log($"Cambiando target a {closestGameObject}");
     }
         
     private IEnumerator AttackPerform()
