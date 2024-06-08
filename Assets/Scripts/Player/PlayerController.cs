@@ -1,6 +1,7 @@
 using Common;
 using Enemys;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Player
@@ -18,7 +19,12 @@ namespace Player
         private float actualSpeed = 0;
         private CombatSystem combatSystem;
 
+        private Vector3 velocity;
+        private bool isGrounded;
+
         private bool isMoving = false;
+
+        public event EventHandler onPlayerDeath;
 
         private void Awake()
         {
@@ -37,11 +43,21 @@ namespace Player
 
         void Update()
         {
+            isGrounded = _controller.isGrounded;
+
+            if(isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
+
             Vector3 move = CalculateMovement();
-            PerformMovement(move);
+            _controller.Move(move * Time.deltaTime);
+            
+            velocity.y += Physics.gravity.y * Time.deltaTime;
+
             RotatePlayerTowardsMouse();
-            
-            
+            _controller.Move(velocity * Time.deltaTime);
+
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Attack();
@@ -78,18 +94,6 @@ namespace Player
             return move;
         }
 
-        private void PerformMovement(Vector3 move)
-        {
-            _controller.Move(move * Time.deltaTime);
-            if(actualSpeed != 0)
-            {
-                isMoving = true;
-            }
-            else
-            {
-                isMoving = false;
-            }
-        }
 
         private void RotatePlayerTowardsMouse()
         {
@@ -117,9 +121,15 @@ namespace Player
 
         private void Die()
         {
-            Debug.Log("Murio");
+            Debug.Log("El jugador ha muerto");
             EnemyController.Instance.SetPlayerDeath();
-            Destroy(gameObject);
+            onPlayerDeath?.Invoke(this, EventArgs.Empty);
+            gameObject.SetActive(false);
+
+            
+
         }
+
+    
     }
 }
