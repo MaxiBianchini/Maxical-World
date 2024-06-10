@@ -13,6 +13,7 @@ namespace Nexo
             if (health <= 0)
             {
                 GameOver();
+                SceneManager.LoadSceneAsync(1);
             }
         }
 
