@@ -25,6 +25,7 @@ public class BuildManager : MonoBehaviour
     private Transform pfGhostTower;
     private Transform ghostTowerInstance;
     private Vector3 lastGhostTowerPosition;
+    private PlayerController player;
 
     private void Awake()
     {
@@ -32,6 +33,21 @@ public class BuildManager : MonoBehaviour
         {
             Instance = this;
         }
+        player = FindObjectOfType<PlayerController>();
+    }
+
+    private void Start()
+    {
+    }
+
+    private void OnEnable()
+    {
+        player.onPlayerDeath += DisableBuildingMesh;
+    }
+
+    private void OnDisable()
+    {
+        player.onPlayerDeath -= DisableBuildingMesh;
     }
     void Update()
     {
@@ -51,6 +67,8 @@ public class BuildManager : MonoBehaviour
     private void StartBuildingProcess()
     {
       //  readyToBuild = true;
+        
+
         isBuilding = true;
 
         if (pfGhostTower == null)
@@ -103,9 +121,23 @@ public class BuildManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-         //   readyToBuild = false;
-            isBuilding = false;
-            GetComponentInChildren<TMP_Text>().enabled = false;
+            DisableBuildingMesh();
+        }
+    }
+
+    private void DisableBuildingMesh()
+    {
+        isBuilding = false;
+        GetComponentInChildren<TMP_Text>().enabled = false;
+        Destroy(ghostTowerInstance.gameObject);
+    }
+
+    private void DisableBuildingMesh(object sender, EventArgs e)
+    {
+        isBuilding = false;
+        GetComponentInChildren<TMP_Text>().enabled = false;
+        if (ghostTowerInstance)
+        {
             Destroy(ghostTowerInstance.gameObject);
         }
     }

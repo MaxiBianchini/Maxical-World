@@ -18,6 +18,7 @@ namespace Player
         private Animator anim;
         private float actualSpeed = 0;
         private CombatSystem combatSystem;
+        private HealthBar healthBar;
 
         private Vector3 velocity;
         private bool isGrounded;
@@ -34,6 +35,10 @@ namespace Player
 
         void Start()
         {
+
+            healthBar = GetComponentInChildren<HealthBar>();
+            healthBar.SetMaxHealthValue(health);
+
             _controller = GetComponent<CharacterController>();
             _mainCamera = Camera.main;
             Dead = false;
@@ -72,7 +77,10 @@ namespace Player
         {
             AudioManager.Instance.PlayEffect("Sword Slash");
             anim.SetTrigger("attack");
-            Debug.Log("Atacoooo");
+
+
+           
+
 
         }
 
@@ -102,7 +110,7 @@ namespace Player
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
             float rayDistance;
-
+            
             if (groundPlane.Raycast(ray, out rayDistance))
             {
                 Vector3 point = ray.GetPoint(rayDistance);
@@ -116,6 +124,7 @@ namespace Player
            // Debug.Log("PLayter recibico danio " + amount);
            AudioManager.Instance.PlayEffect("Player Hit");
            health -= amount;
+           healthBar.UpdateHealthBar(health);
            if (health <= 0)
            {
                Die();
@@ -124,7 +133,6 @@ namespace Player
 
         private void Die()
         {
-            Debug.Log("El jugador ha muerto");
             EnemyController.Instance.SetPlayerDeath();
             onPlayerDeath?.Invoke(this, EventArgs.Empty);
             gameObject.SetActive(false);

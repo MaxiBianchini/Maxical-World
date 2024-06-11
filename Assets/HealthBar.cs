@@ -30,7 +30,10 @@ public class HealthBar : MonoBehaviour
     
     public void SetMaxHealthValue(float value)
     {
-        healthBar.maxValue = value;
+        if (healthBar)
+        {
+            healthBar.maxValue = value;
+        }
     }
 
     public void UpdateHealthBar(float value)
