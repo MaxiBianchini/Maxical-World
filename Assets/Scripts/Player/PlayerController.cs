@@ -22,7 +22,7 @@ namespace Player
         private Vector3 velocity;
         private bool isGrounded;
 
-        private bool isMoving = false;
+        //private bool isMoving = false;
 
         public event EventHandler onPlayerDeath;
 
@@ -70,6 +70,7 @@ namespace Player
 
         private void Attack()
         {
+            AudioManager.Instance.PlayEffect("Sword Slash");
             anim.SetTrigger("attack");
             Debug.Log("Atacoooo");
 
@@ -113,6 +114,7 @@ namespace Player
         public void TakeDamage(float amount)
         {
            // Debug.Log("PLayter recibico danio " + amount);
+           AudioManager.Instance.PlayEffect("Player Hit");
            health -= amount;
            if (health <= 0)
            {
@@ -126,9 +128,7 @@ namespace Player
             EnemyController.Instance.SetPlayerDeath();
             onPlayerDeath?.Invoke(this, EventArgs.Empty);
             gameObject.SetActive(false);
-
             
-
         }
 
     

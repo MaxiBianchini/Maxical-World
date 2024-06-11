@@ -1,5 +1,6 @@
 using Common;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Nexo
 {
@@ -13,12 +14,14 @@ namespace Nexo
             if (health <= 0)
             {
                 GameOver();
+                
             }
         }
 
         private void GameOver()
         {
             Debug.Log($"Game Over");
+            SceneManager.LoadScene(1);
         }
     }
 }

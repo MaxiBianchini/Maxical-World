@@ -45,7 +45,8 @@ public class EnemyController : MonoBehaviour
         FindAndAddNexo();
         
     }
-        
+    
+
     private void FindAndAddAllTowers()
     {
         GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
@@ -108,6 +109,8 @@ public class EnemyController : MonoBehaviour
     {
         _player = null;
     }
+
+
         
     private void HandleDoorDestroyed()
     {
