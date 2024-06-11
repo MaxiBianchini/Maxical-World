@@ -109,6 +109,8 @@ public class EnemyController : MonoBehaviour
     {
         _player = null;
     }
+
+
         
     private void HandleDoorDestroyed()
     {

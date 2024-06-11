@@ -27254,7 +27254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveList:
-  - {fileID: 1382562513}
+  - {fileID: 1798092062}
   timeBetweenWaves: 5
 --- !u!4 &1511407693
 Transform:

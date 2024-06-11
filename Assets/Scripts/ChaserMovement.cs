@@ -1,6 +1,7 @@
 using System.Collections;
 using Common;
 using Enemys;
+using Player;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,6 +29,7 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
     private EnemyController _enemyController;
     private bool _isDead = false;
     private State _state;
+    private PlayerController _player;
         
     private AnimationsController _animationsController;
 
@@ -156,7 +158,7 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
             SetDestination(_target);
         }
 
-        if (_target == null)
+        if (_target == null || EnemyController.Instance.Player == null)
         {
             ChangeTarget();
         }
@@ -172,7 +174,14 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
                 Death();
             }
         }
-
+    
+    public void PlayerDeath()
+    {
+        if (EnemyController.Instance.Player == null)
+        {
+            ChangeTarget();
+        }
+    }
     public void Attack(GameObject currentTarget)
     {
         if (_damageable != null && currentTarget != null)
