@@ -66,7 +66,8 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
             _animationsController.SetMovingState(true);
         }
         
-       // Debug.Log($"path: {_agent.hasPath}");
+
+        // Debug.Log($"path: {_agent.hasPath}");
         //Debug.Log($"path status: {_agent.pathStatus}");
     }
 
@@ -218,9 +219,9 @@ public class ChaserMovement : MonoBehaviour, IEnemy, IDamageable
             SetDestination(closestGameObject);
         } 
         //Debug.Log($"Cambiando target a {closestGameObject}");
+        
     }
-
-
+    
     public void Death()
     {
         StopAttacking();
