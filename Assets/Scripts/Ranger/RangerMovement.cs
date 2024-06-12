@@ -226,7 +226,7 @@ namespace Ranger
         
         private void ChangeTarget()
         {
-            Debug.LogWarning($"Target {_target}");
+           // Debug.LogWarning($"Target {_target}");
             _target = null;
             _agent.isStopped = true;
             int towerCount = EnemyController.Instance.Towers.Count;
