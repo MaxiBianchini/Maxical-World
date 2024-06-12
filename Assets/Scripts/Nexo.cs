@@ -4,8 +4,11 @@ using UnityEngine.SceneManagement;
 
 namespace Nexo
 {
+
+
     public class Nexo : MonoBehaviour, IDamageable
     {
+        [SerializeField] private bool testing = false;
         [SerializeField] private float health;
         public void TakeDamage(float amount)
         {
@@ -21,7 +24,14 @@ namespace Nexo
         private void GameOver()
         {
             Debug.Log($"Game Over");
-            SceneManager.LoadScene(1);
+            if (testing)
+            {
+                SceneManager.LoadScene(1);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }
