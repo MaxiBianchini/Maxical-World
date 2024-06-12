@@ -10,7 +10,7 @@ namespace Player
     {
         [Header("Settings")]
         [SerializeField] private float playerSpeed = 5.0f;
-        [SerializeField] private float health;
+        [SerializeField] private float maxHealth;
 
         public static bool Dead;
         private CharacterController _controller;
@@ -22,6 +22,8 @@ namespace Player
 
         private Vector3 velocity;
         private bool isGrounded;
+        private float health;
+        
 
         //private bool isMoving = false;
 
@@ -35,9 +37,10 @@ namespace Player
 
         void Start()
         {
-
             healthBar = GetComponentInChildren<HealthBar>();
-            healthBar.SetMaxHealthValue(health);
+            health = maxHealth;
+            healthBar.SetMaxHealthValue(maxHealth);
+            healthBar.UpdateHealthBar(health);
 
             _controller = GetComponent<CharacterController>();
             _mainCamera = Camera.main;
@@ -129,6 +132,12 @@ namespace Player
            {
                Die();
            }
+        }
+
+        public void ResetHealthValue()
+        {
+            health = maxHealth;
+            healthBar.UpdateHealthBar(health);
         }
 
         private void Die()

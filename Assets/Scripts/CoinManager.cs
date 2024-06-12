@@ -7,7 +7,7 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private GameObject coinPrefab;
     public static CoinManager Instance { get; private set; }
 
-    private float _totalCoins;
+    [SerializeField] private float _totalCoins;
     private void Awake()
     {
         if (Instance == null)

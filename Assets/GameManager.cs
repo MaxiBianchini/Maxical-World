@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
         
         //Hago aparecer el player y desactivo el contador
         player.gameObject.SetActive(true);
+        player.ResetHealthValue();
         startCount = false;
         remainingTime = respawnTime;
         SetTextVisibility(respawnCountText, false);

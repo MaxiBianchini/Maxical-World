@@ -5,6 +5,7 @@ using Enemys;
 using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildManager : MonoBehaviour
 {
@@ -20,7 +21,9 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private float maxBuildingDistance = 5f;
 
 
-    [SerializeField] private int inventoryGold;
+    //[SerializeField] private int inventoryGold;
+
+    [SerializeField] private Image tooFarAwayToBuildImage;
 
     private Transform pfGhostTower;
     private Transform ghostTowerInstance;
@@ -115,8 +118,11 @@ public class BuildManager : MonoBehaviour
         else
         {
             ChangeGhostTowerMeshMaterial(redMaterial);
-            GetComponentInChildren<TMP_Text>().enabled = outOfRange;
-           
+            //GetComponentInChildren<TMP_Text>().enabled = outOfRange;
+            Debug.Log(outOfRange);
+            tooFarAwayToBuildImage.enabled = outOfRange;
+
+
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -128,14 +134,17 @@ public class BuildManager : MonoBehaviour
     private void DisableBuildingMesh()
     {
         isBuilding = false;
-        GetComponentInChildren<TMP_Text>().enabled = false;
+        //GetComponentInChildren<TMP_Text>().enabled = false;
+        tooFarAwayToBuildImage.enabled = false;
         Destroy(ghostTowerInstance.gameObject);
     }
 
     private void DisableBuildingMesh(object sender, EventArgs e)
     {
         isBuilding = false;
-        GetComponentInChildren<TMP_Text>().enabled = false;
+        //GetComponentInChildren<TMP_Text>().enabled = false;
+        tooFarAwayToBuildImage.enabled = false;
+
         if (ghostTowerInstance)
         {
             Destroy(ghostTowerInstance.gameObject);
@@ -153,9 +162,10 @@ public class BuildManager : MonoBehaviour
     //Chequea si hay oro suficiente para construir la torre
     private bool CanAffordCost(int towerCost)
     {
+        float inventoryGold = CoinManager.Instance.GetTotalCoins();
         if(inventoryGold >= towerCost)
         {
-            inventoryGold -= towerCost;
+            CoinManager.Instance.LessCoinMount(towerCost);
             return true;
         }
         else
