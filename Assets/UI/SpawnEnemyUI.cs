@@ -20,10 +20,11 @@ namespace UI
             if (EnemyController.Instance.enemiesList.Count > 0)
             {
                 underAttackimg.enabled = true;
+                GameManager.instance.ShowImage(underAttackimg);
             }
             else
             {
-                GameManager.instance.FadeOutImage(underAttackimg);
+                GameManager.instance.StartFadeOutImageRutine(underAttackimg);
                 text.text = $"Next wave: {_time:0}";
             }
         }
