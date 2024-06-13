@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager Instance;
+
     [SerializeField] private float spawnPointRadius = 2f;
     [SerializeField] private Material blueMaterial;
     [SerializeField] private Material redMaterial;
@@ -17,6 +18,8 @@ public class BuildManager : MonoBehaviour
 
    // [SerializeField] private bool readyToBuild = false;
     [SerializeField] private bool isBuilding = false;
+    public bool IsBuilding { get { return isBuilding; } }
+
     [SerializeField] private bool isOverTowerSpawnPoint;
     [SerializeField] private float maxBuildingDistance = 5f;
 
@@ -24,11 +27,13 @@ public class BuildManager : MonoBehaviour
     //[SerializeField] private int inventoryGold;
 
     [SerializeField] private Image tooFarAwayToBuildImage;
+    [SerializeField] private Image notEnoughGoldToBuildImage;
 
     private Transform pfGhostTower;
     private Transform ghostTowerInstance;
     private Vector3 lastGhostTowerPosition;
     private PlayerController player;
+    private Image activeImage;
 
     private void Awake()
     {
@@ -91,11 +96,12 @@ public class BuildManager : MonoBehaviour
         Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
 
         bool outOfRange = OutOfBuildingRangeDistance(mousePosition);
+        ActivateImageOnScreen(tooFarAwayToBuildImage, outOfRange);
 
         if (CanSpawnBuilding(mousePosition) && isOverTowerSpawnPoint && !outOfRange)
         {
             //Apago mensaje de que esta lejos para construir
-            tooFarAwayToBuildImage.enabled = outOfRange;
+            //tooFarAwayToBuildImage.enabled = outOfRange;
 
             ChangeGhostTowerMeshMaterial(blueMaterial);
 
@@ -120,7 +126,8 @@ public class BuildManager : MonoBehaviour
         {
             ChangeGhostTowerMeshMaterial(redMaterial);
             //GetComponentInChildren<TMP_Text>().enabled = outOfRange;
-            tooFarAwayToBuildImage.enabled = outOfRange;
+            //ActivateImageOnScreen(tooFarAwayToBuildImage, outOfRange);
+            //tooFarAwayToBuildImage.enabled = outOfRange;
 
 
         }
@@ -131,11 +138,21 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    private void ActivateImageOnScreen(Image image, bool value)
+    {
+        if (!activeImage) activeImage = image;
+
+        activeImage = image;
+        activeImage.enabled = value;
+        GameManager.instance.ShowImage(activeImage);
+        
+    }
+
     private void DisableBuildingMesh()
     {
         isBuilding = false;
         //GetComponentInChildren<TMP_Text>().enabled = false;
-        tooFarAwayToBuildImage.enabled = false;
+        ActivateImageOnScreen(tooFarAwayToBuildImage, false);
         Destroy(ghostTowerInstance.gameObject);
     }
 
@@ -170,7 +187,9 @@ public class BuildManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No tengo plata para construir");
+
+            ActivateImageOnScreen(notEnoughGoldToBuildImage, true);
+            GameManager.instance.StartFadeOutImageRutine(notEnoughGoldToBuildImage);
             return false;
         }
 

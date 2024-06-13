@@ -16,16 +16,24 @@ namespace UI
         private void Update()
         {
             _time = waveManager.GetWaveTimer();
-            
-            if (EnemyController.Instance.enemiesList.Count > 0)
+            if (!waveManager.GetWinBool())
             {
-                underAttackimg.enabled = true;
+                if (EnemyController.Instance.enemiesList.Count > 0)
+                {
+                    underAttackimg.enabled = true;
+                    GameManager.instance.ShowImage(underAttackimg);
+                }
+                else
+                {
+                    GameManager.instance.StartFadeOutImageRutine(underAttackimg);
+                    text.text = $"Next wave: {_time:0}";
+                }
             }
             else
             {
-                GameManager.instance.FadeOutImage(underAttackimg);
-                text.text = $"Next wave: {_time:0}";
+                text.text = $"WIN";
             }
+            
         }
         
     }

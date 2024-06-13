@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float imageFadeOutTime = 2f;
     [SerializeField] private Image attackTutorialImg;
     [SerializeField] private Image buildTutorialImg;
+
+    [SerializeField] private Image attackOnIcon;
+    [SerializeField] private Image attackOffIcon;
+    [SerializeField] private Image buildOnIcon;
+    [SerializeField] private Image buildOffIcon;
 
     private PlayerController player;
     
@@ -45,6 +51,8 @@ public class GameManager : MonoBehaviour
         remainingTime = respawnTime;
     }
 
+    
+
     private IEnumerator ShowTutorialMessagesRoutine()
     {
         attackTutorialImg.enabled = true;
@@ -59,13 +67,17 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+    public void StartFadeOutImageRutine(Image image)
+    {
+        StartCoroutine (FadeOutImage(image));
+    }
     
-    public IEnumerator FadeOutImage(Image imageToFade)
+    private IEnumerator FadeOutImage(Image imageToFade)
     {
         // Obtén el color inicial de la imagen
         Color originalColor = imageToFade.color;
         float elapsedTime = 0f;
-
         while (elapsedTime < imageFadeOutTime)
         {
             elapsedTime += Time.deltaTime;
@@ -77,6 +89,14 @@ public class GameManager : MonoBehaviour
 
         // Asegúrate de que la imagen sea completamente transparente al final
         imageToFade.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
+    }
+
+    public void ShowImage(Image image)
+    {
+        // Obtén el color inicial de la imagen
+        Color originalColor = image.color;
+        float alpha = 1;
+        image.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
     }
 
     private void OnEnable()
@@ -118,6 +138,23 @@ public class GameManager : MonoBehaviour
            remainingTime -= Time.deltaTime;
            int seconds = Mathf.FloorToInt(remainingTime);
             respawnCountText.text = $"Respawning in {seconds.ToString("D1")} secs";
+        }
+
+        SetIcons();
+
+    }
+
+    private void SetIcons()
+    {
+        if (BuildManager.Instance.IsBuilding)
+        {
+            attackOffIcon.enabled = true;
+            buildOffIcon.enabled = false;
+        }
+        else
+        {
+            attackOffIcon.enabled = false;
+            buildOffIcon.enabled = true;
         }
     }
 

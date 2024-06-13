@@ -80,7 +80,7 @@ namespace Player
             RotatePlayerTowardsMouse();
             _controller.Move(velocity * Time.deltaTime);
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !BuildManager.Instance.IsBuilding)
             {
                 Attack();
             }

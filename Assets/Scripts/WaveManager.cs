@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float timeBetweenWaves;
     
     private float _waveTimer;
+    private bool _win = false;
 
     public event EventHandler onWaveSpawned;
 
@@ -60,6 +61,7 @@ public class WaveManager : MonoBehaviour
             else
             {
                 Debug.Log("No hay más waves WIN");
+                _win = true;
             }
         }
     }
@@ -69,6 +71,9 @@ public class WaveManager : MonoBehaviour
         return _waveTimer;
     }
 
-    
+    public bool GetWinBool()
+    {
+        return _win;
+    }
 
 }
