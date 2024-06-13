@@ -4,11 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     [SerializeField] private TMP_Text respawnCountText;
     [SerializeField] private int respawnTime = 5;
+    [SerializeField] private float tutorialShowingTime = 5f;
+    [SerializeField] private float imageFadeOutTime = 2f;
+    [SerializeField] private Image attackTutorialImg;
+    [SerializeField] private Image buildTutorialImg;
 
     private PlayerController player;
     
@@ -18,6 +25,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(instance);
+        }
+
         player = FindObjectOfType<PlayerController>();
 
         //respawnCountText = GetComponentInChildren<TMP_Text>();
@@ -25,7 +41,42 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(ShowTutorialMessagesRoutine());
         remainingTime = respawnTime;
+    }
+
+    private IEnumerator ShowTutorialMessagesRoutine()
+    {
+        attackTutorialImg.enabled = true;
+        yield return new WaitForSeconds(tutorialShowingTime);
+        StartCoroutine(FadeOutImage(attackTutorialImg));
+        yield return new WaitForSeconds(imageFadeOutTime);
+
+        buildTutorialImg.enabled = true;
+        yield return new WaitForSeconds(tutorialShowingTime);
+        StartCoroutine(FadeOutImage(buildTutorialImg));
+
+
+
+    }
+    
+    public IEnumerator FadeOutImage(Image imageToFade)
+    {
+        // Obtén el color inicial de la imagen
+        Color originalColor = imageToFade.color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < imageFadeOutTime)
+        {
+            elapsedTime += Time.deltaTime;
+            // Calcula el nuevo valor alfa
+            float alpha = Mathf.Lerp(1, 0, elapsedTime / imageFadeOutTime);
+            imageToFade.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        // Asegúrate de que la imagen sea completamente transparente al final
+        imageToFade.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
     }
 
     private void OnEnable()

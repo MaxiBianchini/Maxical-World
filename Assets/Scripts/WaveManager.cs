@@ -11,7 +11,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float timeBetweenWaves;
     
     private float _waveTimer;
-    
+
+    public event EventHandler onWaveSpawned;
 
     private void Start()
     {
@@ -39,6 +40,7 @@ public class WaveManager : MonoBehaviour
         if (_waveTimer <= 0 && EnemyController.Instance.enemiesList.Count <= 0)
         {
             SpawnWave();
+            onWaveSpawned?.Invoke(this, EventArgs.Empty);
             _waveTimer = timeBetweenWaves;
         }
         
@@ -53,6 +55,7 @@ public class WaveManager : MonoBehaviour
                 waveList[0].GetComponent<Group>().SpawnAllEnemies();
                 waveList.RemoveAt(0);
                 _waveTimer = timeBetweenWaves;
+
             }
             else
             {

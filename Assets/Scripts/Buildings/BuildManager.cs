@@ -37,6 +37,7 @@ public class BuildManager : MonoBehaviour
             Instance = this;
         }
         player = FindObjectOfType<PlayerController>();
+
     }
 
     private void Start()
@@ -94,7 +95,7 @@ public class BuildManager : MonoBehaviour
         if (CanSpawnBuilding(mousePosition) && isOverTowerSpawnPoint && !outOfRange)
         {
             //Apago mensaje de que esta lejos para construir
-            GetComponentInChildren<TMP_Text>().enabled = false;
+            tooFarAwayToBuildImage.enabled = outOfRange;
 
             ChangeGhostTowerMeshMaterial(blueMaterial);
 
@@ -119,7 +120,6 @@ public class BuildManager : MonoBehaviour
         {
             ChangeGhostTowerMeshMaterial(redMaterial);
             //GetComponentInChildren<TMP_Text>().enabled = outOfRange;
-            Debug.Log(outOfRange);
             tooFarAwayToBuildImage.enabled = outOfRange;
 
 

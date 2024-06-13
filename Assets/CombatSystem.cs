@@ -25,7 +25,6 @@ public class CombatSystem : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
-            Debug.Log($"Le hago {damage} al enemigo0");
         }
     }
 

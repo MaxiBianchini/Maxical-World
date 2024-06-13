@@ -22,7 +22,8 @@ namespace Player
 
         private Vector3 velocity;
         private bool isGrounded;
-        private float health;
+        [SerializeField] private float health;
+        private WaveManager waveManager;
         
 
         //private bool isMoving = false;
@@ -33,7 +34,19 @@ namespace Player
         {
             anim = GetComponent<Animator>();
             combatSystem = GetComponent<CombatSystem>();
+            waveManager = FindObjectOfType<WaveManager>();
+            
         }
+
+        //private void OnEnable()
+        //{
+        //    waveManager.onWaveSpawned += ResetHealthValue;
+        //}
+
+        //private void OnDisable()
+        //{
+        //    waveManager.onWaveSpawned -= ResetHealthValue;
+        //}
 
         void Start()
         {
@@ -135,6 +148,12 @@ namespace Player
         }
 
         public void ResetHealthValue()
+        {
+            health = maxHealth;
+            healthBar.UpdateHealthBar(health);
+        }
+
+        public void ResetHealthValue(object sender, EventArgs e)
         {
             health = maxHealth;
             healthBar.UpdateHealthBar(health);

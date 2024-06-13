@@ -10,6 +10,7 @@ namespace UI
     {
         [SerializeField] private WaveManager waveManager;
         [SerializeField] private Text text;
+        [SerializeField] private Image underAttackimg;
 
         private float _time;
         private void Update()
@@ -18,10 +19,11 @@ namespace UI
             
             if (EnemyController.Instance.enemiesList.Count > 0)
             {
-                text.text = $"Under attack!";
+                underAttackimg.enabled = true;
             }
             else
             {
+                GameManager.instance.FadeOutImage(underAttackimg);
                 text.text = $"Next wave: {_time:0}";
             }
         }
