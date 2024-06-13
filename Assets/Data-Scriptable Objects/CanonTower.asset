@@ -15,6 +15,6 @@ MonoBehaviour:
   nameString: CanonTower
   buildingPrefab: {fileID: 176561352003582481, guid: d8d3d6250ce3044498643a7b1008cd67, type: 3}
   bullet: {fileID: 3148217092885813663, guid: 5364b92c3e0a6d142803b4337a6d2cfb, type: 3}
-  goldAmountCost: 100
+  goldAmountCost: 200
   healthAmountMax: 250
   constructionTimerMax: 10

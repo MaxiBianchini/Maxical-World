@@ -5,6 +5,7 @@ using Enemys;
 using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildManager : MonoBehaviour
 {
@@ -20,11 +21,14 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private float maxBuildingDistance = 5f;
 
 
-    [SerializeField] private int inventoryGold;
+    //[SerializeField] private int inventoryGold;
+
+    [SerializeField] private Image tooFarAwayToBuildImage;
 
     private Transform pfGhostTower;
     private Transform ghostTowerInstance;
     private Vector3 lastGhostTowerPosition;
+    private PlayerController player;
 
     private void Awake()
     {
@@ -32,6 +36,22 @@ public class BuildManager : MonoBehaviour
         {
             Instance = this;
         }
+        player = FindObjectOfType<PlayerController>();
+
+    }
+
+    private void Start()
+    {
+    }
+
+    private void OnEnable()
+    {
+        player.onPlayerDeath += DisableBuildingMesh;
+    }
+
+    private void OnDisable()
+    {
+        player.onPlayerDeath -= DisableBuildingMesh;
     }
     void Update()
     {
@@ -51,6 +71,8 @@ public class BuildManager : MonoBehaviour
     private void StartBuildingProcess()
     {
       //  readyToBuild = true;
+        
+
         isBuilding = true;
 
         if (pfGhostTower == null)
@@ -73,7 +95,7 @@ public class BuildManager : MonoBehaviour
         if (CanSpawnBuilding(mousePosition) && isOverTowerSpawnPoint && !outOfRange)
         {
             //Apago mensaje de que esta lejos para construir
-            GetComponentInChildren<TMP_Text>().enabled = false;
+            tooFarAwayToBuildImage.enabled = outOfRange;
 
             ChangeGhostTowerMeshMaterial(blueMaterial);
 
@@ -97,15 +119,34 @@ public class BuildManager : MonoBehaviour
         else
         {
             ChangeGhostTowerMeshMaterial(redMaterial);
-            GetComponentInChildren<TMP_Text>().enabled = outOfRange;
-           
+            //GetComponentInChildren<TMP_Text>().enabled = outOfRange;
+            tooFarAwayToBuildImage.enabled = outOfRange;
+
+
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-         //   readyToBuild = false;
-            isBuilding = false;
-            GetComponentInChildren<TMP_Text>().enabled = false;
+            DisableBuildingMesh();
+        }
+    }
+
+    private void DisableBuildingMesh()
+    {
+        isBuilding = false;
+        //GetComponentInChildren<TMP_Text>().enabled = false;
+        tooFarAwayToBuildImage.enabled = false;
+        Destroy(ghostTowerInstance.gameObject);
+    }
+
+    private void DisableBuildingMesh(object sender, EventArgs e)
+    {
+        isBuilding = false;
+        //GetComponentInChildren<TMP_Text>().enabled = false;
+        tooFarAwayToBuildImage.enabled = false;
+
+        if (ghostTowerInstance)
+        {
             Destroy(ghostTowerInstance.gameObject);
         }
     }
@@ -121,9 +162,10 @@ public class BuildManager : MonoBehaviour
     //Chequea si hay oro suficiente para construir la torre
     private bool CanAffordCost(int towerCost)
     {
+        float inventoryGold = CoinManager.Instance.GetTotalCoins();
         if(inventoryGold >= towerCost)
         {
-            inventoryGold -= towerCost;
+            CoinManager.Instance.LessCoinMount(towerCost);
             return true;
         }
         else

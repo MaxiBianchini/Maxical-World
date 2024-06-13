@@ -10,7 +10,7 @@ namespace Player
     {
         [Header("Settings")]
         [SerializeField] private float playerSpeed = 5.0f;
-        [SerializeField] private float health;
+        [SerializeField] private float maxHealth;
 
         public static bool Dead;
         private CharacterController _controller;
@@ -18,11 +18,15 @@ namespace Player
         private Animator anim;
         private float actualSpeed = 0;
         private CombatSystem combatSystem;
+        private HealthBar healthBar;
 
         private Vector3 velocity;
         private bool isGrounded;
+        [SerializeField] private float health;
+        private WaveManager waveManager;
+        
 
-        private bool isMoving = false;
+        //private bool isMoving = false;
 
         public event EventHandler onPlayerDeath;
 
@@ -30,10 +34,27 @@ namespace Player
         {
             anim = GetComponent<Animator>();
             combatSystem = GetComponent<CombatSystem>();
+            waveManager = FindObjectOfType<WaveManager>();
+            
         }
+
+        //private void OnEnable()
+        //{
+        //    waveManager.onWaveSpawned += ResetHealthValue;
+        //}
+
+        //private void OnDisable()
+        //{
+        //    waveManager.onWaveSpawned -= ResetHealthValue;
+        //}
 
         void Start()
         {
+            healthBar = GetComponentInChildren<HealthBar>();
+            health = maxHealth;
+            healthBar.SetMaxHealthValue(maxHealth);
+            healthBar.UpdateHealthBar(health);
+
             _controller = GetComponent<CharacterController>();
             _mainCamera = Camera.main;
             Dead = false;
@@ -70,8 +91,12 @@ namespace Player
 
         private void Attack()
         {
+            AudioManager.Instance.PlayEffect("Sword Slash");
             anim.SetTrigger("attack");
-            Debug.Log("Atacoooo");
+
+
+           
+
 
         }
 
@@ -101,7 +126,7 @@ namespace Player
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
             float rayDistance;
-
+            
             if (groundPlane.Raycast(ray, out rayDistance))
             {
                 Vector3 point = ray.GetPoint(rayDistance);
@@ -113,22 +138,33 @@ namespace Player
         public void TakeDamage(float amount)
         {
            // Debug.Log("PLayter recibico danio " + amount);
+           AudioManager.Instance.PlayEffect("Player Hit");
            health -= amount;
+           healthBar.UpdateHealthBar(health);
            if (health <= 0)
            {
                Die();
            }
         }
 
+        public void ResetHealthValue()
+        {
+            health = maxHealth;
+            healthBar.UpdateHealthBar(health);
+        }
+
+        public void ResetHealthValue(object sender, EventArgs e)
+        {
+            health = maxHealth;
+            healthBar.UpdateHealthBar(health);
+        }
+
         private void Die()
         {
-            Debug.Log("El jugador ha muerto");
             EnemyController.Instance.SetPlayerDeath();
             onPlayerDeath?.Invoke(this, EventArgs.Empty);
             gameObject.SetActive(false);
-
             
-
         }
 
     

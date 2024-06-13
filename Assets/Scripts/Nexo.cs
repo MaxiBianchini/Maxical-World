@@ -1,10 +1,14 @@
 using Common;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Nexo
 {
+
+
     public class Nexo : MonoBehaviour, IDamageable
     {
+        [SerializeField] private bool testing = false;
         [SerializeField] private float health;
         public void TakeDamage(float amount)
         {
@@ -13,13 +17,21 @@ namespace Nexo
             if (health <= 0)
             {
                 GameOver();
-                SceneManager.LoadSceneAsync(1);
+                
             }
         }
 
         private void GameOver()
         {
             Debug.Log($"Game Over");
+            if (testing)
+            {
+                SceneManager.LoadScene(1);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }
