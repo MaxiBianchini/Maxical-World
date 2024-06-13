@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager Instance;
+
     [SerializeField] private float spawnPointRadius = 2f;
     [SerializeField] private Material blueMaterial;
     [SerializeField] private Material redMaterial;
@@ -17,6 +18,8 @@ public class BuildManager : MonoBehaviour
 
    // [SerializeField] private bool readyToBuild = false;
     [SerializeField] private bool isBuilding = false;
+    public bool IsBuilding { get { return isBuilding; } }
+
     [SerializeField] private bool isOverTowerSpawnPoint;
     [SerializeField] private float maxBuildingDistance = 5f;
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float imageFadeOutTime = 2f;
     [SerializeField] private Image attackTutorialImg;
     [SerializeField] private Image buildTutorialImg;
+
+    [SerializeField] private Image attackOnIcon;
+    [SerializeField] private Image attackOffIcon;
+    [SerializeField] private Image buildOnIcon;
+    [SerializeField] private Image buildOffIcon;
 
     private PlayerController player;
     
@@ -44,6 +50,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ShowTutorialMessagesRoutine());
         remainingTime = respawnTime;
     }
+
+    
 
     private IEnumerator ShowTutorialMessagesRoutine()
     {
@@ -130,6 +138,23 @@ public class GameManager : MonoBehaviour
            remainingTime -= Time.deltaTime;
            int seconds = Mathf.FloorToInt(remainingTime);
             respawnCountText.text = $"Respawning in {seconds.ToString("D1")} secs";
+        }
+
+        SetIcons();
+
+    }
+
+    private void SetIcons()
+    {
+        if (BuildManager.Instance.IsBuilding)
+        {
+            attackOffIcon.enabled = true;
+            buildOffIcon.enabled = false;
+        }
+        else
+        {
+            attackOffIcon.enabled = false;
+            buildOffIcon.enabled = true;
         }
     }
 
