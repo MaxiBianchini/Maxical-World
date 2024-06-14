@@ -20,12 +20,16 @@ public class CombatSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        IDamageable enemy = other.GetComponent<IDamageable>();
-        if (enemy != null)
+        if (other.CompareTag("Enemy"))
         {
-            enemy.TakeDamage(damage);
+            IDamageable enemy = other.GetComponent<IDamageable>();
+            if (enemy != null)
+            {
+                AudioManager.Instance.PlayEffect("Sword Slash");
+                enemy.TakeDamage(damage);
+            }
         }
+        
     }
 
     private void DamageEventOn()
