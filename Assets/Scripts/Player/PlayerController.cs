@@ -91,12 +91,7 @@ namespace Player
 
         private void Attack()
         {
-            AudioManager.Instance.PlayEffect("Sword Slash");
             anim.SetTrigger("attack");
-
-
-           
-
 
         }
 
