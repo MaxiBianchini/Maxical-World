@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootTimerMax: 0.5
-  targetMaxRadius: 40
+  targetMaxRadius: 18
   towerAccuracy: 0.7
   canAttack: 0
   projectileSpawnPosition: {fileID: 3124474087440442568}
