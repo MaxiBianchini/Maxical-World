@@ -25,7 +25,7 @@ public class CombatSystem : MonoBehaviour
             IDamageable enemy = other.GetComponent<IDamageable>();
             if (enemy != null)
             {
-                AudioManager.Instance.PlayEffect("Sword Slash");
+                
                 enemy.TakeDamage(damage);
             }
         }
@@ -35,6 +35,7 @@ public class CombatSystem : MonoBehaviour
     private void DamageEventOn()
     {
         if (isAttacking) return;
+        AudioManager.Instance.PlayEffect("Sword Slash");
         boxCollider.enabled = true;
         isAttacking = true;
     }
