@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,13 @@ namespace UI
         [SerializeField] private Text text;
 
         private float _coins;
+
+        private void Start()
+        {
+            AudioManager.Instance.musicSource.Stop();
+            AudioManager.Instance.PlayMusic("Main");
+        }
+
         private void Update()
         {
             _coins = CoinManager.Instance.GetTotalCoins();

@@ -8,5 +8,6 @@ public class UIMenuManager : MonoBehaviour
    public void LoadGameScene()
     {
         SceneManager.LoadScene(1);
+
     }
 }
