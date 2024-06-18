@@ -300,7 +300,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayBtn
+  m_Name: AboutUsBtn
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Normal
@@ -496,9 +496,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: 451b48f44f39ea14b8ad72900ce0abea, type: 3}
+      value: {fileID: 21300000, guid: f6c02f205533b104eb6acf59fdf1f939, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: 9280bda72ba1af9418f82197e041437c, type: 3}
+      value: {fileID: 21300000, guid: ed8cacba2303cf349ab94287eb54b7bb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -539,8 +539,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 451b48f44f39ea14b8ad72900ce0abea, type: 3}
-    - {fileID: 21300000, guid: 9280bda72ba1af9418f82197e041437c, type: 3}
+    - {fileID: 21300000, guid: f6c02f205533b104eb6acf59fdf1f939, type: 3}
+    - {fileID: 21300000, guid: ed8cacba2303cf349ab94287eb54b7bb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -827,7 +827,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: a576d3ef2cb912e46bb1d3fd6b20f9da, type: 3}
+      value: {fileID: 21300000, guid: ed8cacba2303cf349ab94287eb54b7bb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -868,7 +868,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: a576d3ef2cb912e46bb1d3fd6b20f9da, type: 3}
+    - {fileID: 21300000, guid: ed8cacba2303cf349ab94287eb54b7bb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
