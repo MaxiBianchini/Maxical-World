@@ -28,9 +28,9 @@ public class AudioManager : MonoBehaviour
         if (musicSource.clip == null)
         {
             PlayMusic("Menu");
-                
+
         }
-            
+
     }
 
     public void PlayMusic(string musicName)
