@@ -33,7 +33,8 @@ namespace Nexo
             if (health <= 0)
             {
                 GameOver();
-                
+                SceneManager.LoadScene(3);
+
             }
         }
 
@@ -42,11 +43,11 @@ namespace Nexo
             Debug.Log($"Game Over");
             if (testing)
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(3);
             }
             else
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(3);
             }
         }
     }

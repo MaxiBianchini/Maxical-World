@@ -19,7 +19,7 @@ namespace UI
         private void Update()
         {
             _coins = CoinManager.Instance.GetTotalCoins();
-            text.text = $"Coins: {_coins}";
+            text.text = $"{_coins}";
         }
     }
 }
