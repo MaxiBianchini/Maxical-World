@@ -3124,19 +3124,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 1
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 1
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1741546789}
@@ -4037,19 +4037,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 1
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 1
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1741546789}
@@ -10564,19 +10564,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 1
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 1
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 1203438522}
   - {fileID: 334817205}
@@ -25260,19 +25260,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 1
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 1
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1741546789}
@@ -25361,19 +25361,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 2
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 2
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1203438522}
@@ -29108,19 +29108,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 1
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 2
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1741546789}
@@ -30871,19 +30871,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 1
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 1
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1741546789}
@@ -36278,19 +36278,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 1
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 2
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1741546789}
@@ -37430,19 +37430,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 0
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 1
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 942572620}
@@ -41174,19 +41174,19 @@ MonoBehaviour:
   destroyerHealth: 125
   destroyerDamage: 40
   destroyerSpeed: 6
-  destroyerValue: 35
+  destroyerValue: 75
   rangerPrefab: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7, type: 3}
   rangerAmount: 0
   rangerHealth: 80
   rangerDamage: 40
   rangerSpeed: 3
-  rangerValue: 35
+  rangerValue: 75
   chaserPrefab: {fileID: 7122654101855521591, guid: 91d4749f098c66442b36767a17342765, type: 3}
   chaserAmount: 0
   chaserHealth: 100
   chaserDamage: 55
   chaserSpeed: 8.5
-  chaserValue: 35
+  chaserValue: 75
   spawnPointList:
   - {fileID: 586536675}
   - {fileID: 1741546789}

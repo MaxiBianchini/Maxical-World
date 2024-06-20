@@ -33,6 +33,8 @@ namespace Nexo
             if (health <= 0)
             {
                 GameOver();
+                AudioManager.Instance.musicSource.Stop();
+                AudioManager.Instance.PlayMusic("Game Over");
                 SceneManager.LoadScene(3);
 
             }
